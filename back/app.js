@@ -165,7 +165,90 @@ app.delete('/users/:user_id', (req, res) => {
     res.status(200).json({ message: '회원 탈퇴가 성공적으로 처리되었습니다.' });
   });
 });
+//-------------------------------검색 페이지----------------------------------------
+// 진행예정 행사 조회
+app.get('/festivals/soon-festival', (req, res) => {
+  const order_by = req.body.orderby;
+  
+  let query = 'SELECT * FROM festival_info WHERE begin_date > CURDATE()';
 
+  switch (order_by) {
+    case 'like':
+      query += ' ORDER BY `like` DESC';
+      break;
+    case 'distance':
+      query += ' ORDER BY distance ASC';
+      break;
+    default:
+      query += ' ORDER BY begin_date ASC'; // 기본 정렬은 date로 설정
+  }
+
+  connection.query(query, (error, results, fields) => {
+    if (error) {
+      console.error('축제 정보 가져오기 실패:', error);
+      res.status(500).json({ error: '축제 정보 가져오기 실패' });
+      return;
+    }
+    console.log('축제 정보 가져오기 성공');
+    res.status(200).json(results);
+  });
+});
+
+// 진행중인 행사 조회
+app.get('/festivals/doing-festival', (req, res) => {
+  const order_by = req.body.orderby;
+ 
+  let query = 'SELECT * FROM festival_info WHERE begin_date <= CURDATE() AND end_date >= CURDATE()';
+
+  switch (order_by) {
+    case 'like':
+      query += ' ORDER BY `like` DESC';
+      break;
+    case 'distance':
+      query += ' ORDER BY distance ASC';
+      break;
+    default:
+      query += ' ORDER BY begin_date ASC'; // 기본 정렬은 date로 설정
+  }
+
+  connection.query(query, (error, results, fields) => {
+    if (error) {
+      console.error('축제 정보 가져오기 실패:', error);
+      res.status(500).json({ error: '축제 정보 가져오기 실패' });
+      return;
+    }
+    console.log('축제 정보 가져오기 성공');
+    res.status(200).json(results);
+  });
+});
+
+// 종료된 행사 조회
+app.get('/festivals/end-festival', (req, res) => {
+  const order_by = req.body.orderby;
+  
+  let query = 'SELECT * FROM festival_info WHERE end_date < CURDATE()';
+
+  switch (order_by) {
+    case 'like':
+      query += ' ORDER BY `like` DESC';
+      break;
+    case 'distance':
+      query += ' ORDER BY distance ASC';
+      break;
+    default:
+      query += ' ORDER BY begin_date ASC'; // 기본 정렬은 date로 설정
+  }
+
+  connection.query(query, (error, results, fields) => {
+    if (error) {
+      console.error('축제 정보 가져오기 실패:', error);
+      res.status(500).json({ error: '축제 정보 가져오기 실패' });
+      return;
+    }
+    console.log('축제 정보 가져오기 성공');
+    res.status(200).json(results);
+  });
+});
 
 
 app.listen(port, () => {
