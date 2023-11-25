@@ -5,20 +5,19 @@ export default StyleSheet.create({
         alignItems: "center",
     },
     profileBox : {
-        margin: 10,
+        marginTop: 10,
+        width: "90%",
         borderWidth: 1,
-        borderColor: "red",
         borderRadius: 20,
         flexDirection: "row",
-        padding: 20
+        padding: 30
     },
     profileLeft:{
         borderWidth: 1,
-        borderColor: "blue",
         borderRadius: 50,
         width: 100,
         height: 100,
-        margin: 10,
+        marginRight: 30,
         overflow: "hidden"
     },
     profileImage:{
@@ -27,24 +26,44 @@ export default StyleSheet.create({
         resizeMode: "contain",
     },
     profileRight:{
-        borderWidth: 1,
-        borderColor: "red",
         width: "60%",
     },
     profileName:{
-        borderWidth: 1,
-        borderColor: "red",
         flex:1,
-        fontSize: 42,
+        fontSize: 32,
+        fontWeight: "bold",
         textAlignVertical: "center",
         paddingHorizontal: 10
     },
     profileNickName:{
-        borderWidth: 1,
-        borderColor: "red",
         flex:1,
         fontSize: 24,
         textAlignVertical: "center",
         paddingHorizontal: 10
+    },
+    myInfoMenuBox:{
+        margin: 10,
+        marginBottom: 0,
+        borderWidth: 1,
+        borderRadius: 20,
+        width: "90%",
+    },
+    splitLine : {
+        borderTopWidth: 1,
+        borderTopColor: 'rgba(0, 0, 0, 0.1)',
+        width: "90%",
+        alignSelf: "center"
+    },
+    
+    //============MyInfoMenuLine
+    myInfoMenuLine: {
+        justifyContent: "center",
+        width: "100%",
+        height: 50,
+        paddingHorizontal: 20,
+    },
+    menuTitle : {
+        fontSize: 18,
+        fontWeight: "bold",
     }
 })
