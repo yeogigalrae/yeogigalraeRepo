@@ -1,48 +1,41 @@
 import { Image, TouchableOpacity } from 'react-native';
 import NaverConfig from '../../configs/NaverConfig.json';
-import NaverLogin from '@react-native-seoul/naver-login';
+import NaverLogin, {
+  NaverLoginResponse,
+  GetProfileResponse
+} from '@react-native-seoul/naver-login';
 import NaverButtonImage from '../../assets/naver_login_btn.png';
 import LoginStyle from '../../styles/user/LoginStyle';
+import {useState} from 'react';
 
-const iosKeys = {
-    kConsumerKey: NaverConfig.NAVER_CLIENT_ID,
-    kConsumerSecret: NaverConfig.NAVER_CLIENT_SECRET,
-    kServiceAppName: "yeogigalrae",
-    kServiceAppUrlScheme: "yeogigalrae-callback" // only for iOS
-};
+const consumerKey = NaverConfig.NAVER_CLIENT_ID;
+const consumerSecret = NaverConfig.NAVER_CLIENT_SECRET;
+const appName = 'yeogigalrae';
+const serviceUrlScheme = 'yeogigalrae-callback';
 
-const androidKeys = {
-    kConsumerKey: NaverConfig.NAVER_CLIENT_ID,
-    kConsumerSecret: NaverConfig.NAVER_CLIENT_SECRET,
-    kServiceAppName: "yeogigalrae"
-};
-
-const initials = Platform.OS === "ios" ? iosKeys : androidKeys;
+NaverLogin.initialize(context, {consumerKey}, {consumerSecret}, {appName});
 
 export default NaverLoginComponent = () => {
-    const naverLogin = props => {
-        return new Promise((resolve, reject) => {
-            NaverLogin.login(props, (err, token) => {
-                console.log(`\n\n  Token is fetched  :: ${token} \n\n`);
-                setNaverToken(token);
-                if (err) {
-                    reject(err);
-                    return;
-                }
-                resolve(token);
-            });
-        });
-    };
 
-    return (
-        <TouchableOpacity
-            onPress={() => naverLogin(initials)}
-        >
-            <Image
-                style={LoginStyle.naver_btn}
-                source={NaverButtonImage}
-            >
-            </Image>
-        </TouchableOpacity>
-    );
+  const login = async () => {
+    const result = await NaverLogin.login({
+      appName,
+      consumerKey,
+      consumerSecret,
+      serviceUrlScheme,
+    });
+    console.log(result);
+  };
+
+  return (
+    <TouchableOpacity
+      onPress={login}
+    >
+      <Image
+        style={LoginStyle.naver_btn}
+        source={NaverButtonImage}
+      >
+      </Image>
+    </TouchableOpacity>
+  );
 }
