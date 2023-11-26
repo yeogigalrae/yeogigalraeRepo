@@ -28,6 +28,9 @@ export default MyInfoStackNavigation = (props) => {
             <Stack.Screen
                 name="myInfo"
                 component={MyInfoScreen}
+                options={{
+                    headerShown: false
+                }}
             />
             <Stack.Screen
                 name="likeList"

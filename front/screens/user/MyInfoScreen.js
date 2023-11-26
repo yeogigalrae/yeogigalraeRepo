@@ -1,9 +1,41 @@
 import { Alert, Image, View, Text } from 'react-native';
 import MyInfoStyle from '../../styles/user/MyInfoStyle';
 import MyInfoMenuLine from '../../components/user/MyInfoMenuLine';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import useUser from '../../components/user/UserState';
+import { useNavigation } from '@react-navigation/native';
+import axios from 'axios';
 
 export default MyInfoScreen = (props) => {
-    
+    const navigation = useNavigation();
+    const currentUser = useUser(state => state.user);
+    const deleteUser = useUser(state => state.deleteUser);
+
+    const logout = async () => {
+        try {
+            await GoogleSignin.signOut()
+                .then(async function () {
+                    const response = await axios({
+                        method : "delete",
+                        url : "http://10.20.60.16:3001/",
+                        // url : "http://localhost:3001/",
+                        headers : {
+                            "Content-Type" : "application/json"
+                        },
+                        data : {
+                            user : currentUser
+                        },
+                        responseType : "json",
+                    })
+                    console.log(response.data);
+                    navigation.navigate("login");
+                })
+                deleteUser();
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
     return (
         <View
             style={MyInfoStyle.myInfo}
@@ -16,7 +48,7 @@ export default MyInfoScreen = (props) => {
                 >
                     <Image
                         style={MyInfoStyle.profileImage}
-                        source={require("../../assets/heart.png")}
+                        source={{uri : currentUser.photo}}
                     />
                 </View>
                 <View
@@ -24,10 +56,10 @@ export default MyInfoScreen = (props) => {
                 >
                     <Text
                         style={MyInfoStyle.profileName}
-                    >이름</Text>
+                    >{currentUser.name}</Text>
                     <Text
                         style={MyInfoStyle.profileNickName}
-                    >닉네임</Text>
+                    >{currentUser.name}</Text>
                 </View>
             </View>
             <View
@@ -81,7 +113,9 @@ export default MyInfoScreen = (props) => {
                         '회원탈퇴',
                         '정말로 탈퇴하시겠습니까?',
                         [
-                            { text: '확인', onPress: () => console.log('확인') },
+                            {
+                                text: '확인', onPress: () => { logout() }
+                            },
                             { text: '취소', style: 'cancel' },
                         ],
                         {
