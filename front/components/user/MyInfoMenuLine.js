@@ -1,8 +1,14 @@
 import {View, TouchableOpacity, Text} from "react-native";
 import MyInfoStyle from '../../styles/user/MyInfoStyle';
 import appStyle from '../../configs/Style.json';
+import { useNavigation } from '@react-navigation/native';
 
 export default MyInfoMenuLine = (props) => {
+    const navigation = useNavigation();
+
+    const clickMenu = () => {
+        navigation.navigate(props.screen, {data: props.data});
+    }
 
     if(props.isTitle){
         return(
@@ -27,6 +33,13 @@ export default MyInfoMenuLine = (props) => {
         return( 
             <TouchableOpacity
                 style={MyInfoStyle.myInfoMenuLine}
+                onPress={() => { 
+                    if(props.onPress == undefined){
+                        clickMenu();
+                    } else {
+                        props.onPress();
+                    }
+                }}
             >
                 <Text
                     style={props.style}

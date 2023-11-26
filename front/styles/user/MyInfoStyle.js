@@ -1,10 +1,10 @@
 import { StyleSheet } from "react-native"
 
 export default StyleSheet.create({
-    myInfo:{
+    myInfo: {
         alignItems: "center",
     },
-    profileBox : {
+    profileBox: {
         marginTop: 10,
         width: "90%",
         borderWidth: 1,
@@ -12,7 +12,7 @@ export default StyleSheet.create({
         flexDirection: "row",
         padding: 30
     },
-    profileLeft:{
+    profileLeft: {
         borderWidth: 1,
         borderRadius: 50,
         width: 100,
@@ -20,41 +20,41 @@ export default StyleSheet.create({
         marginRight: 30,
         overflow: "hidden"
     },
-    profileImage:{
-        width:"100%",
+    profileImage: {
+        width: "100%",
         height: "100%",
         resizeMode: "contain",
     },
-    profileRight:{
+    profileRight: {
         width: "60%",
     },
-    profileName:{
-        flex:1,
+    profileName: {
+        flex: 1,
         fontSize: 32,
         fontWeight: "bold",
         textAlignVertical: "center",
         paddingHorizontal: 10
     },
-    profileNickName:{
-        flex:1,
+    profileNickName: {
+        flex: 1,
         fontSize: 24,
         textAlignVertical: "center",
         paddingHorizontal: 10
     },
-    myInfoMenuBox:{
+    myInfoMenuBox: {
         margin: 10,
         marginBottom: 0,
         borderWidth: 1,
         borderRadius: 20,
         width: "90%",
     },
-    splitLine : {
+    splitLine: {
         borderTopWidth: 1,
         borderTopColor: 'rgba(0, 0, 0, 0.1)',
         width: "90%",
         alignSelf: "center"
     },
-    
+
     //============MyInfoMenuLine
     myInfoMenuLine: {
         justifyContent: "center",
@@ -62,8 +62,24 @@ export default StyleSheet.create({
         height: 50,
         paddingHorizontal: 20,
     },
-    menuTitle : {
+    menuTitle: {
         fontSize: 18,
         fontWeight: "bold",
-    }
+    },
+
+    //
+    alertContainer: {
+        backgroundColor: 'white',
+        borderRadius: 8,
+        padding: 16,
+    },
+    alertTitle: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        marginBottom: 8,
+        color: "red"
+    },
+    alertMessage: {
+        fontSize: 16,
+    },
 })
