@@ -35,7 +35,7 @@ export default MyInfoScreen = (props) => {
             console.error(error);
         }
     }
-
+    
     return (
         <View
             style={MyInfoStyle.myInfo}
@@ -57,9 +57,18 @@ export default MyInfoScreen = (props) => {
                     <Text
                         style={MyInfoStyle.profileName}
                     >{currentUser.name}</Text>
+                    {currentUser.nickname?(
                     <Text
                         style={MyInfoStyle.profileNickName}
-                    >{currentUser.name}</Text>
+                    >{currentUser.nickname}</Text>
+                    ) : (
+                        <Text
+                            style={[
+                                MyInfoStyle.profileNickName,
+                                {color: "gray", fontSize: 16}
+                            ]}
+                        >닉네임을 설정해주세요</Text>
+                    )}
                 </View>
             </View>
             <View

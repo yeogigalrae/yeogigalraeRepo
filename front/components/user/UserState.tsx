@@ -6,6 +6,7 @@ interface User {
         email: string;
         id: number;
         name: string;
+        nickname: string;
         photo: string;
     };
     setUser: (user: any) => void;
@@ -19,6 +20,7 @@ const useUser = create<User>((set) => ({
         email: "",
         id: 0,
         name: "",
+        nickname: "",
         photo: "",
     },
     setUser: (user: any) => set((state) => ({
@@ -33,6 +35,7 @@ const useUser = create<User>((set) => ({
             email: "",
             id: 0,
             name: "",
+            nickname: "",
             photo: "",
         },
     })),
