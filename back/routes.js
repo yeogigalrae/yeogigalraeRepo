@@ -1,9 +1,9 @@
 const express = require('express');
 
-const userController = require('./Cotroller/userController');
-const likeController = require('./Cotroller/likeController');
-const festivalController = require('./Cotroller/festivalController');
-const loginController = require('./Cotroller/loginController');
+const userController = require('./Controller/userController');
+const likeController = require('./Controller/likeController');
+const festivalController = require('./Controller/festivalController');
+const loginController = require('./Controller/loginController');
 
 const routes = express.Router();
 
