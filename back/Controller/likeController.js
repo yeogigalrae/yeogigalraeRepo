@@ -2,6 +2,7 @@ const createConnection = require('../database/dbConnection');
 const connection = createConnection();
 
 module.exports = {
+  // 좋아요 버튼
   putlikebutton(req, res) {
     const festival_id = req.params.festival_id;
     const user_id = req.params.user_id;
@@ -50,20 +51,7 @@ module.exports = {
     }
   },
 
-  getlikecount(req, res) {
-    const festivalId = req.params.festival_id; // 클라이언트에서 festiverId 값을 URL 경로로 전달받음
-
-    connection.query('SELECT `LIKE` FROM festival_info WHERE FESTIVAL_ID = ?', [festivalId], (error, results, fields) => {
-      if (error) {
-        console.error('속성값 조회 실패:', error);
-        res.status(500).json({ error: '속성값 조회 실패', message: error.message });
-        return;
-      }
-      const likeCount = results[0]['LIKE']; // 'like' 속성값을 가져옴
-      res.status(200).json({ likeCount });
-    });
-  },
-
+  // 좋아요한 축제
   getlikedfestival(req, res) {
     const userid = req.params.user_id;
 

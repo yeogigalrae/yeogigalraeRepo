@@ -2,6 +2,7 @@ const createConnection = require('../database/dbConnection');
 const connection = createConnection();
 
 module.exports = {
+  // 진행 예정인 축제
   getsoonfestival(req, res) {
     const order_by = req.body.orderby;
 
@@ -29,6 +30,7 @@ module.exports = {
     });
   },
 
+   //진행 중인 축제
   getdoingfestival(req, res) {
     const order_by = req.body.orderby;
 
@@ -56,6 +58,7 @@ module.exports = {
     });
   },
 
+  // 종료된 축제
   getendfestival(req, res) {
     const order_by = req.body.orderby;
 
@@ -83,6 +86,7 @@ module.exports = {
     });
   },
 
+  // 분류별 축제 검색
   getcategorizefestival(req, res) {
     const category = req.params.category;
     const date = req.params.date;
@@ -128,6 +132,7 @@ module.exports = {
     });
   },
 
+  // 축제 상세 정보
   getfestivalinfo(req, res) {
     const festival_id = req.params.festival_id;
 
