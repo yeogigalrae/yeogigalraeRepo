@@ -2,21 +2,26 @@ const createConnection = require('../database/dbConnection');
 const connection = createConnection();
 
 module.exports = {
-  updateUserNickname(req, res) {
+  // 회원 정보 변경
+  updateuserinfo(req,res) {
     const userId = req.params.user_id;
     const newNickname = req.body.nickname;
-  
-    connection.query('UPDATE user_info SET nickname = ? WHERE user_id = ?', [newNickname, userId], (error, results, fields) => {
+    const newAddress = req.body.address;
+    const newBirth = req.body.birth;
+    const newPhoneNumber = req.body.phone_number;
+    
+    connection.query('UPDATE user_info SET nickname = ?, address = ?, birth = ?, phone_number = ? WHERE user_id = ?', [newNickname, newAddress, newBirth, newPhoneNumber, userId], (error, results, fields) =>{
       if (error) {
-        console.error('닉네임 변경 실패:', error);
-        res.status(500).json({ error: '닉네임 변경 실패' });
+        console.error('회원 정보 변경 실패:', error);
+        res.status(500).json({ error: '회원 정보 변경 실패' });
         return;
       }
-      console.log('닉네임 변경 성공');
-      res.status(200).json({ message: '닉네임 변경 성공' });
+      console.log('회원 정보 변경 성공');
+      res.status(200).json({ message: '회원 정보 변경 성공' });
     });
   },
-  
+
+  // 프로필 사진 변경
   updateUserImage(req, res) {
     const userId = req.params.user_id;
     const newImage = req.body.image;
@@ -32,28 +37,7 @@ module.exports = {
     });
   },
   
-  getUserImage(req, res) {
-    const userId = req.params.user_id;
-  
-    connection.query('SELECT `image` FROM user_info WHERE user_id = ?', [userId], (error, results, fields) => {
-      if (error) {
-        console.error('프로필 사진 조회 실패:', error);
-        res.status(500).json({ error: '프로필 사진 조회 실패' });
-        return;
-      }
-  
-      if (results.length === 0) {
-        console.log('프로필 사진이 없습니다');
-        res.status(404).json({ message: '프로필 사진이 없습니다' });
-        return;
-      }
-  
-      const image = results[0].image;
-      console.log('프로필 사진 조회 성공');
-      res.status(200).json({ image });
-    });
-  },
-  
+  // 알림 설정 변경
   updateNoticeSettings(req, res) {
     const userId = req.params.user_id;
     const notice = req.body.notice;
@@ -69,6 +53,7 @@ module.exports = {
     });
   },
   
+  // 회원 탈퇴
   deleteUser(req, res) {
     const userId = req.params.user_id;
   

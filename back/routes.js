@@ -3,17 +3,15 @@ const express = require('express');
 const userController = require('./Cotroller/userController');
 const likeController = require('./Cotroller/likeController');
 const festivalController = require('./Cotroller/festivalController');
+const loginController = require('./Cotroller/loginController');
 
 const routes = express.Router();
 
-// 닉네임 변경
-routes.put('/users/:user_id/nickname', userController.updateUserNickname);
+// 회원 정보 변경
+routes.put('/users/:user_id', userController.updateuserinfo);
 
 // 프로필 사진 변경
 routes.put('/users/:user_id/image', userController.updateUserImage);
-
-// 프로필 사진 조회
-routes.get('/users/:user_id/image', userController.getUserImage);
 
 // 알림 설정 변경
 routes.put('/users/:user_id/notice', userController.updateNoticeSettings);
@@ -24,9 +22,6 @@ routes.delete('/users/:user_id', userController.deleteUser);
 
 // 좋아요 버튼 기능
 routes.put('/festivals/:festival_id/like/:user_id', likeController.putlikebutton);
-
-// 축제 좋아요 갯수 조회
-routes.get('/festivals/:festival_id/like-count', likeController.getlikecount);
 
 // 좋아요한 축제 조회
 routes.get('/festivals/:user_id/liked', likeController.getlikedfestival);
@@ -46,6 +41,13 @@ routes.get('/festivals/:category/:date/:place', festivalController.getcategorize
 
 // 축제 상세 조회
 routes.get('/festivals/:festival_id', festivalController.getfestivalinfo);
+
+
+// 로그인
+routes.post('/users/login', loginController.userlogin);
+
+// 회원가입
+routes.post('/users/signup', loginController.usersignup);
 
 module.exports = routes;
 
