@@ -2,6 +2,7 @@ import { View, Text, Image, TouchableOpacity } from 'react-native';
 import FestivalTypeButtonBoxStyle from '../../styles/main/FestivalTypeButtonBoxStyle';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
+import IPConfig from '../../configs/IPConfig.json';
 
 export default FestivalButtons = (props) => {
     const navigation = useNavigation();
@@ -10,8 +11,7 @@ export default FestivalButtons = (props) => {
         try{
             const response = await axios({
                 method : "get",
-                // url : `http://10.20.61.77/festivals?category=${props.name}`,
-                url : "http://172.16.34.100:3000/",
+                url : IPConfig.IP,
                 headers : {
                     "Content-Type" : "application/json"
                 },

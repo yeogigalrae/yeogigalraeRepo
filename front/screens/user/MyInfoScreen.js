@@ -5,6 +5,7 @@ import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import useUser from '../../components/user/UserState';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
+import IPConfig from '../../configs/IPConfig.json';
 
 export default MyInfoScreen = (props) => {
     const navigation = useNavigation();
@@ -17,8 +18,7 @@ export default MyInfoScreen = (props) => {
                 .then(async function () {
                     const response = await axios({
                         method : "delete",
-                        url : "http://10.20.60.16:3001/",
-                        // url : "http://localhost:3001/",
+                        url : IPConfig.IP,
                         headers : {
                             "Content-Type" : "application/json"
                         },
@@ -79,13 +79,8 @@ export default MyInfoScreen = (props) => {
                     isTitle={true}
                 />
                 <MyInfoMenuLine
-                    text={"닉네임 변경"}
-                    screen={"nickname"}
-                />
-                <View style={MyInfoStyle.splitLine} />
-                <MyInfoMenuLine
-                    text={"프로필 사진 변경"}
-                    screen={"profile"}
+                    text={"회원정보 수정"}
+                    screen={"userInfo"}
                 />
             </View>
             <View

@@ -8,6 +8,9 @@ interface User {
         name: string;
         nickname: string;
         photo: string;
+        address: string;
+        gender: string;
+        birth: string;
     };
     setUser: (user: any) => void;
     setIdToken: (idToken: string) => void;
@@ -22,6 +25,9 @@ const useUser = create<User>((set) => ({
         name: "",
         nickname: "",
         photo: "",
+        address: "",
+        gender: "",
+        birth: "",
     },
     setUser: (user: any) => set((state) => ({
         user: user,
@@ -37,6 +43,9 @@ const useUser = create<User>((set) => ({
             name: "",
             nickname: "",
             photo: "",
+            address: "",
+            gender: "",
+            birth: "",
         },
     })),
 }));

@@ -8,21 +8,24 @@ import useUser from './UserState';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
+import IPConfig from '../../configs/IPConfig.json';
+import GoogleConfig from '../../configs/GoogleConfig.json';
 
 type RootStackParamList = {
     loginSuccess: undefined;
+    userInfo: undefined;
 };
-// typescript에서는 이렇게 navigation을 써야한다...
-// StackNavigationProp에 위에서 정의한 타입을 전달합니다.
-type NavigationProp = StackNavigationProp<RootStackParamList, 'loginSuccess'>;
 
 export default function () {
     GoogleSignin.configure({
         scopes: ['https://www.googleapis.com/auth/drive.readonly'],
-        webClientId: '364841318578-s772bcki0psd5mqbugii02s8u9embc9o.apps.googleusercontent.com',
+        webClientId: GoogleConfig.WEB_CLIENT_ID,
     });
 
-    const navigation = useNavigation<NavigationProp>();
+    // typescript에서는 이렇게 navigation을 써야한다...
+    // StackNavigationProp에 위에서 정의한 타입을 전달합니다.
+    const loginSuccessNavigation = useNavigation<StackNavigationProp<RootStackParamList, 'loginSuccess'>>();
+    const userInfoNavigaiton = useNavigation<StackNavigationProp<RootStackParamList, 'userInfo'>>();
 
     const setUser = useUser((state) => state.setUser);
     const setIdToken = useUser((state) => state.setIdToken);
@@ -33,7 +36,12 @@ export default function () {
     useEffect(() => {
         if (currentUser.name != "") {
             console.log(currentUser);
-            navigation.navigate("loginSuccess");
+            if (currentUser.gender && currentUser.birth &&
+                currentUser.nickname) {
+                loginSuccessNavigation.navigate("loginSuccess");
+            } else {
+                userInfoNavigaiton.navigate("userInfo");
+            }
         }
     }, [currentUser]);
 
@@ -42,8 +50,7 @@ export default function () {
         try {
             const response = await axios({
                 method: "post",
-                url: "http://10.20.60.16:3001/",
-                // url : "http://localhost:3001/",
+                url: IPConfig.IP,
                 headers: {
                     "Content-Type": "application/json"
                 },

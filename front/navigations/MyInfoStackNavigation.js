@@ -4,12 +4,11 @@ import LikeListScreen from '../screens/user/LikeListScreen';
 import MyInfoScreen from '../screens/user/MyInfoScreen';
 import CommonStyle from '../styles/common/CommonStyle';
 import NoticeScreen from '../screens/user/NoticeScreen';
-import NicknameModifyScreen from '../screens/user/NicknameModifyScreen';
-import ProfileModifyScreen from '../screens/user/ProfileModifyScreen';
+import UserInfoScreen from "../screens/user/UserInfoScreen";
 
 const Stack = createStackNavigator();
 
-export default MyInfoStackNavigation = (props) => {
+export default MyInfoStackNavigation = () => {
     return (
         <Stack.Navigator
             initialRouteName='myInfo'
@@ -44,12 +43,8 @@ export default MyInfoStackNavigation = (props) => {
                 component={NoticeScreen}
             />
             <Stack.Screen
-                name="nickname"
-                component={NicknameModifyScreen}
-            />
-            <Stack.Screen
-                name="profile"
-                component={ProfileModifyScreen}
+                name="userInfo"
+                component={UserInfoScreen}
             />
         </Stack.Navigator>
     )
