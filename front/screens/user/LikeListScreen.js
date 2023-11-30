@@ -1,6 +1,6 @@
 import {View, Text} from 'react-native';
 import FestivalList from '../../components/common/FestivalList';
-
+import appStyle from '../../configs/Style.json';
 
 export default LikeListScreen = (props) => {
 
@@ -35,7 +35,9 @@ export default LikeListScreen = (props) => {
     }]
 
     return (
-        <View>
+        <View
+            style={{backgroundColor:appStyle.APP_BACKGROUD_COLOR}}
+        >
             <FestivalList data={dummy} isMain={false}/>
         </View>
     );

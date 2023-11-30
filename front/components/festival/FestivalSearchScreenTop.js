@@ -1,7 +1,7 @@
 import FestivalSearchScreenStyle from '../../styles/festival/FestivalSearchScreenStyle';
 import {View, Text, TouchableOpacity} from 'react-native';
 
-export default FestivalSearchScreenTop = () => {
+export default FestivalSearchScreenTop = (props) => {
     return (
         <View style={FestivalSearchScreenStyle.top}>
             <View style={FestivalSearchScreenStyle.topEmpty}/>
@@ -12,6 +12,7 @@ export default FestivalSearchScreenTop = () => {
                             // FestivalSearchScreenStyle.topLeftButtonBefore,
                             FestivalSearchScreenStyle.topLeftButtonAfter,
                         ]}
+                        onPress={() => props.getFestivals("추천")}
                     >
                         <Text 
                             style={[
@@ -27,6 +28,7 @@ export default FestivalSearchScreenTop = () => {
                             // FestivalSearchScreenStyle.topRightButtonAfter
                             FestivalSearchScreenStyle.topRightButtonBefore
                         ]}
+                        onPress={() => props.getFestivals("전체")}
                     >
                         <Text
                             style={[
@@ -34,7 +36,7 @@ export default FestivalSearchScreenTop = () => {
                                 FestivalSearchScreenStyle.ButtonLabelBefore,
                                 FestivalSearchScreenStyle.ButtonLabel
                             ]}
-                        >전체</Text>
+                            >전체</Text>
                     </TouchableOpacity>
                 </View>
             <View style={FestivalSearchScreenStyle.topEmpty}/>

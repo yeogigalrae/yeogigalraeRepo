@@ -5,7 +5,8 @@ export default StyleSheet.create({
     userInfo: {
         height: "100%",
         alignItems: "center",
-        justifyContent: "center"
+        justifyContent: "center",
+        backgroundColor: AppStyle.APP_BACKGROUD_COLOR
     },
     container: {
         borderWidth: 3,
@@ -49,7 +50,6 @@ export default StyleSheet.create({
     },
     addressInput: {
         fontSize: 16,
-        color: "gray",
         marginVertical: 3
     },
     radioButton : {

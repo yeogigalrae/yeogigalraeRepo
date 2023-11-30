@@ -6,7 +6,7 @@ import MapScreen from '../screens/map/MapScreen';
 import LikeListScreen from '../screens/user/LikeListScreen';
 import MainStackNavigation from './MainStackNavigation';
 import MyInfoStackNavigation from './MyInfoStackNavigation';
-
+import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 
 const Tab = createBottomTabNavigator();
 
@@ -17,22 +17,23 @@ export default BottomNavigation = (props) => {
             </SafeAreaView>
             <Tab.Navigator
                 initialRouteName='메인'
-                screenOptions={({route}) => ({ 
-                    headerShown : false,
-                    tabBarStyle : BottomTabStyle.tapBarStyle,
+                backBehavior='initialRoute'
+                screenOptions={({ route }) => ({
+                    headerShown: false,
+                    tabBarStyle: BottomTabStyle.tapBarStyle,
                     tabBarLabel: () => (
-                        <Text style={{color: "black" }}>
+                        <Text style={{ color: "black" }}>
                             {route.name}
                         </Text>
                     )
                 })}
             >
-                <Tab.Screen 
-                    name="검색" 
+                <Tab.Screen
+                    name="검색"
                     component={FestivalSearchScreen}
                     options={{
                         tabBarIcon: () => {
-                            return(
+                            return (
                                 <Image
                                     source={require('../assets/search.png')}
                                     style={BottomTabStyle.icon}
@@ -41,12 +42,12 @@ export default BottomNavigation = (props) => {
                         }
                     }}
                 />
-                <Tab.Screen 
-                    name="주변" 
+                <Tab.Screen
+                    name="주변"
                     component={MapScreen}
                     options={{
                         tabBarIcon: () => {
-                            return(
+                            return (
                                 <Image
                                     source={require('../assets/map.png')}
                                     style={BottomTabStyle.icon}
@@ -55,8 +56,8 @@ export default BottomNavigation = (props) => {
                         }
                     }}
                 />
-                <Tab.Screen 
-                    name="메인" 
+                <Tab.Screen
+                    name="메인"
                     component={MainStackNavigation}
                     options={{
                         tabBarButton: ({ children, onPress, style }) => {
@@ -66,15 +67,15 @@ export default BottomNavigation = (props) => {
                                     onPress={onPress}
                                 >
                                     <View
-                                        style={[BottomTabStyle.mainInnerBox]}    
+                                        style={[BottomTabStyle.mainInnerBox]}
                                     >
                                         {children}
                                     </View>
                                 </TouchableOpacity>
                             )
                         },
-                        tabBarIcon : () => {
-                            return(
+                        tabBarIcon: () => {
+                            return (
                                 <View
                                     style={BottomTabStyle.mainIconOuterBox}
                                 >
@@ -91,12 +92,12 @@ export default BottomNavigation = (props) => {
                         }
                     }}
                 />
-                <Tab.Screen 
-                    name="좋아요" 
+                <Tab.Screen
+                    name="좋아요"
                     component={LikeListScreen}
                     options={{
                         tabBarIcon: () => {
-                            return(
+                            return (
                                 <Image
                                     source={require('../assets/heart.png')}
                                     style={BottomTabStyle.icon}
@@ -105,19 +106,27 @@ export default BottomNavigation = (props) => {
                         }
                     }}
                 />
-                <Tab.Screen 
-                    name="내정보" 
+                <Tab.Screen
+                    name="내정보"
                     component={MyInfoStackNavigation}
-                    options={{
+                    options={({ route }) => ({
+                        unmountOnBlur: true,
+                        tabBarStyle: ((route) => {
+                            const routeName = getFocusedRouteNameFromRoute(route);
+                            if (routeName === 'userInfo') {
+                                return { display: "none" };
+                            }
+                            return BottomTabStyle.tapBarStyle;
+                        })(route),
                         tabBarIcon: () => {
-                            return(
+                            return (
                                 <Image
                                     source={require('../assets/user.png')}
                                     style={BottomTabStyle.icon}
                                 />
                             )
-                        }
-                    }}
+                        },
+                    })}
                 />
             </Tab.Navigator>
         </>

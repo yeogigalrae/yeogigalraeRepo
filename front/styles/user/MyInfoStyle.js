@@ -1,8 +1,11 @@
 import { StyleSheet } from "react-native"
+import AppStyle from '../../configs/Style.json';
 
 export default StyleSheet.create({
     myInfo: {
+        height: "100%",
         alignItems: "center",
+        backgroundColor: AppStyle.APP_BACKGROUD_COLOR
     },
     profileBox: {
         marginTop: 10,
@@ -10,7 +13,7 @@ export default StyleSheet.create({
         borderWidth: 1,
         borderRadius: 20,
         flexDirection: "row",
-        padding: 30
+        padding: 30,
     },
     profileLeft: {
         borderWidth: 1,
@@ -23,7 +26,7 @@ export default StyleSheet.create({
     profileImage: {
         width: "100%",
         height: "100%",
-        resizeMode: "contain",
+        resizeMode: "cover",
     },
     profileRight: {
         width: "60%",

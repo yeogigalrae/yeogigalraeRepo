@@ -12,6 +12,7 @@ export default MyInfoStackNavigation = () => {
     return (
         <Stack.Navigator
             initialRouteName='myInfo'
+            backBehavior='initialRoute'
             screenOptions={{
                 headerStyle: CommonStyle.headerStyle,
                 headerTintColor: "black",
@@ -20,7 +21,7 @@ export default MyInfoStackNavigation = () => {
                 },
                 headerTitleAlign: 'center',
                 headerTitle: () => (
-                    <Text style={{ color: 'black' }}>{"여기갈래"}</Text>
+                    <Text style={CommonStyle.headerTitle}>{"여기갈래"}</Text>
                 ),
             }}
         >
@@ -28,14 +29,13 @@ export default MyInfoStackNavigation = () => {
                 name="myInfo"
                 component={MyInfoScreen}
                 options={{
-                    headerShown: false
+                    headerLeft: () => null
                 }}
             />
             <Stack.Screen
                 name="likeList"
                 component={LikeListScreen}
                 options={{
-                    headerShown: false
                 }}
             />
             <Stack.Screen

@@ -32,18 +32,18 @@ export default function () {
     const currentUser = useUser((state) => state.user);
     const currentIdToken = useUser((state) => state.idToken);
 
-    // user정보가 store에 들어왔으면 작업 진행
-    useEffect(() => {
-        if (currentUser.name != "") {
-            console.log(currentUser);
-            if (currentUser.gender && currentUser.birth &&
-                currentUser.nickname) {
-                loginSuccessNavigation.navigate("loginSuccess");
-            } else {
-                userInfoNavigaiton.navigate("userInfo");
-            }
-        }
-    }, [currentUser]);
+    // // user정보가 store에 들어왔으면 작업 진행
+    // useEffect(() => {
+    //     if (currentUser.name != "") {
+    //         console.log(currentUser);
+    //         if (currentUser.gender && currentUser.birth &&
+    //             currentUser.nickname) {
+    //             loginSuccessNavigation.navigate("loginSuccess");
+    //         } else {
+    //             userInfoNavigaiton.navigate("userInfo");
+    //         }
+    //     }
+    // }, [currentUser]);
 
     // 백엔드에 값 넘겨주고 필요한 정보만 받아서 상태관리
     const login = async (idToken: string, user: any) => {
@@ -78,6 +78,12 @@ export default function () {
                         const response = await login(idToken, user)
                         setIdToken(JSON.stringify(idToken))
                         setUser(response);
+                        console.log(response);
+                        if(response.nickname != ""){
+                            loginSuccessNavigation.navigate("loginSuccess");
+                        } else {
+                            userInfoNavigaiton.navigate("userInfo");
+                        }
                     }
                 } catch (error: any) {
                     if (error.code === statusCodes.SIGN_IN_CANCELLED) {

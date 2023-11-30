@@ -5,7 +5,7 @@ import AppStackNavigation from './navigations/AppStackNavigation';
 export default function App() {
   return (
     <View
-      style={{ height: "100%" }}
+      style={{ height: "100%"}}
     >
       <NavigationContainer>
         <AppStackNavigation/>

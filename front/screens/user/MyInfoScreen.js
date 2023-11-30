@@ -28,9 +28,9 @@ export default MyInfoScreen = (props) => {
                         responseType : "json",
                     })
                     console.log(response.data);
+                    deleteUser();
                     navigation.navigate("login");
                 })
-                deleteUser();
         } catch (error) {
             console.error(error);
         }

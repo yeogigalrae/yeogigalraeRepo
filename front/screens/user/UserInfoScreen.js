@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, Image, TextInput } from 'react-native';
+import { Modal, View, Text, TouchableOpacity, Image, TextInput } from 'react-native';
 import UserInfoStyle from '../../styles/user/UserInfoStyle';
 import { useState, useEffect } from 'react';
 import DatePicker from 'react-native-date-picker';
@@ -7,24 +7,21 @@ import useUser from '../../components/user/UserState';
 import IPConfig from "../../configs/IPConfig.json";
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
+import Postcode from '@actbase/react-daum-postcode';
 
-export default UserInfoScreen = () => {
+export default Init_UserInfoScreen = () => {
     const navigation = useNavigation();
     const currentUser = useUser(state => state.user);
     const setUser = useUser((state) => state.setUser);
     const [date, setDate] = useState(new Date());
     const [open, setOpen] = useState(false);
-    const [image, setImage] = useState(null);
+    const [image, setImage] = useState(currentUser.photo);
+    const [isImage, setIsImage] = useState(false);
     const [gender, setGender] = useState("남성");
-    const [address, setAddress] = useState(null);
+    const [address, setAddress] = useState(currentUser.address);
     const [checked, setChecked] = useState(0);
     const [nickname, setNickname] = useState(currentUser.nickname);
-
-    useEffect(() => {
-        navigation.setOptions({
-          tabBarVisible: false,
-        });
-      }, [navigation]);
+    const [isModal, setModal] = useState(false);
 
     const Radio = () => {
         var gender = ['남자', '여자'];
@@ -57,17 +54,10 @@ export default UserInfoScreen = () => {
         );
     };
 
-    useEffect(() => {
-        if (currentUser.birth != "") {
-            // console.log(currentUser);
-            navigation.navigate("loginSuccess");
-        }
-    }, [currentUser]);
-
     const onRegistration = async () => {
         const newUserInfo = {
             ...currentUser,
-            // photo: image,
+            photo: image,
             gender: gender,
             birth: `${date.getFullYear()}-${('0' + (date.getMonth() + 1)).slice(-2)}-${('0' + date.getDate()).slice(-2)}`,
             address: address,
@@ -86,43 +76,31 @@ export default UserInfoScreen = () => {
                 responseType: "json",
             })
             setUser(response.data);
-            return response.data;
+            console.log(response.data);
         } catch (error) {
             console.log(error);
         }
     }
 
     const pickImage = async () => {
-        let result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.All,
-            allowsEditing: true, //이미지를 선택한 후 편집할 수 있는 UI를 표시할지 여부
-            aspect: [4, 3], //allowsEditing을 true로 줄 경우 유지할 가로,세로 길이
-            quality: 1, //압축 품질 0: 작은 크기 압축, 1: 최대 품질 압축
-        });
-        delete result.cancelled;
-        if (!result.canceled) {
-            setImage(result.assets[0].uri);
+        if (!isImage) {
+            setIsImage(true);
+            let result = await ImagePicker.launchImageLibraryAsync({
+                mediaTypes: ImagePicker.MediaTypeOptions.All,
+                allowsEditing: true, //이미지를 선택한 후 편집할 수 있는 UI를 표시할지 여부
+                aspect: [4, 3], //allowsEditing을 true로 줄 경우 유지할 가로,세로 길이
+                quality: 1, //압축 품질 0: 작은 크기 압축, 1: 최대 품질 압축
+            });
+            delete result.cancelled;
+            if (!result.canceled) {
+                setImage(result.assets[0].uri);
+                setIsImage(false);
+            }
+            if (result.canceled) {
+                setIsImage(false);
+            }
         }
     };
-
-    const onAddress = async () => {
-        console.log("주소 일단 패스");
-        // try {
-        //     const response = await axios({
-        //         method: "get",
-        //     //     url: `https://business.juso.go.kr/addrlink/addrMobileLinkUrl.do?confmKey=
-        //     // devU01TX0FVVEgyMDIzMTEyNzE2MDcxNDExNDMwODc=&returnUrl=http://10.20.61.80:3001/address`,
-        //         url: `http://10.20.61.80:3001/sample`,
-        //         headers: {
-        //             "Content-Type": "application/json"
-        //         },
-        //         responseType: "json",
-        //     })
-        //     return response.data;
-        // } catch (error) {
-        //     console.log(error);
-        // }
-    }
 
     return (
         <View style={UserInfoStyle.userInfo}>
@@ -133,7 +111,7 @@ export default UserInfoScreen = () => {
                 >
                     <Image
                         style={UserInfoStyle.imageBox}
-                        source={{ uri: currentUser.photo }}
+                        source={{ uri: image }}
                     >
                     </Image>
                     <Image
@@ -155,8 +133,8 @@ export default UserInfoScreen = () => {
                             style={UserInfoStyle.Input}
                             placeholder='닉네임을 입력 해주세요.'
                             maxLength={20}
+                            value={nickname}
                             onChangeText={(value) => setNickname(value)}
-                            value={currentUser.nickname}
                         />
                         <View
                             style={UserInfoStyle.InputBottom}
@@ -172,11 +150,24 @@ export default UserInfoScreen = () => {
                     >
                         <TouchableOpacity
                             style={UserInfoStyle.Input}
-                            onPress={onAddress}
+                            onPress={() => { setModal(true) }}
                         >
-                            <Text
+                            <Modal visible={isModal}>
+                                <Postcode
+                                    style={{ width: "100%", height: "100%" }}
+                                    jsOptions={{ animation: true, hideMapBtn: true }}
+                                    onSelected={data => {
+                                        console.log(JSON.stringify(data.roadAddress));
+                                        setAddress(data.roadAddress);
+                                        setModal(false);
+                                    }}
+                                />
+                            </Modal>
+                            <TextInput
                                 style={UserInfoStyle.addressInput}
-                            >주소를 설정 해주세요.</Text>
+                                placeholder={"주소를 설정 해주세요."}
+                                editable={false}
+                            >{address}</TextInput>
                         </TouchableOpacity>
                         <View style={UserInfoStyle.InputBottom} />
                     </View>
@@ -255,7 +246,17 @@ export default UserInfoScreen = () => {
                     </View>
                     <TouchableOpacity
                         style={UserInfoStyle.submit}
-                        onPress={onRegistration}
+                        onPress={async () => {
+                            const state = navigation.getState().routes;
+                            await onRegistration()
+                                .then(function () {
+                                    if(state[0].name != "myInfo"){
+                                        navigation.navigate("loginSuccess");
+                                    } else {
+                                        navigation.navigate(state[0].name);
+                                    }
+                                });
+                        }}
                     >
                         <Text
                             style={UserInfoStyle.label}
@@ -265,5 +266,4 @@ export default UserInfoScreen = () => {
             </View>
         </View>
     )
-
 }
