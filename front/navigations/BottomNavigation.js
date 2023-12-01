@@ -1,7 +1,7 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { SafeAreaView, TouchableOpacity, Text, View, Image } from 'react-native';
 import BottomTabStyle from '../styles/navigations/BottomTabStyle';
-import FestivalSearchScreen from '../screens/festival/FestivalSearchScreen';
+import FestivalSearchStackNavigation from './FestivalSearchStackNavigation';
 import MapScreen from '../screens/map/MapScreen';
 import LikeListScreen from '../screens/user/LikeListScreen';
 import MainStackNavigation from './MainStackNavigation';
@@ -30,7 +30,7 @@ export default BottomNavigation = (props) => {
             >
                 <Tab.Screen
                     name="검색"
-                    component={FestivalSearchScreen}
+                    component={FestivalSearchStackNavigation}
                     options={{
                         tabBarIcon: () => {
                             return (

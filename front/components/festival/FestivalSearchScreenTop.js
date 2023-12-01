@@ -2,6 +2,7 @@ import FestivalSearchScreenStyle from '../../styles/festival/FestivalSearchScree
 import {View, Text, TouchableOpacity} from 'react-native';
 
 export default FestivalSearchScreenTop = (props) => {
+
     return (
         <View style={FestivalSearchScreenStyle.top}>
             <View style={FestivalSearchScreenStyle.topEmpty}/>

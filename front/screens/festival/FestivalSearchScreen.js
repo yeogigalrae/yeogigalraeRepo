@@ -2,15 +2,18 @@ import FestivalSearchScreenStyle from '../../styles/festival/FestivalSearchScree
 import { View, FlatList } from 'react-native';
 import FestivalSearchScreenTop from '../../components/festival/FestivalSearchScreenTop';
 import FestivalList from '../../components/common/FestivalList';
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import axios from 'axios';
 import IPConfig from '../../configs/IPConfig.json';
 
 export default FestivalSearchScreen = (props) => {
     const [festivalList, setFestivalLst] = useState(null);
 
+    useEffect(() => {
+        getFestivalList();
+    }, []);
+
     async function getFestivalList() {
-        console.log(IPConfig.IP+"festivalList");
         try{
             const response = await axios({
                 method: "get",
