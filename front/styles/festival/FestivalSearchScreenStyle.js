@@ -13,15 +13,14 @@ export default StyleSheet.create({
         shadowOpacity: 0.3,
         shadowRadius: 2,
         shadowColor: "black",
-        height: "10%",
         backgroundColor: "white"
     },
     topEmpty: {
-        height: "8%",
+        height: 10,
         backgroundColor: "white"
     },
     topButtonBox: {
-        height: "84%",
+        height: 60,
         flexDirection: "row",
         backgroundColor: "#EEEEEE",
     },
@@ -72,5 +71,28 @@ export default StyleSheet.create({
     },
     ButtonLabelAfter: {
         color: "black"
+    },
+
+    // top_under_Searchbox-----------
+    searchBox: {
+        alignItems: "center"
+    },
+    searchButton: {
+        width: "90%",
+        height: 50,
+        borderRadius: 50,
+        backgroundColor: "#EEEEEE",
+        flexDirection: "row",
+        alignItems: "center",
+        paddingHorizontal: 20,
+        justifyContent: "space-between"
+    },
+    searchButtonLabel: {
+        fontSize: 18,
+        color: "darkgray"
+    },
+    searchImage: {
+        width: 30,
+        height: 30,
     }
 })
