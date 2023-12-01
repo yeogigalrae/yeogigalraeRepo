@@ -1,50 +1,88 @@
 import { StyleSheet } from "react-native"
+import AppStyle from '../../configs/Style.json';
 
 export default StyleSheet.create({
-    myInfo:{
+    myInfo: {
+        height: "100%",
         alignItems: "center",
+        backgroundColor: AppStyle.APP_BACKGROUD_COLOR
     },
-    profileBox : {
-        margin: 10,
+    profileBox: {
+        marginTop: 10,
+        width: "90%",
         borderWidth: 1,
-        borderColor: "red",
         borderRadius: 20,
         flexDirection: "row",
-        padding: 20
+        padding: 30,
     },
-    profileLeft:{
+    profileLeft: {
         borderWidth: 1,
-        borderColor: "blue",
         borderRadius: 50,
         width: 100,
         height: 100,
-        margin: 10,
+        marginRight: 30,
         overflow: "hidden"
     },
-    profileImage:{
-        width:"100%",
+    profileImage: {
+        width: "100%",
         height: "100%",
-        resizeMode: "contain",
+        resizeMode: "cover",
     },
-    profileRight:{
-        borderWidth: 1,
-        borderColor: "red",
+    profileRight: {
         width: "60%",
     },
-    profileName:{
-        borderWidth: 1,
-        borderColor: "red",
-        flex:1,
-        fontSize: 42,
+    profileName: {
+        flex: 1,
+        fontSize: 32,
+        fontWeight: "bold",
         textAlignVertical: "center",
         paddingHorizontal: 10
     },
-    profileNickName:{
-        borderWidth: 1,
-        borderColor: "red",
-        flex:1,
+    profileNickName: {
+        flex: 1,
         fontSize: 24,
         textAlignVertical: "center",
         paddingHorizontal: 10
-    }
+    },
+    myInfoMenuBox: {
+        margin: 10,
+        marginBottom: 0,
+        borderWidth: 1,
+        borderRadius: 20,
+        width: "90%",
+    },
+    splitLine: {
+        borderTopWidth: 1,
+        borderTopColor: 'rgba(0, 0, 0, 0.1)',
+        width: "90%",
+        alignSelf: "center"
+    },
+
+    //============MyInfoMenuLine
+    myInfoMenuLine: {
+        justifyContent: "center",
+        width: "100%",
+        height: 50,
+        paddingHorizontal: 20,
+    },
+    menuTitle: {
+        fontSize: 18,
+        fontWeight: "bold",
+    },
+
+    //
+    alertContainer: {
+        backgroundColor: 'white',
+        borderRadius: 8,
+        padding: 16,
+    },
+    alertTitle: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        marginBottom: 8,
+        color: "red"
+    },
+    alertMessage: {
+        fontSize: 16,
+    },
 })

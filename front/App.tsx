@@ -1,19 +1,14 @@
 import { SafeAreaView, Text, View } from 'react-native';
-import BottomNavigation from './navigations/BottomNavigation';
 import { NavigationContainer } from "@react-navigation/native"
-import LoginScreen from './screens/user/LoginScreen';
+import AppStackNavigation from './navigations/AppStackNavigation';
 
 export default function App() {
   return (
     <View
-      style={{ height: "100%" }}
+      style={{ height: "100%"}}
     >
-      <SafeAreaView
-      >
-        {/* <LoginScreen/> */}
-      </SafeAreaView>
       <NavigationContainer>
-        <BottomNavigation />
+        <AppStackNavigation/>
       </NavigationContainer>
     </View>
   );

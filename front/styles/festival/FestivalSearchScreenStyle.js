@@ -3,8 +3,7 @@ import appStyle from '../../configs/Style.json'
 
 export default StyleSheet.create({
     festivalSearchScreen: {
-        // borderWidth: 1,
-        // borderColor: 'blue',
+        backgroundColor : appStyle.APP_BACKGROUD_COLOR,
         height: "100%"
     },
     top: {

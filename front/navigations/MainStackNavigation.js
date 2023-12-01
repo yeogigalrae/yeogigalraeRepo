@@ -2,9 +2,6 @@ import { createStackNavigator } from '@react-navigation/stack';
 import FestivalSearchScreen from '../screens/festival/FestivalSearchScreen';
 import MapScreen from '../screens/map/MapScreen';
 import MainScreen from '../screens/main/MainScreen';
-import LikeListScreen from '../screens/user/LikeListScreen';
-import MyInfoScreen from '../screens/user/MyInfoScreen';
-import MainStackStyle from '../styles/navigations/MainStackStyle';
 import CommonStyle from '../styles/common/CommonStyle';
 import FestivalDetailScreen from '../screens/festival/FestivalDetailScreen';
 

@@ -5,7 +5,8 @@ export default StyleSheet.create({
     festivalList : {
         borderWidth: 1,
         margin: 10,
-        borderRadius: 20
+        borderRadius: 20,
+        backgroundColor: appStyle.APP_BACKGROUD_COLOR,
     },
     imageBox: {
         borderBottomWidth: 3,
