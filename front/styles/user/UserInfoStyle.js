@@ -1,16 +1,16 @@
 import { StyleSheet } from 'react-native';
-import AppStyle from '../../configs/Style.json';
+import appStyle from '../../configs/Style.json';
 
 export default StyleSheet.create({
     userInfo: {
         height: "100%",
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: AppStyle.APP_BACKGROUD_COLOR
+        backgroundColor: appStyle.APP_BACKGROUD_COLOR
     },
     container: {
         borderWidth: 3,
-        borderColor: AppStyle.APP_MAIN_COLOR,
+        borderColor: appStyle.APP_MAIN_COLOR,
         width: "90%",
         height: 700,
         borderRadius: 20,
@@ -101,7 +101,7 @@ export default StyleSheet.create({
         marginLeft: 10,
     },
     submit: {
-        backgroundColor: AppStyle.APP_MAIN_COLOR,
+        backgroundColor: appStyle.APP_MAIN_COLOR,
         borderRadius: 20,
         alignSelf: "center",
         marginTop: 10,
@@ -125,7 +125,7 @@ export default StyleSheet.create({
     },
     modify: {
         borderWidth: 1,
-        borderColor: AppStyle.APP_MAIN_COLOR,
+        borderColor: appStyle.APP_MAIN_COLOR,
         padding: 10,
         borderRadius: 10
     },

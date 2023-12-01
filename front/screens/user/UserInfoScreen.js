@@ -1,4 +1,4 @@
-import { Modal, View, Text, TouchableOpacity, Image, TextInput } from 'react-native';
+import { Alert, Modal, View, Text, TouchableOpacity, Image, TextInput } from 'react-native';
 import UserInfoStyle from '../../styles/user/UserInfoStyle';
 import { useState, useEffect } from 'react';
 import DatePicker from 'react-native-date-picker';
@@ -22,6 +22,8 @@ export default Init_UserInfoScreen = () => {
     const [checked, setChecked] = useState(0);
     const [nickname, setNickname] = useState(currentUser.nickname);
     const [isModal, setModal] = useState(false);
+
+    const regex = /^[ㄱ-힣a-zA-Z0-9]*$/;
 
     const Radio = () => {
         var gender = ['남자', '여자'];
@@ -55,31 +57,41 @@ export default Init_UserInfoScreen = () => {
     };
 
     const onRegistration = async () => {
-        const newUserInfo = {
-            ...currentUser,
-            photo: image,
-            gender: gender,
-            birth: `${date.getFullYear()}-${('0' + (date.getMonth() + 1)).slice(-2)}-${('0' + date.getDate()).slice(-2)}`,
-            address: address,
-            nickname: nickname
-        }
-        try {
-            const response = await axios({
-                method: "post",
-                url: IPConfig.IP,
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                data: {
-                    user: newUserInfo
-                },
-                responseType: "json",
-            })
-            setUser(response.data);
-            console.log(response.data);
-        } catch (error) {
-            console.log(error);
-        }
+        // if (regex.test(nickname) && address != "") {
+            const newUserInfo = {
+                ...currentUser,
+                photo: image,
+                gender: gender,
+                birth: `${date.getFullYear()}-${('0' + (date.getMonth() + 1)).slice(-2)}-${('0' + date.getDate()).slice(-2)}`,
+                address: address,
+                nickname: nickname
+            }
+            try {
+                const response = await axios({
+                    method: "post",
+                    url: IPConfig.IP,
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    data: {
+                        user: newUserInfo
+                    },
+                    responseType: "json",
+                })
+                setUser(response.data);
+                console.log(response.data);
+            } catch (error) {
+                console.log(error);
+            }
+            return true;
+        // } else {
+        //     Alert.alert("닉네임 또는 주소를 다시입력해주세요.", "(닉네임 : 최대15글자 한글,숫자,영어)", [
+        //         {
+        //             text: "확인",
+        //         },
+        //     ]);
+        //     return false;
+        // }
     }
 
     const pickImage = async () => {
@@ -199,6 +211,7 @@ export default Init_UserInfoScreen = () => {
                                 title={"생년월일"}
                                 date={date}
                                 mode='date'
+                                maximumDate={new Date()}
                                 confirmText="확인"
                                 cancelText="취소"
                                 onConfirm={(date) => {
@@ -248,14 +261,14 @@ export default Init_UserInfoScreen = () => {
                         style={UserInfoStyle.submit}
                         onPress={async () => {
                             const state = navigation.getState().routes;
-                            await onRegistration()
-                                .then(function () {
-                                    if(state[0].name != "myInfo"){
-                                        navigation.navigate("loginSuccess");
-                                    } else {
-                                        navigation.navigate(state[0].name);
-                                    }
-                                });
+                            const registration = await onRegistration()
+                            if (registration) {
+                                if (state[0].name != "myInfo") {
+                                    navigation.navigate("loginSuccess");
+                                } else {
+                                    navigation.navigate(state[0].name);
+                                }
+                            }
                         }}
                     >
                         <Text

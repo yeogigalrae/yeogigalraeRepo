@@ -11,6 +11,7 @@ interface User {
         address: string;
         gender: string;
         birth: string;
+        notice: boolean
     };
     setUser: (user: any) => void;
     setIdToken: (idToken: string) => void;
@@ -24,10 +25,11 @@ const useUser = create<User>((set) => ({
         id: 0,
         name: "",
         nickname: "",
-        photo: "",
+        photo: require("../../assets/home.png"),
         address: "",
         gender: "",
         birth: "",
+        notice: true
     },
     setUser: (user: any) => set((state) => ({
         user: user,
@@ -42,10 +44,11 @@ const useUser = create<User>((set) => ({
             id: 0,
             name: "",
             nickname: "",
-            photo: "",
+            photo: require("../../assets/home.png"),
             address: "",
             gender: "",
             birth: "",
+            notice: true
         },
     })),
 }));

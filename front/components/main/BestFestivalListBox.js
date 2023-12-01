@@ -2,26 +2,8 @@ import {View, Text} from 'react-native';
 import BestFestivalListBoxStyle from '../../styles/main/BestFestivalListBoxStyle';
 import FestivalList from '../common/FestivalList';
 
-const dummy = [
-    {
-        id:1,
-        subject: "행사1",
-        likeCount: 1234,
-        startDate: "2023년 11월 14일",
-        endDate: "2023년 11월 16일",
-        address: "충남 아산시 ~"
-    },  
-    {
-        id:2,
-        subject: "행사2",
-        likeCount: 1,
-        startDate: "2023년 11월 14일",
-        endDate: "2023년 11월 16일",
-        address: "전북 익산시 ~"
-    }
-]
-
 export default BestFestivalListBox = (props) => {
+
     return (
         <View
             style={BestFestivalListBoxStyle.bestFestivalListBox}
@@ -34,7 +16,7 @@ export default BestFestivalListBox = (props) => {
             </View>
             <View style={BestFestivalListBoxStyle.festivalListBox}>
                 <FestivalList 
-                    data={dummy}
+                    data={props.list}
                     isMain={true}
                 />
             </View>
