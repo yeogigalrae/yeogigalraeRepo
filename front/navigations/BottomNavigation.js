@@ -31,7 +31,8 @@ export default BottomNavigation = (props) => {
                 <Tab.Screen
                     name="검색"
                     component={FestivalSearchStackNavigation}
-                    options={{
+                    options={({ route }) => ({
+                        unmountOnBlur: true,
                         tabBarIcon: () => {
                             return (
                                 <Image
@@ -39,8 +40,16 @@ export default BottomNavigation = (props) => {
                                     style={BottomTabStyle.icon}
                                 />
                             )
-                        }
-                    }}
+                        },
+                        tabBarStyle: ((route) => {
+                            const routeName = getFocusedRouteNameFromRoute(route);
+                            if (routeName === 'textSearch') {
+                                return {display: "none"}
+                            } else {
+                                return BottomTabStyle.tapBarStyle;
+                            }
+                        })(route)
+                    })}
                 />
                 <Tab.Screen
                     name="주변"

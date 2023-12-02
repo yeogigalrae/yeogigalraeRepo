@@ -1,9 +1,15 @@
 import { useState } from 'react';
 import FestivalSearchScreenStyle from '../../styles/festival/FestivalSearchScreenStyle';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 export default FestivalSearchScreenTop = (props) => {
     const [currentTop, setCurrentTop] = useState("추천");
+    const navigation = useNavigation();
+
+    const searchScreenHandler = () => {
+        navigation.navigate("textSearch");
+    }
 
     return (
         <View style={FestivalSearchScreenStyle.top}>
@@ -60,7 +66,7 @@ export default FestivalSearchScreenTop = (props) => {
                     >
                         <TouchableOpacity
                             style={FestivalSearchScreenStyle.searchButton}
-                            onPress={null}
+                            onPress={searchScreenHandler}
                         >
                             <Text
                                 style={FestivalSearchScreenStyle.searchButtonLabel}
@@ -71,6 +77,7 @@ export default FestivalSearchScreenTop = (props) => {
                             >
                             </Image>
                         </TouchableOpacity>
+                        <View style={FestivalSearchScreenStyle.topEmpty}/>
                     </View>
                 ) : null
             }
