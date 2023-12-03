@@ -80,9 +80,9 @@ export default function () {
                         setUser(response);
                         console.log(response);
                         if(response.nickname != ""){
-                            loginSuccessNavigation.navigate("loginSuccess");
+                            loginSuccessNavigation.replace("loginSuccess");
                         } else {
-                            userInfoNavigaiton.navigate("userInfo");
+                            userInfoNavigaiton.replace("userInfo");
                         }
                     }
                 } catch (error: any) {

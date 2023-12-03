@@ -8,26 +8,26 @@ export default FestivalButtons = (props) => {
     const navigation = useNavigation();
 
     const onTypeButton = async (typeName) => {
+        // typeName을 파라미터로 요청하여 해당하는 행사목록 가져오기
         try{
             const response = await axios({
                 method : "get",
-                url : IPConfig.IP,
+                url : IPConfig.IP+"festivalList",
                 headers : {
                     "Content-Type" : "application/json"
                 },
                 responseType : "json"
             })
-            console.log(response.data);
+            navigation.navigate("search", { data: response.data, top: "전체"});
         } catch(error) {
             console.log(error);
         }
-        // navigation.navigate("search", { data: response.data });
     }
 
     return (
         <TouchableOpacity
             style={FestivalTypeButtonBoxStyle.festivalTypeButton}
-            onPress={onTypeButton}
+            onPress={() => onTypeButton(props.name)}
         >
             <Image
                 source={props.image}

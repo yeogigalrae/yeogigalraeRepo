@@ -3,10 +3,10 @@ import { SafeAreaView, TouchableOpacity, Text, View, Image } from 'react-native'
 import BottomTabStyle from '../styles/navigations/BottomTabStyle';
 import FestivalSearchStackNavigation from './FestivalSearchStackNavigation';
 import MapScreen from '../screens/map/MapScreen';
-import LikeListScreen from '../screens/user/LikeListScreen';
 import MainStackNavigation from './MainStackNavigation';
 import MyInfoStackNavigation from './MyInfoStackNavigation';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
+import LikeStackNavigation from './LikeStackNavigation';
 
 const Tab = createBottomTabNavigator();
 
@@ -19,6 +19,7 @@ export default BottomNavigation = (props) => {
                 initialRouteName='메인'
                 backBehavior='initialRoute'
                 screenOptions={({ route }) => ({
+                    unmountOnBlur: true,
                     headerShown: false,
                     tabBarStyle: BottomTabStyle.tapBarStyle,
                     tabBarLabel: () => (
@@ -32,7 +33,6 @@ export default BottomNavigation = (props) => {
                     name="검색"
                     component={FestivalSearchStackNavigation}
                     options={({ route }) => ({
-                        unmountOnBlur: true,
                         tabBarIcon: () => {
                             return (
                                 <Image
@@ -68,7 +68,7 @@ export default BottomNavigation = (props) => {
                 <Tab.Screen
                     name="메인"
                     component={MainStackNavigation}
-                    options={{
+                    options={({ route }) => ({
                         tabBarButton: ({ children, onPress, style }) => {
                             return (
                                 <TouchableOpacity
@@ -98,12 +98,19 @@ export default BottomNavigation = (props) => {
                                     </View>
                                 </View>
                             )
-                        }
-                    }}
+                        },
+                        tabBarStyle: ((route) => {
+                            const routeName = getFocusedRouteNameFromRoute(route);
+                            if (routeName === 'festivalMap') {
+                                return { display: "none" };
+                            }
+                            return BottomTabStyle.tapBarStyle;
+                        })(route),
+                    })}
                 />
                 <Tab.Screen
                     name="좋아요"
-                    component={LikeListScreen}
+                    component={LikeStackNavigation}
                     options={{
                         tabBarIcon: () => {
                             return (
@@ -119,8 +126,7 @@ export default BottomNavigation = (props) => {
                     name="내정보"
                     component={MyInfoStackNavigation}
                     options={({ route }) => ({
-                        unmountOnBlur: true,
-                        tabBarStyle: ((route) => {
+                        tabBarStyle: ((route) => { 
                             const routeName = getFocusedRouteNameFromRoute(route);
                             if (routeName === 'userInfo') {
                                 return { display: "none" };

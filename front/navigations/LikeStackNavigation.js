@@ -1,18 +1,24 @@
+import {Text} from "react-native";
 import { createStackNavigator } from '@react-navigation/stack';
-import {View, Text} from 'react-native';
-import FestivalSearchScreen from '../screens/festival/FestivalSearchScreen';
 import CommonStyle from '../styles/common/CommonStyle';
 import FestivalDetailScreen from '../screens/festival/FestivalDetailScreen';
-import SearchScreen from '../screens/festival/SearchScreen';
+import FestivalMapScreen from '../screens/festival/FestivalMapScreen';
+import LikeListScreen from "../screens/user/LikeListScreen";
 
 const Stack = createStackNavigator();
 
-export default FestivalSearchStackNavigation = ({navigation}) => {
-
+export default LikeStackNavigation = (props) => {
     return (
         <Stack.Navigator
-            initialRouteName='search'
-            screenOptions={{
+            initialRouteName='likeList'
+            screenOptions={({ route }) => ({
+                tabBarStyle: CommonStyle.headerStyle,
+                tabBarLabel: () => (
+                    <Text style={{ color: "black" }}>
+                        {여기갈래}
+                    </Text>
+                ),
+                headerShown: true,
                 headerStyle: CommonStyle.headerStyle,
                 headerTintColor: "black",
                 headerTitleStyle: {
@@ -22,13 +28,13 @@ export default FestivalSearchStackNavigation = ({navigation}) => {
                 headerTitle: () => (
                     <Text style={CommonStyle.headerTitle}>{"여기갈래"}</Text>
                 )
-            }}
+            })}
         >
-            <Stack.Screen 
-                name="search" 
-                component={FestivalSearchScreen}
+            <Stack.Screen
+                name="likeList"
+                component={LikeListScreen}
                 options={{
-                    headerShown: false
+                    headerShown: false,
                 }}
             />
             <Stack.Screen
@@ -36,13 +42,9 @@ export default FestivalSearchStackNavigation = ({navigation}) => {
                 component={FestivalDetailScreen}
             />
             <Stack.Screen
-                name="textSearch"
-                component={SearchScreen}
-            />
-            <Stack.Screen
                 name="festivalMap"
                 component={FestivalMapScreen}
             />
         </Stack.Navigator>
-    );
+    )
 }

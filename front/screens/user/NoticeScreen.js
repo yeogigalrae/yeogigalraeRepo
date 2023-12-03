@@ -27,8 +27,7 @@ export default NoticeScreen = (props) => {
                 },
                 responseType: "json",
             })
-            console.log(response.data);
-            setUser(newUserInfo);
+            setUser(response.data);
         } catch (error){
             console.log(error);
         }

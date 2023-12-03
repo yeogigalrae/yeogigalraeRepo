@@ -49,7 +49,7 @@ export default SearchScreen = () => {
                     },
                     responseType: "json",
                 })
-                navigation.navigate("search", { data: response.data });
+                navigation.navigate("search", { data: response.data, top: "전체" });
             } catch (error) {
                 console.log(error);
             }
@@ -82,6 +82,7 @@ export default SearchScreen = () => {
             ]);
         }
     }
+    
 
     return (
         <View

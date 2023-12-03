@@ -4,7 +4,7 @@ import { View, Text, TouchableOpacity, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 export default FestivalSearchScreenTop = (props) => {
-    const [currentTop, setCurrentTop] = useState("추천");
+    const [currentTop, setCurrentTop] = useState(props.top?props.top:"추천");
     const navigation = useNavigation();
 
     const searchScreenHandler = () => {

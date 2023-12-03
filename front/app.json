@@ -26,6 +26,14 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      [
+        "@react-native-seoul/naver-login",
+        {
+          "urlScheme": "http://10.20.60.17:3000/" 
+        }
+      ]
+    ]
   }
 }

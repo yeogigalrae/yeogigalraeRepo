@@ -14,7 +14,9 @@ export default StyleSheet.create({
     image : {
         width: "100%",
         height: 150,
-        resizeMode: "contain",
+        resizeMode: "cover",
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20
     },
 
     // contentBox 
@@ -27,28 +29,23 @@ export default StyleSheet.create({
     },
     festivalSubject : {
         fontSize: 30,
-        maxWidth: 250,
     },
-    firstLine_right: {
+    secondLine: {
         flexDirection: "row",
         alignItems: "center",
     },
-    likeIcon : {
+    icon : {
         width: 20,
         height: 20,
         resizeMode: "contain",
-        marginLeft: 10,
         marginRight: 10
     },
     likeCount : {
         maxWidth: 50,
     },
-    secondLine : {
+    line : {
         flexDirection: "row",
-        marginTop: 2,
-        marginBottom: 2
-    },
-    thirdLine : {
-        flexDirection: "row",
+        marginVertical: 2,
+        marginHorizontal: 2
     }
 })

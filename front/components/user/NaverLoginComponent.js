@@ -13,7 +13,7 @@ const consumerSecret = NaverConfig.NAVER_CLIENT_SECRET;
 const appName = 'yeogigalrae';
 const serviceUrlScheme = 'yeogigalrae-callback';
 
-NaverLogin.initialize(context, {consumerKey}, {consumerSecret}, {appName});
+// NaverLogin.initialize(context, {consumerKey}, {consumerSecret}, {appName});
 
 export default NaverLoginComponent = () => {
 

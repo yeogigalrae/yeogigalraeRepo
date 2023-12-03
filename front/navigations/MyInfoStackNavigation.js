@@ -32,12 +32,12 @@ export default MyInfoStackNavigation = () => {
                     headerLeft: () => null
                 }}
             />
-            <Stack.Screen
+            {/* <Stack.Screen
                 name="likeList"
                 component={LikeListScreen}
                 options={{
                 }}
-            />
+            /> */}
             <Stack.Screen
                 name="notice"
                 component={NoticeScreen}
