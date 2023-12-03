@@ -27,7 +27,6 @@ export default LikeListScreen = (props) => {
                 },
                 responseType: "json",
             })
-            console.log(response.data);
             setFestivalList(response.data);
         } catch (error) {
             console.log(error);

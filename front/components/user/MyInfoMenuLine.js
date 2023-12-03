@@ -7,7 +7,11 @@ export default MyInfoMenuLine = (props) => {
     const navigation = useNavigation();
 
     const clickMenu = () => {
-        navigation.navigate(props.screen, {data: props.data});
+        if(props.screen === "likeList"){
+            navigation.navigate("좋아요");
+        } else {
+            navigation.navigate(props.screen, {data: props.data});
+        }
     }
 
     if(props.isTitle){

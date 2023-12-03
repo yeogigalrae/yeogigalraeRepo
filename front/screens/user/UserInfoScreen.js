@@ -264,7 +264,7 @@ export default Init_UserInfoScreen = () => {
                             const registration = await onRegistration()
                             if (registration) {
                                 if (state[0].name != "myInfo") {
-                                    navigation.navigate("loginSuccess");
+                                    navigation.replace("loginSuccess");
                                 } else {
                                     navigation.navigate(state[0].name);
                                 }
