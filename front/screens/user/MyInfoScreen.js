@@ -1,7 +1,7 @@
 import { Alert, Image, View, Text } from 'react-native';
 import MyInfoStyle from '../../styles/user/MyInfoStyle';
 import MyInfoMenuLine from '../../components/user/MyInfoMenuLine';
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
+// import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import useUser from '../../components/user/UserState';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
@@ -12,29 +12,29 @@ export default MyInfoScreen = (props) => {
     const currentUser = useUser(state => state.user);
     const deleteUser = useUser(state => state.deleteUser);
 
-    const logout = async () => {
-        try {
-            await GoogleSignin.signOut()
-                .then(async function () {
-                    const response = await axios({
-                        method : "delete",
-                        url : IPConfig.IP,
-                        headers : {
-                            "Content-Type" : "application/json"
-                        },
-                        data : {
-                            user : currentUser
-                        },
-                        responseType : "json",
-                    })
-                    console.log(response.data);
-                    deleteUser();
-                    navigation.navigate("login");
-                })
-        } catch (error) {
-            console.error(error);
-        }
-    }
+    // const logout = async () => {
+    //     try {
+    //         await GoogleSignin.signOut()
+    //             .then(async function () {
+    //                 const response = await axios({
+    //                     method : "delete",
+    //                     url : IPConfig.IP,
+    //                     headers : {
+    //                         "Content-Type" : "application/json"
+    //                     },
+    //                     data : {
+    //                         user : currentUser
+    //                     },
+    //                     responseType : "json",
+    //                 })
+    //                 console.log(response.data);
+    //                 deleteUser();
+    //                 navigation.navigate("login");
+    //             })
+    //     } catch (error) {
+    //         console.error(error);
+    //     }
+    // }
     
     return (
         <View

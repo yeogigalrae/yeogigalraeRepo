@@ -10,7 +10,7 @@ const consumerSecret = 'hdzHtQie2Y';
 const appName = 'front';
 const serviceUrlScheme = 'http://10.20.60.17:3000/';
 
-const App = () => {
+const NaverLoginC = () => {
   const [success, setSuccessResponse] =
     useState<NaverLoginResponse['successResponse']>();
   const [failure, setFailureResponse] =
@@ -110,4 +110,4 @@ const ResponseJsonText = ({json = {}, name}: {json?: object; name: string}) => (
   </View>
 );
 
-export default App;
+export default NaverLoginC;

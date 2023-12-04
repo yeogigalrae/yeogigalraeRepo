@@ -7,6 +7,8 @@ import MainStackNavigation from './MainStackNavigation';
 import MyInfoStackNavigation from './MyInfoStackNavigation';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import LikeStackNavigation from './LikeStackNavigation';
+import CommonStyle from '../styles/common/CommonStyle';
+import MapStackNavigation from './MapStackNavigation';
 
 const Tab = createBottomTabNavigator();
 
@@ -44,7 +46,7 @@ export default BottomNavigation = (props) => {
                         tabBarStyle: ((route) => {
                             const routeName = getFocusedRouteNameFromRoute(route);
                             if (routeName === 'textSearch') {
-                                return {display: "none"}
+                                return { display: "none" }
                             } else {
                                 return BottomTabStyle.tapBarStyle;
                             }
@@ -53,8 +55,9 @@ export default BottomNavigation = (props) => {
                 />
                 <Tab.Screen
                     name="주변"
-                    component={MapScreen}
+                    component={MapStackNavigation}
                     options={{
+                        tabBarStyle: { display: "none" },
                         tabBarIcon: () => {
                             return (
                                 <Image
@@ -101,7 +104,7 @@ export default BottomNavigation = (props) => {
                         },
                         tabBarStyle: ((route) => {
                             const routeName = getFocusedRouteNameFromRoute(route);
-                            if (routeName === 'festivalMap') {
+                            if (routeName === 'festivalMap' || routeName === "festival") {
                                 return { display: "none" };
                             }
                             return BottomTabStyle.tapBarStyle;
@@ -126,7 +129,7 @@ export default BottomNavigation = (props) => {
                     name="내정보"
                     component={MyInfoStackNavigation}
                     options={({ route }) => ({
-                        tabBarStyle: ((route) => { 
+                        tabBarStyle: ((route) => {
                             const routeName = getFocusedRouteNameFromRoute(route);
                             if (routeName === 'userInfo') {
                                 return { display: "none" };
