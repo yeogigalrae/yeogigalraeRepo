@@ -14,7 +14,10 @@ module.exports = {
         return;
       }
       console.log('축제 정보 가져오기 성공');
-      res.status(200).json(results);
+      
+      const festivals = results;
+      
+      res.status(200).json(festivals);
     });
   },
 

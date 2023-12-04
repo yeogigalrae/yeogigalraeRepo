@@ -1,5 +1,6 @@
 const createConnection = require('../database/dbConnection');
 const connection = createConnection();
+const user = require('../models/user');
 
 module.exports = {
   // 회원 정보 변경

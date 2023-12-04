@@ -4,10 +4,17 @@ const connection = createConnection();
 module.exports = {
     // 로그인
     userLogin(req, res) {
-        const id = req.body.id;
+        const id = req.body.user.id;
+        const name = req.body.user.name;
+        const email = req.body.user.email;
+        const photo = req.body.user.photo;
+        const nickname = "";
+        const address = "";
+        const gender = "";
+        const birth = "";
       
         // 첫 번째 쿼리: 사용자 정보 조회
-        const getUserInfoQuery = 'SELECT user_id, name, nickname, photo FROM user_info WHERE user_id = ?';
+        const getUserInfoQuery = 'SELECT * FROM user_info WHERE user_id = ?';
         connection.query(getUserInfoQuery, [id], (error, userResults, fields) => {
           if (error) {
             console.error('로그인 또는 회원 가입 실패:', error);
@@ -30,22 +37,32 @@ module.exports = {
             });
           } else {
             console.log('회원 가입이 필요합니다');
-            res.status(200).json({ message: '회원 가입이 필요합니다.' });
+            res.status(200).json({
+              id: id,
+              name: name,
+              email: email,
+              photo: photo,
+              nickname: nickname ,
+              address: address ,
+              gender: gender ,
+              birth: birth ,
+              notice: true
+            });
           }
         });
       },
     // 회원 가입
     userSignup(req, res) {
-        const id = req.body.id;
-        const email = req.body.email;
-        const name = req.body.name;
-        const photo = req.body.photo;
-        const address = req.body.address;
-        const sex = req.body.sex;
-        const age = req.body.age;
-        const nickname = req.body.nickname;
+        const id = req.body.user.id;
+        const email = req.body.user.email;
+        const name = req.body.user.name;
+        const photo = req.body.user.photo;
+        const address = req.body.user.address;
+        const sex = req.body.user.gender;
+        const age = req.body.user.birth;
+        const nickname = req.body.user.nickname;
 
-        connection.query('INSERT INTO user_info (user_id, email, name, address, sex, age, nickname, photo) VALUES (?, ?, ?, ?, ?, ?, ? ,?)', [id, email, name, address, sex, age, nickname, photo], (error, results, fields) => {
+        connection.query('INSERT INTO user_info (user_id, email, name, address, sex, birth, nickname, photo) VALUES (?, ?, ?, ?, ?, ?, ? ,?)', [id, email, name, address, sex, age, nickname, photo], (error, results, fields) => {
             if (error) {
                 console.error('회원가입 정보 삽입 실패:', error);
                 res.status(500).json({ error: '회원가입 정보 삽입 실패' });
