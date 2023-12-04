@@ -1,6 +1,6 @@
 const createConnection = require('../database/dbConnection');
 const connection = createConnection();
-const user = require('../models/user');
+const User = require('../models/user');
 
 module.exports = {
   // 회원 정보 변경
@@ -57,7 +57,9 @@ updateUserInfo(req, res) {
         return;
       }
       console.log('회원 정보 조회 성공');
-      res.status(200).json(results);
+      user = new User(results[0]);
+      console.log(user);
+      res.status(200).json(user);
     });
   });
 },
@@ -80,7 +82,9 @@ updateUserInfo(req, res) {
           return;
         }
         console.log('알림 설정 변경');
-        res.status(200).json(results);
+        user = new User(results[0]);
+        console.log(user);
+        res.status(200).json(user);
       });
     });
   },

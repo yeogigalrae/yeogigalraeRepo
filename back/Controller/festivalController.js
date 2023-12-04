@@ -1,5 +1,6 @@
 const createConnection = require('../database/dbConnection');
 const connection = createConnection();
+const Festival = require('../models/festival');
 
 module.exports = {
   // 축제 조회 (진행 예정, 진행중)
@@ -13,18 +14,19 @@ module.exports = {
         res.status(500).json({ error: '축제 정보 가져오기 실패' });
         return;
       }
-      console.log('축제 정보 가져오기 성공');
-      
-      const festivals = results;
-      
-      res.status(200).json(festivals);
+      console.log('축제 정보 가져오기 성공1');
+      const festivalList = []
+      for (let i in results ){
+        let festival = new Festival(results[i]);
+        festivalList.push(festival);
+      }
+      res.status(200).json(festivalList);
     });
   },
 
-
   // 분류별 축제 검색
 getCategorizeFestival(req, res) {
-  const category = req.params.category;
+  const category = req.params.category; // 클라이언트에서 보낼때 대소문자 구분
   const date = req.params.date;
   const place = req.params.place.split(','); // 여러 값을 콤마로 구분하여 배열로 변환
 
@@ -45,7 +47,9 @@ getCategorizeFestival(req, res) {
     params.push(date, date);
   }
 
-  if (place.length > 0) {
+  if(place == 'ALL'){
+
+  } else {
     // 여러 값에 대한 조건을 IN 절로 추가
     query += ' AND place IN (?)';
     params.push(place);
@@ -57,11 +61,15 @@ getCategorizeFestival(req, res) {
       res.status(500).json({ error: '축제 정보 가져오기 실패' });
       return;
     }
-    console.log('축제 정보 가져오기 성공');
-    res.status(200).json(results);
+    console.log('축제 정보 가져오기 성공2');
+    const festivalList = []
+      for (let i in results){
+        const festival = new Festival(results[i]);
+        festivalList.push(festival);
+      }
+    res.status(200).json(festivalList);
   });
-}
-,
+},
 
   // 축제 검색
   getSearchFestival(req, res) {
@@ -82,8 +90,13 @@ getCategorizeFestival(req, res) {
         res.status(500).json({ error: '축제 정보 가져오기 실패' });
         return;
       }
-      console.log('축제 정보 가져오기 성공');
-      res.status(200).json(results);
+      console.log('축제 정보 가져오기 성공3');
+      const festivalList = []
+      for (let i in results){
+        const festival = new Festival(results[i]);
+        festivalList.push(festival);
+      }
+      res.status(200).json(festivalList);
     });
   },
 
@@ -98,7 +111,8 @@ getCategorizeFestival(req, res) {
         return;
       }
       console.log('축제 상세 조회 성공');
-      res.status(200).json(results);
+      festival = new Festival(results[0]);
+      res.status(200).json(festival);
     });
   }
 };

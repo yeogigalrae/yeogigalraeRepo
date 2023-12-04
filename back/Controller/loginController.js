@@ -1,9 +1,14 @@
 const createConnection = require('../database/dbConnection');
 const connection = createConnection();
+const User = require('../models/user');
+
+const db = {};
+db.User = User;
 
 module.exports = {
     // 로그인
     userLogin(req, res) {
+      
         const id = req.body.user.id;
         const name = req.body.user.name;
         const email = req.body.user.email;

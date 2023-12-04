@@ -1,17 +1,15 @@
-const createConnection = require('../database/dbConnection');
-const connection = createConnection();
+class User{
+    constructor(info){
+        this.id = info.USER_ID
+        this.name = info.NAME
+        this.email = info.EMAIL
+        this.birth = info.BIRTH
+        this.gender = info.GENDER
+        this.address = info.ADDRESS
+        this.nickname = info.NICKNAME
+        this.photo = info.PHOTO
+        this.notice = info.NOTICE
+    }
 
-const user = {
-    id: USER_ID,
-    name: NAME,
-    email: EMAIL,
-    birth: BIRTH,
-    gender: GENDER,
-    address: ADRESS,
-    nickname: NICKNAME,
-    photo: PHOTO,
-    notice: NOTICE
-}    
-
-
+}
 module.exports = User

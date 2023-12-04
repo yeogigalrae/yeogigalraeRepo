@@ -1,8 +1,9 @@
 const createConnection = require('../database/dbConnection');
+const Festival = require('../models/festival');
 const connection = createConnection();
 
 module.exports = {
-  // 좋아요 버튼
+  // 좋아요 버튼 (23.12.05 수정할거임)
   putLikeButton(req, res) {
     const festival_id = req.params.festival_id;
     const user_id = req.params.user_id;
@@ -23,14 +24,16 @@ module.exports = {
             res.status(500).json({ error: 'LIKE1 테이블에 삽입 실패' });
             return;
           }
-          connection.query('SELECT `like` FROM festival_info WHERE festival_id = ?', [festival_id], (error, results, fields) => {
+          connection.query('SELECT * FROM festival_info WHERE festival_id = ?', [festival_id], (error, results, fields) => {
             if (error) {
               console.error('축제 좋아요 갯수 조회 실패:', error);
               res.status(500).json({ error: '축제 좋아요 갯수 조회 실패' });
               return;
             }
             console.log('축제 좋아요 갯수 조회 성공');
-            res.status(200).json({like: results[0].like});
+            festival = new Festival(results[0])
+            console.log(festival.like)
+            res.status(200).json({festival});
           });
         });
       });
@@ -76,7 +79,12 @@ module.exports = {
         return;
       }
       console.log('좋아요한 축제 정보 가져오기 성공');
-      res.status(200).json(results);
+      const festivalList = []
+      for (let i in results ){
+        let festival = new Festival(results[i]);
+        festivalList.push(festival);
+      }
+      res.status(200).json(festivalList);
     });
   }
 };
