@@ -50,7 +50,7 @@ export default function FestivalList({ data, isMain}) {
             ]}
           >
             <Image
-              source={require("../../assets/heart.png")}
+              source={require("../../assets/views.png")}
               style={FestivalListStyle.icon}
             />
             <Text style={FestivalListStyle.likeCount}>{item.views}</Text>

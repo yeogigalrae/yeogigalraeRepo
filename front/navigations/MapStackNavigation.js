@@ -1,21 +1,16 @@
-import {Text} from "react-native";
+import {Text, TouchableOpacity} from "react-native";
 import { createStackNavigator } from '@react-navigation/stack';
-import FestivalSearchScreen from '../screens/festival/FestivalSearchScreen';
 import MapScreen from '../screens/map/MapScreen';
-import MainScreen from '../screens/main/MainScreen';
 import CommonStyle from '../styles/common/CommonStyle';
 import FestivalDetailScreen from '../screens/festival/FestivalDetailScreen';
-import FestivalMapScreen from '../screens/festival/FestivalMapScreen';
-import SearchScreen from "../screens/festival/SearchScreen";
 
 const Stack = createStackNavigator();
 
-export default MainStackNavigation = (props) => {
+export default MapStackNavigation = ({navigation}) => {
     return (
         <Stack.Navigator
-            initialRouteName='main'
+            initialRouteName='map'
             screenOptions={({ route }) => ({
-                headerShown: false,
                 tabBarStyle: CommonStyle.headerStyle,
                 tabBarLabel: () => (
                     <Text style={{ color: "black" }}>
@@ -35,33 +30,21 @@ export default MainStackNavigation = (props) => {
             })}
         >
             <Stack.Screen
-                name="main"
-                component={MainScreen}
-                options={{
-                }}
-            />
-            <Stack.Screen
-                name="search"
-                component={FestivalSearchScreen}
-                options={{
-                    headerShown: false
-                }}
-            />
-            <Stack.Screen
                 name="map"
                 component={MapScreen}
+                options={{
+                    headerTitle: () => (
+                        <TouchableOpacity
+                            onPress={() => navigation.goBack()}
+                        >
+                            <Text style={CommonStyle.headerTitle}>{"여기갈래"}</Text>
+                        </TouchableOpacity>
+                    )
+                }}
             />
             <Stack.Screen
                 name="festival"
                 component={FestivalDetailScreen}
-            />
-            <Stack.Screen
-                name="festivalMap"
-                component={FestivalMapScreen}
-            />
-            <Stack.Screen
-                name="textSearch"
-                component={SearchScreen}
             />
         </Stack.Navigator>
     )

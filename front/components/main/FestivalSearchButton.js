@@ -1,9 +1,9 @@
-import {Text, TouchableOpacity, Image} from 'react-native';
+import { Text, TouchableOpacity, Image } from 'react-native';
 import FestivalSearchButtonBoxStyle from '../../styles/main/FestivalSearchButtonBoxStyle';
 import { useNavigation } from '@react-navigation/native';
 
 export default FestivalSearchButton = (props) => {
-    
+
     const navigation = useNavigation();
 
     const textSearch = async () => {
@@ -18,7 +18,7 @@ export default FestivalSearchButton = (props) => {
         <TouchableOpacity
             style={FestivalSearchButtonBoxStyle.festivalSearchButton}
             onPress={() => {
-                if(props.screen === "search"){
+                if (props.screen === "search") {
                     textSearch();
                 } else {
                     mapSearch();
@@ -26,8 +26,11 @@ export default FestivalSearchButton = (props) => {
             }}
         >
             <Image
-                source={require("../../assets/home.png")}
-                style={FestivalSearchButtonBoxStyle.festivalSearchButtonIcon}            
+                source={props.screen === "search" ?
+                    require("../../assets/festivalSearch.png"):
+                    require("../../assets/mapSearch.png")
+                }
+                style={FestivalSearchButtonBoxStyle.festivalSearchButtonIcon}
             />
             <Text
                 style={FestivalSearchButtonBoxStyle.festivalSearchButtonLabel}
