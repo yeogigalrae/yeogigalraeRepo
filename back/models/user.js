@@ -1,6 +1,9 @@
 class User{
     constructor(info){
-        this.id = info.USER_ID
+        
+        this.user_id = info.USER_ID
+        this.id = info.ID
+        this.password = info.PASSWORD
         this.name = info.NAME
         this.email = info.EMAIL
         this.birth = info.BIRTH
