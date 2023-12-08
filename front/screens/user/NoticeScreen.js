@@ -11,6 +11,7 @@ export default NoticeScreen = (props) => {
     const [isNotice, setNotice] = useState(currentUser.notice);
     
     const changeNotice = async() => {
+        console.log("여기서 ? : ", isNotice);
         try{
             const newUserInfo = {
                 ...currentUser,
@@ -18,7 +19,7 @@ export default NoticeScreen = (props) => {
             }
             const response = await axios({
                 method: "put",
-                url: IPConfig.IP,
+                url: IPConfig.IP + `users/${currentUser.user_id}/notice`,
                 headers: {
                     "Content-Type": "application/json"
                 },
@@ -27,12 +28,17 @@ export default NoticeScreen = (props) => {
                 },
                 responseType: "json",
             })
-            setUser(response.data);
+            console.log("{NoticeScreen} : changeNotice / response.data = ", response.data);
+            setUser(response.data.user);
         } catch (error){
             console.log(error);
         }
     }
 
+    useEffect(() => {
+        changeNotice();
+    }, [isNotice]);
+    
     return (
         <View
             style={NoticeStyle.notice}
@@ -62,7 +68,6 @@ export default NoticeScreen = (props) => {
                                     style={NoticeStyle.onNotice}
                                     onPress={() => {
                                         setNotice(false);
-                                        changeNotice();
                                     }}
                                 >
                                     <View style={NoticeStyle.noticeCurr}/>
@@ -72,7 +77,6 @@ export default NoticeScreen = (props) => {
                                     style={NoticeStyle.offNotice}
                                     onPress={() => {
                                         setNotice(true)
-                                        changeNotice();
                                     }}
                                 >
                                     <View style={NoticeStyle.noticeCurr}/>

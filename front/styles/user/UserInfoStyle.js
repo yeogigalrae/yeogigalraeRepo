@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import appStyle from '../../configs/Style.json';
+import appStyle from '../../configs/Style';
 
 export default StyleSheet.create({
     userInfo: {
@@ -52,15 +52,15 @@ export default StyleSheet.create({
         fontSize: 16,
         marginVertical: 3
     },
-    radioButton : {
+    radioButton: {
         flexDirection: "row",
         alignItems: "center",
     },
-    radioLabel : {
+    radioLabel: {
         fontSize: 18,
         marginBottom: 4
     },
-    radioOuter : {
+    radioOuter: {
         borderWidth: 2,
         width: 20,
         height: 20,
@@ -69,7 +69,7 @@ export default StyleSheet.create({
         justifyContent: "center",
         alignItems: "center"
     },
-    radioInner : {
+    radioInner: {
         width: 10,
         height: 10,
         backgroundColor: "black",
@@ -89,7 +89,7 @@ export default StyleSheet.create({
         alignItems: "center",
         flexDirection: "row",
     },
-    dateText : { // 2023, 11, 10
+    dateText: { // 2023, 11, 10
         borderWidth: 0.3,
         backgroundColor: "white",
         fontSize: 16,
@@ -112,8 +112,8 @@ export default StyleSheet.create({
         shadowRadius: 2,
         shadowOpacity: 0.2
     },
-    
-    
+
+
     /// common =======
     outerBox: {
         padding: 10
@@ -139,5 +139,39 @@ export default StyleSheet.create({
         width: "90%",
         borderBottomWidth: 1,
         borderColor: 'lightgray'
+    },
+
+    
+    //CusotomDatePicker
+    detePickerButtonBox: {
+        flexDirection: "row",
+        justifyContent: "space-around",
+        marginTop: 20
+    },
+    datePickerButtonLabel: {
+        color: "white",
+        fontSize: 24
+    },
+
+
+    //CustomPostcode
+    postcodeBox: {
+        justifyContent: "center"
+    },
+    postcodeTopBox: {
+        height: 60,
+        backgroundColor: appStyle.APP_MAIN_COLOR,
+        alignItems: "center",
+        flexDirection: "row",
+        paddingHorizontal: 20
+    },
+    postcodeCancleLabel: {
+        fontSize: 24
+    },
+    postcodeTitle: {
+        fontSize: 36,
+        alignSelf: "center",
+        marginLeft: 50
     }
+    
 })

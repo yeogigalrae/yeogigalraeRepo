@@ -1,25 +1,53 @@
-import {View, Text, TouchableOpacity, Image} from "react-native";
+import { View, Text, TouchableOpacity, Image } from "react-native";
 import FestivalDetailScreenStyle from "../../../styles/festival/FestivalDetailScreenStyle";
 import axios from "axios";
 import IPConfig from '../../../configs/IPConfig.json';
 import { useState } from "react";
+import useUser from "../../user/UserState";
+import useFestivalStore from "../../common/FestivalStore";
+import useLikeFestivalStore from "../../common/likeFestivalStore";
 
 export default FestivalDetailButtons = (props) => {
-    const [currentLikeCount, setLikeCount] = useState(props.likeCount);
+    const currentUser = useUser((state) => state.user);
+    const festivalList = useFestivalStore((state) => state.festivalList);
+    const setFestivalList = useFestivalStore((state) => state.setFestivalList);
+    const [currentFestival, setCurrentFestival] = useState(
+        festivalList.find((festival) => {
+            return props.festivalInfo == festival
+        })
+    );
+    const likeFestivalList = useLikeFestivalStore((state) => state.likeFestivalList);
+    const setLikeFestivalList = useLikeFestivalStore((state) => state.setLikeFestivalList);
 
     const likeButtonClick = async () => {
-        try{
+        try {
             const response = await axios({
-                method: "patch",
-                url: IPConfig.IP+"like",
+                method: "put",
+                url: IPConfig.IP + `festivals/${currentFestival.id}/like/${currentUser.user_id}`,
                 headers: {
                     "Content-Type": "application/json"
                 },
+                data: {
+                    festival: currentFestival
+                },
                 responseType: "json",
             })
-            console.log(response.data);
-            setLikeCount(response.data);
-        } catch(error){
+            console.log("{FestivalDetailButton} : likeButtonClick / response.data = ", response.data);
+            let newFestivalList = [];
+            festivalList.map((festival, idx) => {
+                if (festival.id == response.data.id) {
+                    newFestivalList.push(response.data.festival);
+                } else {
+                    newFestivalList.push(festival);
+                }
+            })
+            setFestivalList(newFestivalList);
+            setCurrentFestival(response.data.festival);
+            // likeFestivalList에서 현재 행사를 제거
+            if(currentFestival.likestate){
+                setLikeFestivalList(likeFestivalList?.filter((festival) => festival.id != currentFestival.id))
+            }
+        } catch (error) {
             console.log(error);
         }
     }
@@ -31,13 +59,13 @@ export default FestivalDetailButtons = (props) => {
             <TouchableOpacity
                 style={[
                     FestivalDetailScreenStyle.button,
-                    {borderRightWidth: 1, borderRightColor: "lightgray"}
+                    { borderRightWidth: 1, borderRightColor: "lightgray" }
                 ]}
                 onPress={() => likeButtonClick()}
             >
                 <Image
                     style={FestivalDetailScreenStyle.buttonImage}
-                    source={require('../../../assets/heart.png')}
+                    source={currentFestival.likestate ? require('../../../assets/redHeart.png') : require('../../../assets/heart.png')}
                 />
                 <View
                     style={FestivalDetailScreenStyle.likeButtonBox}
@@ -45,7 +73,7 @@ export default FestivalDetailButtons = (props) => {
                     <Text
                         style={FestivalDetailScreenStyle.buttonLabel}
                     >좋아요</Text>
-                    <Text>{`${currentLikeCount} 개`}</Text>
+                    <Text>{`${currentFestival.like} 개`}</Text>
                 </View>
             </TouchableOpacity>
             <TouchableOpacity

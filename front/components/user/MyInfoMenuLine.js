@@ -1,6 +1,6 @@
 import {View, TouchableOpacity, Text} from "react-native";
 import MyInfoStyle from '../../styles/user/MyInfoStyle';
-import appStyle from '../../configs/Style.json';
+import appStyle from '../../configs/Style';
 import { useNavigation } from '@react-navigation/native';
 
 export default MyInfoMenuLine = (props) => {

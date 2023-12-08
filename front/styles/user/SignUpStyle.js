@@ -14,20 +14,13 @@ export default styles = StyleSheet.create({
         borderRadius: 10,
         width: "90%",
         height: "90%",
-        justifyContent: "space-evenly",
-        alignItems: "center",
-        paddingTop: 20
+        justifyContent: "space-around",
+        alignItems: "center"
     },
     topBox: {
-        borderWidth: 2,
-        borderColor: appStyle.APP_MAIN_COLOR,
         width: "50%",
         height: 80,
-        position: "absolute",
         alignSelf: "center",
-        top: -40,
-        backgroundColor: "white",
-        borderRadius: 10,
         alignItems: "center",
         justifyContent: "center"
     },
@@ -35,15 +28,9 @@ export default styles = StyleSheet.create({
         fontSize: 36,
         fontWeight: "bold",
     },
-    appIconBox: {
-    },
-    appIcon: {
-        width: 250,
-        height: 100,
-        resizeMode: "contain"
-    },
-    loginBox: {
+    signUpBox: {
         width: "90%",
+        position: "relative"
     },
     inputBox: {
         borderWidth: 1,
@@ -53,17 +40,25 @@ export default styles = StyleSheet.create({
         marginVertical: 5,
         minHeight: 50,
         maxHeight: 50,
+        justifyContent: "center",
         fontSize: 20,
+    },
+    idCheckButton: {
+        backgroundColor: appStyle.APP_MAIN_COLOR,
+        borderRadius: 5,
+        justifyContent: "center",
+        alignItems: "center",
+        paddingHorizontal: 5,
     },
     inputAfter: {
         position: "absolute",
         backgroundColor: "white",
-        left: 15,
-        top: -3,
+        left: 10,
+        top: -8,
         paddingHorizontal: 5,
         color: appStyle.APP_MAIN_COLOR
     },
-    loginButton: {
+    signUpButton: {
         backgroundColor: appStyle.APP_MAIN_COLOR,
         borderRadius: 10,
         justifyContent: "center",
@@ -71,19 +66,14 @@ export default styles = StyleSheet.create({
         height: 50,
         marginTop: 5
     },
-    loginButtonLabel: {
+    signUpButtonLabel: {
         fontSize: 20
     },
-    signUpButton: {
-        alignItems: "center",
-        marginTop: 20
+    checkIcon: {
+        width: 40,
+        height: 40
     },
-    signUpLabel: {
-        color: "gray",
-    },
-    LabelUnder: {
-        borderBottomColor: "gray",
-        borderBottomWidth: 1,
-        width: 50
+    retry : {
+        borderColor :"red"
     }
 })

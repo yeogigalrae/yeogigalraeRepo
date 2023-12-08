@@ -8,7 +8,7 @@ import NaverLogin, {
 const consumerKey = 'VPA3JIBpinu793m3bvem';
 const consumerSecret = 'hdzHtQie2Y';
 const appName = 'front';
-const serviceUrlScheme = 'http://10.20.60.17:3000/';
+const serviceUrlScheme = 'yeogigalrae-callback';
 
 const NaverLoginC = () => {
   const [success, setSuccessResponse] =

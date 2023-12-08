@@ -1,5 +1,5 @@
 import { Image, TouchableOpacity } from 'react-native';
-import NaverConfig from '../../configs/NaverConfig.json';
+import NaverConfig from '../../configs/NaverConfig';
 import NaverLogin, {
   NaverLoginResponse,
   GetProfileResponse

@@ -5,7 +5,7 @@ import {
   View
 } from 'react-native';
 import CalendarPicker from 'react-native-calendar-picker';
-import appStyle from '../../configs/Style.json';
+import appStyle from '../../configs/Style';
 
 export default class Calendar extends Component {
   constructor(props) {

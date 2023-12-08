@@ -9,11 +9,11 @@ export default FestivalContent = ({data}) => {
         >
             <ContentLine
                 subject={"행사 진행 날짜"}
-                content={data.startDate+" ~ "+data.endDate}
+                content={data.begin_date+" ~ "+data.end_date}
             />
             <ContentLine
                 subject={"행사 진행 장소"}
-                content={data.address}
+                content={data.place}
             />
             {/* <ContentLine
                 subject={"참여 방법"}

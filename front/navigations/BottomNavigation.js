@@ -13,10 +13,11 @@ import MapStackNavigation from './MapStackNavigation';
 const Tab = createBottomTabNavigator();
 
 export default BottomNavigation = (props) => {
+
     return (
         <>
-            <SafeAreaView>
-            </SafeAreaView>
+            {/* <SafeAreaView> */}
+            {/* </SafeAreaView> */}
             <Tab.Navigator
                 initialRouteName='메인'
                 backBehavior='initialRoute'

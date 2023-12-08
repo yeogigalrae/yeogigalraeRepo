@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import appStyle from '../../configs/Style.json';
+import appStyle from '../../configs/Style';
 
 export default StyleSheet.create({
     map:{
@@ -11,7 +11,6 @@ export default StyleSheet.create({
         backgroundColor: "white",
         height: 70,
         justifyContent: "center",
-        borderBottomWidth: 1
     },
     searchButton: {
         width: "90%",
