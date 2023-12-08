@@ -4,7 +4,7 @@ interface User {
     idToken: string;
     user: {
         email: string;
-        id: number;
+        user_id: string;
         name: string;
         nickname: string;
         photo: string;
@@ -21,8 +21,8 @@ interface User {
 const useUser = create<User>((set) => ({
     idToken: "",
     user: {
+        user_id: "",
         email: "",
-        id: 0,
         name: "",
         nickname: "",
         photo: require("../../assets/home.png"),
@@ -41,7 +41,7 @@ const useUser = create<User>((set) => ({
         idToken: "",
         user: {
             email: "",
-            id: 0,
+            user_id: "",
             name: "",
             nickname: "",
             photo: require("../../assets/home.png"),

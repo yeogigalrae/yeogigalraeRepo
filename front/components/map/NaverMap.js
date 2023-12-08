@@ -1,4 +1,4 @@
-import Geolocation from '@react-native-community/geolocation';
+// import Geolocation from '@react-native-community/geolocation';
 import { useEffect, useState } from 'react';
 import { View, Dimensions } from 'react-native';
 import NaverMapView, { Circle, Marker, Path, Polyline, Polygon } from "react-native-nmap";
@@ -9,23 +9,23 @@ export default NaverMap = () => {
     const end = { latitude: 37.565051, longitude: 126.978567 };
     const P2 = { latitude: 37.565383, longitude: 126.976292 };
 
-    useEffect(() => {
-        // watchPosition() 도 가능
-        Geolocation.getCurrentPosition(
-            (info) => {
-                setMyPosition({
-                    latitude: info.coords.latitude,
-                    longitude: info.coords.longitude,
-                });
-            },
-            console.error,
-            {
-                enableHighAccuracy: true,
-                timeout: 20000,
-                // distanceFilter: 50
-            }
-        );
-    }, []);
+    // useEffect(() => {
+    //     // watchPosition() 도 가능
+    //     Geolocation.getCurrentPosition(
+    //         (info) => {
+    //             setMyPosition({
+    //                 latitude: info.coords.latitude,
+    //                 longitude: info.coords.longitude,
+    //             });
+    //         },
+    //         console.error,
+    //         {
+    //             enableHighAccuracy: true,
+    //             timeout: 20000,
+    //             // distanceFilter: 50
+    //         }
+    //     );
+    // }, []);
 
     return (
         <NaverMapView
@@ -38,28 +38,6 @@ export default NaverMap = () => {
                 longitude: myPosition.longitude
             }}
         >
-            <Marker
-                coordinate={{
-                    latitude: myPosition.latitude,
-                    longitude: myPosition.longitude,
-                }}
-                pinColor="blue"
-            />
-            <Path
-                coordinates={[
-                    {
-                        latitude: myPosition.latitude,
-                        longitude: myPosition.longitude,
-                    },
-                    { latitude: myPosition.latitude, longitude: myPosition.longitude },
-                ]}
-            />
-            <Marker
-                coordinate={{
-                    latitude: myPosition.latitude,
-                    longitude: myPosition.longitude,
-                }}
-            />
         </NaverMapView>
     )
 }

@@ -1,6 +1,6 @@
 import {View} from 'react-native';
-import NaverMapView, { Align, Marker} from "react-native-nmap";
-import appStyle from '../../../configs/Style.json';
+// import NaverMapView, { Align, Marker} from "react-native-nmap";
+import appStyle from '../../../configs/Style';
 import { useNavigation } from '@react-navigation/native';
 
 export default FestivalMap = (props) => {
@@ -8,7 +8,7 @@ export default FestivalMap = (props) => {
 
     return (
         <View>
-            <NaverMapView
+            {/* <NaverMapView
                 style={{ width: "100%", height: "100%" }}
                 zoomControl={false}
                 scrollGesturesEnabled={false}
@@ -42,7 +42,7 @@ export default FestivalMap = (props) => {
                         align: Align.Top,
                     }}
                 />
-            </NaverMapView>
+            </NaverMapView> */}
         </View>
     )
 }

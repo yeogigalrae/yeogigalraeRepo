@@ -3,22 +3,24 @@ import FestivalTypeButtonBoxStyle from '../../styles/main/FestivalTypeButtonBoxS
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import IPConfig from '../../configs/IPConfig.json';
+import useUser from '../user/UserState';
 
 export default FestivalButtons = (props) => {
     const navigation = useNavigation();
+    const currentUser = useUser(state => state.user);
 
     const onTypeButton = async (typeName) => {
         // typeName을 파라미터로 요청하여 해당하는 행사목록 가져오기
         try{
             const response = await axios({
                 method : "get",
-                url : IPConfig.IP+"festivalList",
+                url : IPConfig.IP+`festivals/search/${currentUser.user_id}/${props.name}/ALL/ALL`,
                 headers : {
                     "Content-Type" : "application/json"
                 },
                 responseType : "json"
             })
-            navigation.navigate("search", { data: response.data, top: "전체"});
+            navigation.navigate("search", { data: response.data.festivals, top: "전체"});
         } catch(error) {
             console.log(error);
         }

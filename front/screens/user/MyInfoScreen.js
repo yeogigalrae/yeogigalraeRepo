@@ -35,7 +35,27 @@ export default MyInfoScreen = (props) => {
     //         console.error(error);
     //     }
     // }
-    
+
+    const logout = async () => {
+        try {
+            const response = await axios({
+                method: "delete",
+                url: IPConfig.IP+`users/${currentUser.user_id}`,
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                data: {
+                    user: currentUser
+                },
+                responseType: "json",
+            })
+            deleteUser();
+            navigation.navigate("login");
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
     return (
         <View
             style={MyInfoStyle.myInfo}
@@ -48,7 +68,7 @@ export default MyInfoScreen = (props) => {
                 >
                     <Image
                         style={MyInfoStyle.profileImage}
-                        source={{uri : currentUser.photo}}
+                        source={{ uri: currentUser.photo }}
                     />
                 </View>
                 <View
@@ -57,15 +77,15 @@ export default MyInfoScreen = (props) => {
                     <Text
                         style={MyInfoStyle.profileName}
                     >{currentUser.name}</Text>
-                    {currentUser.nickname?(
-                    <Text
-                        style={MyInfoStyle.profileNickName}
-                    >{currentUser.nickname}</Text>
+                    {currentUser.nickname ? (
+                        <Text
+                            style={MyInfoStyle.profileNickName}
+                        >{currentUser.nickname}</Text>
                     ) : (
                         <Text
                             style={[
                                 MyInfoStyle.profileNickName,
-                                {color: "gray", fontSize: 16}
+                                { color: "gray", fontSize: 16 }
                             ]}
                         >닉네임을 설정해주세요</Text>
                     )}

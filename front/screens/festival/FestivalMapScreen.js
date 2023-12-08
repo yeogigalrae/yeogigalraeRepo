@@ -1,5 +1,5 @@
 import { View } from 'react-native';
-import NaverMapView, { Align, MapType, Marker} from "react-native-nmap"
+// import NaverMapView, { Align, MapType, Marker} from "react-native-nmap"
 
 export default FestivalMapScreen = (props) => {
     const location = props.route.params.location;
@@ -7,7 +7,7 @@ export default FestivalMapScreen = (props) => {
 
     return (
         <View>
-            <NaverMapView
+            {/* <NaverMapView
                 style={{ width: "100%", height: "100%" }}
                 center={{
                     zoom: 16, // 지도 확대
@@ -34,7 +34,7 @@ export default FestivalMapScreen = (props) => {
                     }}
                     flat={true}
                 />
-            </NaverMapView>
+            </NaverMapView> */}
         </View>
     )
 }

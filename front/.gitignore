@@ -35,4 +35,6 @@ yarn-error.*
 *.tsbuildinfo
 
 # config
-configs/
+configs
+configs/GoogleConfig.json
+configs/NaverConfig.json

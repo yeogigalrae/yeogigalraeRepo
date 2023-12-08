@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import appStyle from '../../configs/Style.json';
+import appStyle from '../../configs/Style';
 
 export default StyleSheet.create({
     festivalList : {
@@ -7,6 +7,12 @@ export default StyleSheet.create({
         margin: 10,
         borderRadius: 20,
         backgroundColor: appStyle.APP_BACKGROUD_COLOR,
+        shadowOffset: {
+            height: 3,
+        },
+        shadowOpacity: 0.3,
+        shadowRadius: 2,
+        shadowColor: "black",
     },
     imageBox: {
         borderBottomWidth: 3,

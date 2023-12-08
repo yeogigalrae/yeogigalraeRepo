@@ -26,14 +26,6 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    },
-    "plugins": [
-      [
-        "@react-native-seoul/naver-login",
-        {
-          "urlScheme": "yeogigarlae-callback" 
-        }
-      ]
-    ]
+    }
   }
 }

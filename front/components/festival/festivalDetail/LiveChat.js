@@ -2,7 +2,10 @@ import { TouchableOpacity, View, Text } from "react-native";
 import FestivalDetailScreenStyle from "../../../styles/festival/FestivalDetailScreenStyle";
 
 export default LiveChat = (props) => {
-    const liveChatActivate = props.liveChatActivate;
+    const begin_date = new Date(props.festivalInfo.begin_date);
+    const end_date = new Date(props.festivalInfo.end_date);
+    
+    const liveChatActivate = (begin_date-end_date)>=0?true:false;
 
     return (
         <View

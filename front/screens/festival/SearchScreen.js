@@ -9,12 +9,14 @@ import { regionKeywords, festivalCategoryKeywords } from "../../configs/SearchKe
 import axios from "axios";
 import IPConfig from '../../configs/IPConfig.json';
 import { useNavigation } from "@react-navigation/native";
+import useUser from "../../components/user/UserState";
 
 export default SearchScreen = () => {
     const navigation = useNavigation();
     const [select, setSelect] = useState(1);
     const [selectedKeywords, setSelectKeyword] = useState([]);
     const [selectedDate, setSeletedDate] = useState([]);
+    const currentUser = useUser(state => state.user);
 
     const selectKeyword = (keyword) => {
         if (select == 1) {
@@ -39,16 +41,17 @@ export default SearchScreen = () => {
     }
 
     const textRequest = async (searchText) => {
-        if(searchText != ""){
+        if (searchText != "") {
             try {
                 const response = await axios({
                     method: "get",
-                    url: IPConfig.IP + "festivals/" + searchText,
+                    url: IPConfig.IP + `festivals/search/${123}/${searchText}`,
                     headers: {
                         "Content-Type": "application/json"
                     },
                     responseType: "json",
                 })
+                console.log("{SearchScreen} : textRequest / response.data = ", response.data);
                 navigation.navigate("search", { data: response.data, top: "전체" });
             } catch (error) {
                 console.log(error);
@@ -57,20 +60,25 @@ export default SearchScreen = () => {
     }
 
     const keywordsRequest = async () => {
-        // const query = selectedKeywords.map((value) => 
-        //     `keyword=${value}`
-        // ).join("&");
+        const type = selectedKeywords.filter(element => festivalCategoryKeywords.includes(element)) != ""?
+            selectedKeywords.filter(element => festivalCategoryKeywords.includes(element)):"ALL";
+        const cityList = selectedKeywords.filter(element => regionKeywords.includes(element)) != ""?
+            selectedKeywords.filter(element => regionKeywords.includes(element)):"ALL";
+        const date = selectedKeywords.filter(element => element.match(/^\d{4}-\d{2}-\d{2}$/)) != ""?
+            selectedKeywords.filter(element => element.match(/^\d{4}-\d{2}-\d{2}$/)):"ALL";
+
         if (selectedKeywords.length != 0) {
             try {
                 const response = await axios({
                     method: "get",
-                    url: IPConfig.IP + "festivals/" + selectedKeywords,
+                    url: IPConfig.IP + `festivals/search/${currentUser.user_id}/${type}/${date}/${cityList}`,
                     headers: {
                         "Content-Type": "application/json"
                     },
                     responseType: "json",
                 })
-                navigation.navigate("search", { data: response.data });
+                console.log("{SearchScreen} : keywordsRequest / response.data = ", response.data);
+                navigation.navigate("search", { data: response.data.festivals });
             } catch (error) {
                 console.log(error);
             }
@@ -82,7 +90,7 @@ export default SearchScreen = () => {
             ]);
         }
     }
-    
+
 
     return (
         <View
