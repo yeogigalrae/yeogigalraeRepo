@@ -24,24 +24,33 @@ routes.put('/festivals/:festival_id/like/:user_id', likeController.putLikeButton
 routes.get('/festivals/:user_id/liked', likeController.getLikedFestival);
 
 
+// 축제 상위 5개 조회
+routes.get('/festivals/:user_id', festivalController.getMainFestivals);
+
 // 진행 중이거나 예정인 축제
-routes.get('/festivals', festivalController.getFestivals);
+routes.get('/festivals/:user_id', festivalController.getFestivals);
+
+// 추천 축제 조회
+routes.get('/festivals/recommends/:user_id', festivalController.getRecommendFestivals);
 
 // 분류별 축제 검색
-routes.get('/festivals/search/:category/:date/:place', festivalController.getCategorizeFestival);
+routes.get('/festivals/search/:user_id/:category/:date/:place', festivalController.getCategorizeFestival);
 
 // 축제 검색
-routes.get('/festivals/search/:search', festivalController.getSearchFestival);
+routes.get('/festivals/search/:user_id/:search', festivalController.getSearchFestival);
 
-// 축제 상세 조회
-routes.get('/festivals/:festival_id', festivalController.getFestivalInfo);
+// // 축제 상세 조회
+// routes.get('/festivals/:festival_id/:user_id', festivalController.getFestivalInfo);
 
 
 // 로그인
-routes.post('/users/login', loginController.userLogin);
+routes.get('/users/login/:id/:password', loginController.userLogin);
 
 // 회원가입
 routes.post('/users/signup', loginController.userSignup);
+
+// 아이디 중복 체크
+routes.get('/users/signup/idcheck/:id', loginController.userSignupIdCheck);
 
 module.exports = routes;
 

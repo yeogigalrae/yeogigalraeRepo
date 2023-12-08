@@ -1,74 +1,75 @@
 const createConnection = require('../database/dbConnection');
 const connection = createConnection();
+const User = require('../models/user');
 
 module.exports = {
-    // 로그인
-    userLogin(req, res) {
-        const id = req.body.id;
-      
-        // 첫 번째 쿼리: 사용자 정보 조회
-        const getUserInfoQuery = 'SELECT user_id, name, nickname, photo FROM user_info WHERE user_id = ?';
-        connection.query(getUserInfoQuery, [id], (error, userResults, fields) => {
-          if (error) {
-            console.error('로그인 또는 회원 가입 실패:', error);
-            res.status(500).json({ error: '로그인 또는 회원 가입 실패' });
-            return;
-          }
-      
-          if (userResults.length > 0 && userResults[0].user_id === id) {
-            // 두 번째 쿼리: 상위 5개의 좋아요 순으로 정렬된 축제 정보 조회
-            const getTop5FestivalsQuery = 'SELECT * FROM festival_info ORDER BY `like` DESC LIMIT 5';
-            connection.query(getTop5FestivalsQuery, (error, festivalResults, fields) => {
-              if (error) {
-                console.error('축제 정보 조회 실패:', error);
-                res.status(500).json({ error: '축제 정보 조회 실패' });
-                return;
-              }
-      
-              console.log('로그인 및 상위 5개 축제 정보 조회 성공');
-              res.status(200).json({ user: userResults[0], top5Festivals: festivalResults });
-            });
-          } else {
-            console.log('회원 가입이 필요합니다');
-            res.status(200).json({ message: '회원 가입이 필요합니다.' });
-          }
-        });
-      },
-    // 회원 가입
-    userSignup(req, res) {
-        const id = req.body.id;
-        const email = req.body.email;
-        const name = req.body.name;
-        const photo = req.body.photo;
-        const address = req.body.address;
-        const sex = req.body.sex;
-        const age = req.body.age;
-        const nickname = req.body.nickname;
+  // 로그인
+  userLogin(req, res) {
+    const id = req.params.id;
+    const password = req.params.password;
+    console.log(id);
+    console.log(password);
 
-        connection.query('INSERT INTO user_info (user_id, email, name, address, sex, age, nickname, photo) VALUES (?, ?, ?, ?, ?, ?, ? ,?)', [id, email, name, address, sex, age, nickname, photo], (error, results, fields) => {
-            if (error) {
-                console.error('회원가입 정보 삽입 실패:', error);
-                res.status(500).json({ error: '회원가입 정보 삽입 실패' });
-                return;
-            }
-            console.log('회원가입 성공')
-            connection.query('SELECT * FROM user_info WHERE user_id = ?', [id], (error, userResults, field) => {
-                if (error) {
-                    console.error('로그인 실패:', error);
-                    res.status(500).json({ error: '로그인 실패' });
-                }
-                const getTop5FestivalsQuery = 'SELECT * FROM festival_info ORDER BY `like` DESC LIMIT 5';
-                connection.query(getTop5FestivalsQuery, (error, festivalResults, fields) => {
-                if (error) {
-                    console.error('축제 정보 조회 실패:', error);
-                    res.status(500).json({ error: '축제 정보 조회 실패' });
-                    return;
-                }
-        
-                console.log('로그인 및 상위 5개 축제 정보 조회 성공');
-                res.status(200).json({ user: userResults[0], top5Festivals: festivalResults });
-                });
-            })
-        });
-    }
+
+    // 첫 번째 쿼리: 사용자 정보 조회
+    const getUserInfoQuery = 'SELECT * FROM user_info WHERE id = ? AND password = ?';
+    connection.query(getUserInfoQuery, [id, password], (error, userResults, fields) => {
+      if (error) {
+        console.error('로그인 또는 회원 가입 실패1:', error);
+        res.status(500).json({ error: '로그인 또는 회원 가입 실패' });
+        return;
+      }
+      let user;
+      console.log(userResults);
+
+      if (userResults.length > 0) {
+        user = new User(userResults[0]);
+      }
+      else {
+        console.log('로그인 또는 회원 가입 실패:');
+        res.status(200).json(false);
+      }
+      res.status(200).json({ user: user });
+    });
+  },
+
+  userSignup(req, res) {
+    const id = req.body.user.id;
+    const password = req.body.user.password;
+    const name = req.body.user.name;
+    const email = req.body.user.email;
+
+    connection.query(`INSERT INTO user_info (user_id, id, password, name, email) VALUES (REPLACE(UUID(),'-',' '), ?, ?, ?, ?)`, [id, password, name, email], (error, results, field) => {
+      if (error) {
+        console.log('회원 가입 실패');
+        res.status(500).json({ error: '회원 가입 실패' });
+      }
+      console.log('회원 가입 성공');
+      res.status(200).json(true);
+    });
+  },
+
+  userSignupIdCheck(req, res) {
+    const id = req.params.id;
+
+    connection.query('SELECT * FROM user_info WHERE id= ?', [id], (error, results, field) => {
+      if (error) {
+        console.log('중복 확인 실패');
+        res.status(500).json({ error: '중복 확인 실패' });
+      }
+
+      if (results.length == 1) {
+        console.log('중복 되었습니다.');
+        res.status(200).json(false);
+      }
+      else if (results.length == 0) {
+        console.log('중복 되지 않았습니다.');
+        res.status(200).json(true);
+      }
+      else {
+        console.log('데이터가 이상합니다.');
+        res.status(200).json({ message: '데이터가 이상합니다.' });
+      }
+    });
+  }
 }
