@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native"
-import AppStyle from '../../configs/Style.json';
+import AppStyle from '../../configs/Style';
 
 export default StyleSheet.create({
     myInfo: {

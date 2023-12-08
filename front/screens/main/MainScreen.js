@@ -6,10 +6,12 @@ import MainStyle from '../../styles/main/MainStyle';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import IPConfig from '../../configs/IPConfig.json';
+import useUser from '../../components/user/UserState';
 // import usePermissions from '../../components/map/usePermissions';
 
 export default MainScreen = (props) => {
-    const [festivalList, setFestivalList] = useState(null);
+    const [festivalList, setFestivalList] = useState();
+    const currentUser = useUser(state => state.user);
 
     useEffect(() => {
         // const backAction = () => {
@@ -30,13 +32,14 @@ export default MainScreen = (props) => {
         try {
             const response = await axios({
                 method: "get",
-                url: IPConfig.IP + "festivalList",
+                url: IPConfig.IP + `festivals/${currentUser.id}`,
                 headers: {
                     "Content-Type": "application/json"
                 },
                 responseType: "json",
             })
-            setFestivalList(response.data);
+            console.log("{MainScreen} : initMain / response.data = ", response.data);
+            setFestivalList(response.data.festivals);
         } catch (error) {
             console.log(error);
         }

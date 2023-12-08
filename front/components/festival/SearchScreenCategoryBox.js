@@ -9,9 +9,8 @@ export default SearchScreenCategoryBox = (props) => {
         >
             <TouchableOpacity
                 style={[
-                    { borderRightWidth: 1, borderRightColor: "lightgray" },
                     SearchScreenStyle.categoryButton,
-                    props.current == 1 ? SearchScreenStyle.selectedButton : null
+                    props.current == 1 ? SearchScreenStyle.selectedButton : { borderRightWidth: 1, borderRightColor: "lightgray" }
                 ]}
                 onPress={() => {
                     props.onPress(1);
@@ -23,9 +22,8 @@ export default SearchScreenCategoryBox = (props) => {
             </TouchableOpacity>
             <TouchableOpacity
                 style={[
-                    { borderRightWidth: 1, borderRightColor: "lightgray" },
                     SearchScreenStyle.categoryButton,
-                    props.current == 2 ? SearchScreenStyle.selectedButton : null
+                    props.current == 2 ? SearchScreenStyle.selectedButton : { borderRightWidth: 1, borderRightColor: "lightgray" }
                 ]}
                 onPress={() => {
                     props.onPress(2);

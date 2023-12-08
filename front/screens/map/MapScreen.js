@@ -1,6 +1,7 @@
 import { Image, View, TouchableOpacity, Text } from 'react-native';
 import NaverMap from '../../components/map/NaverMap';
 import MapStyle from '../../styles/map/MapStyle';
+import Maps from '../../components/map/Maps';
 
 export default MapScreen = (props) => {
     return (
@@ -23,7 +24,8 @@ export default MapScreen = (props) => {
                     </Image>
                 </TouchableOpacity>
             </View>
-            <NaverMap />
+            {/* <NaverMap/> */}
+            <Maps/>
         </View>
     );
 }

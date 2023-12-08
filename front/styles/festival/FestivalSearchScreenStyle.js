@@ -1,10 +1,10 @@
 import { StyleSheet } from 'react-native';
-import appStyle from '../../configs/Style.json'
+import appStyle from '../../configs/Style'
 
 export default StyleSheet.create({
     festivalSearchScreen: {
         backgroundColor : appStyle.APP_BACKGROUD_COLOR,
-        height: "100%"
+        height: "100%",
     },
     top: {
         shadowOffset: {

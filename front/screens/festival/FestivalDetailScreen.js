@@ -21,17 +21,17 @@ export default FestivalDetailScreen = (props) => {
                 />
             </View>
             <FestivalDetailButtons
-                likeCount={festivalInfo.likeCount}
+                festivalInfo={festivalInfo}
             />
             <View
                 style={FestivalDetailScreenStyle.contentBox}
             >
                 <Text
                     style={FestivalDetailScreenStyle.subject}
-                >{festivalInfo.subject}</Text>
+                >{festivalInfo.name}</Text>
                 <FestivalContent data={festivalInfo}/>
                 <LiveChat 
-                    liveChatActivate={festivalInfo.liveChatActivate}
+                    festivalInfo={festivalInfo}
                 />
                 <View>
                     <Text
@@ -58,8 +58,8 @@ export default FestivalDetailScreen = (props) => {
                     >
                         <FestivalMap
                             location={{
-                                latitude: festivalInfo.location.latitude,
-                                longitude: festivalInfo.location.longitude
+                                latitude: festivalInfo.latitude,
+                                longitude: festivalInfo.longitude
                             }}
                             subject={festivalInfo.subject}
                         />
@@ -74,7 +74,7 @@ export default FestivalDetailScreen = (props) => {
                     >
                         <Text
                             style={FestivalDetailScreenStyle.contactTitle}
-                        >www.naver.com</Text>
+                        >{festivalInfo.url}</Text>
                     </TouchableOpacity>
                 </View>
             </View>
