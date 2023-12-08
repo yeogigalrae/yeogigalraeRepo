@@ -178,7 +178,7 @@ module.exports = {
         }
 
         // 파이썬 실행 결과 전송
-        const recommend_results = stdout.split('\n').filter((result) => result.trim() !== '' && !result.includes('전달받은 변수:'));
+        const recommend_results = stdout.split('\n').filter((result) => result.trim() !== '');
         const params = recommend_results.map((result) => result.trim());
 
         console.log(params);

@@ -1,6 +1,5 @@
 class User{
-    constructor(info){
-        
+    constructor(info){        
         this.user_id = info.USER_ID
         this.id = info.ID
         this.password = info.PASSWORD

@@ -1,6 +1,5 @@
 import pandas as pd
 import numpy as np
-import pymysql
 import sys
 from sqlalchemy import create_engine
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -9,11 +8,11 @@ from scipy.sparse import hstack
 from datetime import datetime
 from dbConnection import connect_to_database
 
-userId = sys.argv[1]
-# 받아온 변수 활용
-print("전달받은 변수:", userId)
-
 engine = connect_to_database()
+
+# userId = sys.argv[1]
+userId = '8708e3fa 95ae 11ee 9e5a 9883899920ee'
+
 # 쿼리 실행 및 결과 가져오기
 query = "SELECT * FROM festival_info"
 festivals = pd.read_sql(query, engine)

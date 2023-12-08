@@ -38,6 +38,8 @@ module.exports = {
     const password = req.body.user.password;
     const name = req.body.user.name;
     const email = req.body.user.email;
+    console.log(req.body.user.id);
+    console.log(id);
 
     connection.query(`INSERT INTO user_info (user_id, id, password, name, email) VALUES (REPLACE(UUID(),'-',' '), ?, ?, ?, ?)`, [id, password, name, email], (error, results, field) => {
       if (error) {
