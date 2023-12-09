@@ -7,9 +7,6 @@ module.exports = {
   userLogin(req, res) {
     const id = req.params.id;
     const password = req.params.password;
-    console.log(id);
-    console.log(password);
-
 
     // 첫 번째 쿼리: 사용자 정보 조회
     const getUserInfoQuery = 'SELECT * FROM user_info WHERE id = ? AND password = ?';
@@ -20,7 +17,6 @@ module.exports = {
         return;
       }
       let user;
-      console.log(userResults);
 
       if (userResults.length > 0) {
         user = new User(userResults[0]);
