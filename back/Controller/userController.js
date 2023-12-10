@@ -12,6 +12,7 @@ module.exports = {
     const newPhoto = req.body.user.photo;
     const newGender = req.body.user.gender;
 
+    console.log(newPhoto);
     let query = 'UPDATE user_info SET';
 
     const params = [];
@@ -63,6 +64,10 @@ module.exports = {
         }
         console.log('회원 정보 조회 성공');
         const user = new User(results[0]);
+        console.log(user.photo);
+        // const decodedString = user.photo.toString('utf8');
+        // console.log(decodedString);
+
         res.status(200).json({ user: user });
       });
     });

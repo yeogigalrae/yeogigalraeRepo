@@ -45,14 +45,14 @@ export default SearchScreen = () => {
             try {
                 const response = await axios({
                     method: "get",
-                    url: IPConfig.IP + `festivals/search/${123}/${searchText}`,
+                    url: IPConfig.IP + `festivals/search/${currentUser.user_id}/${searchText}`,
                     headers: {
                         "Content-Type": "application/json"
                     },
                     responseType: "json",
                 })
                 console.log("{SearchScreen} : textRequest / response.data = ", response.data);
-                navigation.navigate("search", { data: response.data, top: "전체" });
+                navigation.navigate("search", { data: response.data.festivals, top: "전체" });
             } catch (error) {
                 console.log(error);
             }

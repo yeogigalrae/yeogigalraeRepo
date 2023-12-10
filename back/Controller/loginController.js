@@ -7,9 +7,6 @@ module.exports = {
   userLogin(req, res) {
     const id = req.params.id;
     const password = req.params.password;
-    console.log(id);
-    console.log(password);
-
 
     // 첫 번째 쿼리: 사용자 정보 조회
     const getUserInfoQuery = 'SELECT * FROM user_info WHERE id = ? AND password = ?';
@@ -19,17 +16,14 @@ module.exports = {
         res.status(500).json({ error: '로그인 또는 회원 가입 실패' });
         return;
       }
-      let user;
-      console.log(userResults);
-
       if (userResults.length > 0) {
-        user = new User(userResults[0]);
+        const user = new User(userResults[0]);
+        res.status(200).json({ user: user });
       }
       else {
         console.log('로그인 또는 회원 가입 실패:');
         res.status(200).json(false);
       }
-      res.status(200).json({ user: user });
     });
   },
 
