@@ -1,57 +1,57 @@
-import { Router } from 'express';
+const express = require('express');
 
-import { updateUserInfo, updateNoticeSettings, deleteUser } from './Controller/userController';
-import { putLikeButton, getLikedFestival } from './Controller/likeController';
-import { getMainFestivals, getFestivals, getRecommendFestivals, getCategorizeFestival, getSearchFestival } from './Controller/festivalController';
-import { userLogin, userSignup, userSignupIdCheck } from './Controller/loginController';
+const userController = require('./Controller/userController');
+const likeController = require('./Controller/likeController');
+const festivalController = require('./Controller/festivalController');
+const loginController = require('./Controller/loginController');
 
-const routes = Router();
+const routes = express.Router();
 
 // 회원 정보 변경
-routes.put('/users/:user_id', updateUserInfo);
+routes.put('/users/:user_id', userController.updateUserInfo);
 
 // 알림 설정 변경
-routes.put('/users/:user_id/notice', updateNoticeSettings);
+routes.put('/users/:user_id/notice', userController.updateNoticeSettings);
 
 // 회원 탈퇴
-routes.delete('/users/:user_id', deleteUser);
+routes.delete('/users/:user_id', userController.deleteUser);
 
 
 // 좋아요 버튼 기능
-routes.put('/festivals/:festival_id/like/:user_id', putLikeButton);
+routes.put('/festivals/:festival_id/like/:user_id', likeController.putLikeButton);
 
 // 좋아요한 축제 조회
-routes.get('/festivals/:user_id/liked', getLikedFestival);
+routes.get('/festivals/:user_id/liked', likeController.getLikedFestival);
 
 
 // 축제 상위 5개 조회
-routes.get('/festivals/:user_id', getMainFestivals);
+routes.get('/festivals/top5/:user_id', festivalController.getMainFestivals);
 
 // 진행 중이거나 예정인 축제
-routes.get('/festivals/:user_id', getFestivals);
+routes.get('/festivals/:user_id', festivalController.getFestivals);
 
 // 추천 축제 조회
-routes.get('/festivals/recommends/:user_id', getRecommendFestivals);
+routes.get('/festivals/recommends/:user_id', festivalController.getRecommendFestivals);
 
 // 분류별 축제 검색
-routes.get('/festivals/search/:user_id/:category/:date/:place', getCategorizeFestival);
+routes.get('/festivals/search/:user_id/:category/:date/:place', festivalController.getCategorizeFestival);
 
 // 축제 검색
-routes.get('/festivals/search/:user_id/:search', getSearchFestival);
+routes.get('/festivals/search/:user_id/:search', festivalController.getSearchFestival);
 
 // // 축제 상세 조회
 // routes.get('/festivals/:festival_id/:user_id', festivalController.getFestivalInfo);
 
 
 // 로그인
-routes.get('/users/login/:id/:password', userLogin);
+routes.get('/users/login/:id/:password', loginController.userLogin);
 
 // 회원가입
-routes.post('/users/signup', userSignup);
+routes.post('/users/signup', loginController.userSignup);
 
 // 아이디 중복 체크
-routes.get('/users/signup/idcheck/:id', userSignupIdCheck);
+routes.get('/users/signup/idcheck/:id', loginController.userSignupIdCheck);
 
-export default routes;
+module.exports = routes;
 
 

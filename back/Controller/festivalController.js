@@ -186,7 +186,7 @@ module.exports = {
             }
 
             // 파이썬 실행 결과 전송
-            const recommend_results = stdout.split('\n').filter((result) => result.trim() !== '' && !result.includes('전달받은 변수:'));
+            const recommend_results = stdout.split('\n').filter((result) => result.trim() !== '' );
             const params = recommend_results.map((result) => result.trim());
 
             connection.query('SELECT * FROM festival_info WHERE name IN (?, ?, ?, ?, ?)', params, (error, results, fields) => {
@@ -217,6 +217,7 @@ module.exports = {
             const festival = new Festival(results[i]);
             festivalList.push(festival);
           }
+          console.log(festivalList);
           res.status(200).json({ festivals: festivalList });
         });
       }
