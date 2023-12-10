@@ -1,15 +1,12 @@
 import pandas as pd
 import numpy as np
 import sys
-from sqlalchemy import create_engine
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import linear_kernel
-from scipy.sparse import hstack
-from datetime import datetime
 from dbConnection import connect_to_database
 
-# userId = sys.argv[1]
-userId = "f98a44f6 95dd 11ee 9e5a 9883899920ee"
+userId = sys.argv[1]
+# userId = "f98a44f6 95dd 11ee 9e5a 9883899920ee"
 
 engine = connect_to_database()
 # 쿼리 실행 및 결과 가져오기

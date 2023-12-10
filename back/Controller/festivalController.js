@@ -141,6 +141,7 @@ module.exports = {
         const festival = new Festival(results[i]);
         festivalList.push(festival);
       }
+      console.log(festivalList)
       res.status(200).json({ festivals: festivalList });
     });
   },
@@ -217,7 +218,6 @@ module.exports = {
             const festival = new Festival(results[i]);
             festivalList.push(festival);
           }
-          console.log(festivalList);
           res.status(200).json({ festivals: festivalList });
         });
       }
