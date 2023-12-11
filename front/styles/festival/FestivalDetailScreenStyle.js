@@ -6,7 +6,7 @@ export default StyleSheet.create({
         backgroundColor: appStyle.APP_BACKGROUD_COLOR,
     },
     imageBox : {
-        height: 200,
+        height: 500,
         backgroundColor: "lightgray"
     },
     image : {
@@ -99,14 +99,14 @@ export default StyleSheet.create({
 
     // LiveChat
     liveChatBox: {
-        paddingVertical: 20,
         borderBottomWidth: 1,
         borderTopWidth: 1,
         marginVertical: 10
     },
     liveChatButton: {
+        paddingVertical: 20,
         flexDirection: "row",
-        width: "auto",
+        maxWidth: 200,
     },
     liveChatLabel: {
         fontSize: 18,
@@ -131,5 +131,41 @@ export default StyleSheet.create({
         height: 10,
         borderRadius: 50,
         backgroundColor: "red"
+    },
+    liveChatArea: {
+        height: 600,
+        backgroundColor: appStyle.APP_MAIN_COLOR
+    },
+    liveChatInputBox: {
+        backgroundColor: "white",
+        justifyContent: "center",
+        alignItems: "center",
+        flexDirection: "row",
+        shadowOffset: {
+            width: 0,
+            height: -5
+        },
+        shadowOpacity: 0.2,
+        shadowRadius: 5
+    },
+    liveChatInput: {
+        borderWidth: 1,
+        width: "80%",
+        padding:10,
+        height: 70,
+        borderColor: appStyle.APP_MAIN_COLOR,
+        backgroundColor: "white",
+        flex: 5
+    },
+    liveChatInputButton:{
+        justifyContent: "center",
+        width: "20%",
+        height: 70,
+        alignItems: "center",
+        backgroundColor: appStyle.APP_MAIN_COLOR,
+    },
+    liveChatInputButtonImage: {
+        width: 30,
+        height: 30,
     }
 })

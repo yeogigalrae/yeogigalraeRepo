@@ -9,7 +9,7 @@ export default StyleSheet.create({
     searchBox: {
         alignItems: "center",
         backgroundColor: "white",
-        height: 70,
+        height: "10%",
         justifyContent: "center",
     },
     searchButton: {

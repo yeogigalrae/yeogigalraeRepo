@@ -13,6 +13,22 @@ export default MapScreen = (props) => {
             >
                 <TouchableOpacity
                     style={MapStyle.searchButton}
+                    onPress={async() => {
+                        try{
+                            // const response = await axios({
+                            //     method : "post",
+                            //     url: IPConfig.IP + "coordinates",
+                            //     headers: {"Content-Type" : "application/json"},
+                            //     data : {
+                            //         latitude : 35.851692,
+                            //         longitude : 128.6950183
+                            //     }
+                            // })
+                            console.log(response.data);
+                        } catch (error){
+                            console.log(error);
+                        }
+                    }}
                 >
                     <Text
                         style={MapStyle.searchButtonLabel}
@@ -24,8 +40,8 @@ export default MapScreen = (props) => {
                     </Image>
                 </TouchableOpacity>
             </View>
-            {/* <NaverMap/> */}
             <Maps/>
+            {/* <NaverMap/> */}
         </View>
     );
 }
