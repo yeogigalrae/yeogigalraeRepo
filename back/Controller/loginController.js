@@ -24,12 +24,12 @@ module.exports = {
 
       if (userResults.length > 0) {
         user = new User(userResults[0]);
+        res.status(200).json({ user: user });
       }
       else {
         console.log('로그인 또는 회원 가입 실패:');
         res.status(200).json(false);
       }
-      res.status(200).json({ user: user });
     });
   },
 
