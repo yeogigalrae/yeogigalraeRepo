@@ -4,7 +4,7 @@ import { View, Dimensions } from 'react-native';
 // import NaverMapView, { Circle, Marker, Path, Polyline, Polygon } from "react-native-nmap";
 
 export default NaverMap = () => {
-    const [myPosition, setMyPosition] = useState({latitude: 36.7998, longitude: 127.0749});
+    // const [myPosition, setMyPosition] = useState({latitude: 36.7998, longitude: 127.0749});
     const start = { latitude: 37.564362, longitude: 126.977011 };
     const end = { latitude: 37.565051, longitude: 126.978567 };
     const P2 = { latitude: 37.565383, longitude: 126.976292 };

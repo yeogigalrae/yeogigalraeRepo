@@ -16,8 +16,10 @@ module.exports = {
         res.status(500).json({ error: '로그인 또는 회원 가입 실패' });
         return;
       }
+
       if (userResults.length > 0) {
         const user = new User(userResults[0]);
+
         res.status(200).json({ user: user });
       }
       else {

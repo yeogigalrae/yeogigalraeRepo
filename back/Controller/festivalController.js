@@ -218,6 +218,7 @@ module.exports = {
             const festival = new Festival(results[i]);
             festivalList.push(festival);
           }
+
           res.status(200).json({ festivals: festivalList });
         });
       }
