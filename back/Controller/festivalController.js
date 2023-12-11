@@ -2,7 +2,7 @@ const createConnection = require('../database/dbConnection');
 const connection = createConnection();
 const Festival = require('../models/festival');
 const path = require('path');
-const { spawn } = require('child_process');
+const { exec } = require('child_process');
 
 process.env.PYTHONIOENCODING = 'utf-8';
 
@@ -66,6 +66,7 @@ module.exports = {
     const category = req.params.category; // 클라이언트에서 보낼때 대소문자 구분
     const date = req.params.date;
     const place = req.params.place.split(','); // 여러 값을 콤마로 구분하여 배열로 변환
+    console.log(place);
 
     let query = `SELECT festival_info.*, IF(l.festival_id IS NOT NULL, 1, NULL) AS LIKESTATE
                 FROM festival_info LEFT OUTER JOIN (SELECT festival_id FROM like1 WHERE user_id = ?) l ON festival_info.festival_id = l.festival_id
@@ -93,6 +94,7 @@ module.exports = {
       query += ' AND festival_info.place IN (?)';
       params.push(place);
     }
+    console.log(query);
 
     connection.query(query + ' ORDER BY festival_info.begin_date ASC', params, (error, results, fields) => {
       if (error) {
@@ -146,10 +148,10 @@ module.exports = {
     });
   },
 
-  //추천 페이지
+  // 추천 페이지
   getRecommendFestivals(req, res) {
     const userId = req.params.user_id;
-
+  
     let checkquery = `SELECT festival_id FROM like1 WHERE user_id = ?`;
     connection.query(checkquery, [userId], (error, results, fields) => {
       if (error) {
@@ -162,35 +164,24 @@ module.exports = {
         try {
           // 파이썬 파일의 디렉토리 경로
           const pythonFilePath = path.join(__dirname, 'recommend', 'recommend.py');
-
-          // 파이썬 프로세스 생성
-          const pythonProcess = spawn('python', [pythonFilePath, userId]);
-
-          // 파이썬 스크립트 실행 결과 받기
-          let stdout = '';
-          pythonProcess.stdout.on('data', (data) => {
-            stdout += data.toString();
-          });
-
-          // 파이썬 스크립트 실행 중 에러 처리
-          pythonProcess.on('error', (error) => {
-            console.error(`파이썬 실행 중 에러가 발생했습니다: ${error}`);
-            res.status(500).json({ error: '파이썬 실행 중 에러가 발생했습니다.' });
-          });
-
-          // 파이썬 스크립트 실행 완료 처리
-          pythonProcess.on('close', (code) => {
-            if (code !== 0) {
-              console.error('파이썬 스크립트 실행이 비정상적으로 종료되었습니다.');
-              res.status(500).json({ error: '파이썬 스크립트 실행이 비정상적으로 종료되었습니다.' });
+  
+          // 파이썬 명령어 생성
+          const command = `python ${pythonFilePath} "${userId}"`;
+  
+          // 파이썬 스크립트 실행
+          exec(command, (error, stdout, stderr) => {
+            if (error) {
+              console.error(`파이썬 실행 중 에러가 발생했습니다: ${error}`);
+              res.status(500).json({ error: '파이썬 실행 중 에러가 발생했습니다.' });
               return;
             }
-
-            // 파이썬 실행 결과 전송
-            const recommend_results = stdout.split('\n').filter((result) => result.trim() !== '' );
+  
+            // 실행 결과 전송
+            const recommend_results = stdout.split('\n').filter((result) => result.trim() !== '');
             const params = recommend_results.map((result) => result.trim());
-
-            connection.query('SELECT * FROM festival_info WHERE name IN (?, ?, ?, ?, ?)', params, (error, results, fields) => {
+  
+            const query = 'SELECT * FROM festival_info WHERE name IN (?, ?, ?, ?, ?)';
+            connection.query(query, params, (error, results, fields) => {
               if (error) {
                 console.error('추천 축제 정보 가져오기 실패:', error);
                 res.status(500).json({ error: '추천 축제 정보 가져오기 실패' });
@@ -211,6 +202,7 @@ module.exports = {
           if (error) {
             console.error('추천 축제 정보 가져오기 실패2:', error);
             res.status(500).json({ error: '추천 축제 정보 가져오기 실패2' });
+            return;
           }
           console.log('추천 축제 가져오기 성공2');
           const festivalList = []
@@ -218,7 +210,7 @@ module.exports = {
             const festival = new Festival(results[i]);
             festivalList.push(festival);
           }
-
+          console.log(festivalList);
           res.status(200).json({ festivals: festivalList });
         });
       }
