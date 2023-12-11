@@ -10,8 +10,6 @@ from datetime import datetime
 from dbConnection import connect_to_database
 
 userId = sys.argv[1]
-# 받아온 변수 활용
-print("전달받은 변수:", userId)
 
 engine = connect_to_database()
 # 쿼리 실행 및 결과 가져오기

@@ -25,7 +25,7 @@ routes.get('/festivals/:user_id/liked', likeController.getLikedFestival);
 
 
 // 축제 상위 5개 조회
-routes.get('/festivals/:user_id', festivalController.getMainFestivals);
+routes.get('/festivals/top5/:user_id', festivalController.getMainFestivals);
 
 // 진행 중이거나 예정인 축제
 routes.get('/festivals/:user_id', festivalController.getFestivals);

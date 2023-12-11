@@ -10,7 +10,7 @@ module.exports = {
   // 좋아요 상위 5개 조회 (메인 페이지)
   getMainFestivals(req, res) {
     const userId = req.params.user_id;
-    console.log(userId);
+
     let getTop5FestivalsQuery = `SELECT festival_info.*, IF(l.festival_id IS NOT NULL, 1, NULL) AS LIKESTATE 
                                   FROM festival_info LEFT OUTER JOIN (SELECT festival_id FROM like1 WHERE user_id = ?) l
                                   ON festival_info.festival_id = l.festival_id
@@ -93,7 +93,6 @@ module.exports = {
       query += ' AND festival_info.place IN (?)';
       params.push(place);
     }
-    console.log(query);
 
     connection.query(query + ' ORDER BY festival_info.begin_date ASC', params, (error, results, fields) => {
       if (error) {
@@ -101,7 +100,6 @@ module.exports = {
         res.status(500).json({ error: '축제 정보 가져오기 실패' });
         return;
       }
-      console.log(results);
 
       console.log('축제 정보 가져오기 성공2');
       const festivalList = []
@@ -178,10 +176,9 @@ module.exports = {
         }
 
         // 파이썬 실행 결과 전송
-        const recommend_results = stdout.split('\n').filter((result) => result.trim() !== '' && !result.includes('전달받은 변수:'));
+        const recommend_results = stdout.split('\n').filter((result) => result.trim() !== '');
         const params = recommend_results.map((result) => result.trim());
 
-        console.log(params);
         connection.query('SELECT * FROM festival_info WHERE name IN (?, ?, ?, ?, ?)', params, (error, results, fields) => {
           if (error) {
             console.error('추천 축제 정보 가져오기 실패:', error);

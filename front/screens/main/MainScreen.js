@@ -32,7 +32,7 @@ export default MainScreen = (props) => {
         try {
             const response = await axios({
                 method: "get",
-                url: IPConfig.IP + `festivals/${currentUser.id}`,
+                url: IPConfig.IP + `festivals/top5/${currentUser.id}`,
                 headers: {
                     "Content-Type": "application/json"
                 },
