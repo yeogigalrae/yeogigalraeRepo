@@ -79,9 +79,11 @@ export default Init_UserInfoScreen = () => {
                 responseType: "json",
             })
             console.log("{UserInfoScreen} : onRegistration / response.data = ", response.data);
-            const imageData = response.data.user.photo.data;
-            const newPhoto = imageData.map(num => String.fromCharCode(num)).join('');
-            response.data.user.photo = newPhoto;
+            const imageData = response.data.user.photo;
+            // const newPhoto = imageData.map(num => String.fromCharCode(num)).join('');
+            console.log("imageData :" + imageData);
+            // console.log("newPhoto :" + newPhoto);
+            response.data.user.photo = imageData;
             setUser(response.data.user);
         } catch (error) {
             console.log(error);

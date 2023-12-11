@@ -10,7 +10,7 @@ module.exports = {
   // 좋아요 상위 5개 조회 (메인 페이지)
   getMainFestivals(req, res) {
     const userId = req.params.user_id;
-
+    
     let getTop5FestivalsQuery = `SELECT festival_info.*, IF(l.festival_id IS NOT NULL, 1, NULL) AS LIKESTATE 
                                   FROM festival_info LEFT OUTER JOIN (SELECT festival_id FROM like1 WHERE user_id = ?) l
                                   ON festival_info.festival_id = l.festival_id
@@ -141,6 +141,7 @@ module.exports = {
         const festival = new Festival(results[i]);
         festivalList.push(festival);
       }
+      console.log(festivalList)
       res.status(200).json({ festivals: festivalList });
     });
   },
@@ -217,7 +218,7 @@ module.exports = {
             const festival = new Festival(results[i]);
             festivalList.push(festival);
           }
-          console.log(festivalList);
+
           res.status(200).json({ festivals: festivalList });
         });
       }
