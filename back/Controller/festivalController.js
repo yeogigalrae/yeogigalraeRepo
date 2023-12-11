@@ -145,55 +145,83 @@ module.exports = {
     });
   },
 
-  //추천 축제 조회
+  //추천 페이지
   getRecommendFestivals(req, res) {
     const userId = req.params.user_id;
-    try {
-      // 파이썬 파일의 디렉토리 경로
-      const pythonFilePath = path.join(__dirname, 'recommend', 'recommend.py');
 
-      // 파이썬 프로세스 생성
-      const pythonProcess = spawn('python', [pythonFilePath, userId]);
+    let checkquery = `SELECT festival_id FROM like1 WHERE user_id = ?`;
+    connection.query(checkquery, [userId], (error, results, fields) => {
+      if (error) {
+        console.error('추천 축제 정보 가져오기 실패1:', error);
+        res.status(500).json({ error: '추천 축제 정보 가져오기 실패1' });
+        return;
+      }
+      console.log(results);
+      if (results.length > 0) {
+        try {
+          // 파이썬 파일의 디렉토리 경로
+          const pythonFilePath = path.join(__dirname, 'recommend', 'recommend.py');
 
-      // 파이썬 스크립트 실행 결과 받기
-      let stdout = '';
-      pythonProcess.stdout.on('data', (data) => {
-        stdout += data.toString();
-      });
+          // 파이썬 프로세스 생성
+          const pythonProcess = spawn('python', [pythonFilePath, userId]);
 
-      // 파이썬 스크립트 실행 중 에러 처리
-      pythonProcess.on('error', (error) => {
-        console.error(`파이썬 실행 중 에러가 발생했습니다: ${error}`);
-        res.status(500).json({ error: '파이썬 실행 중 에러가 발생했습니다.' });
-      });
+          // 파이썬 스크립트 실행 결과 받기
+          let stdout = '';
+          pythonProcess.stdout.on('data', (data) => {
+            stdout += data.toString();
+          });
 
-      // 파이썬 스크립트 실행 완료 처리
-      pythonProcess.on('close', (code) => {
-        if (code !== 0) {
-          console.error('파이썬 스크립트 실행이 비정상적으로 종료되었습니다.');
-          res.status(500).json({ error: '파이썬 스크립트 실행이 비정상적으로 종료되었습니다.' });
-          return;
+          // 파이썬 스크립트 실행 중 에러 처리
+          pythonProcess.on('error', (error) => {
+            console.error(`파이썬 실행 중 에러가 발생했습니다: ${error}`);
+            res.status(500).json({ error: '파이썬 실행 중 에러가 발생했습니다.' });
+          });
+
+          // 파이썬 스크립트 실행 완료 처리
+          pythonProcess.on('close', (code) => {
+            if (code !== 0) {
+              console.error('파이썬 스크립트 실행이 비정상적으로 종료되었습니다.');
+              res.status(500).json({ error: '파이썬 스크립트 실행이 비정상적으로 종료되었습니다.' });
+              return;
+            }
+
+            // 파이썬 실행 결과 전송
+            const recommend_results = stdout.split('\n').filter((result) => result.trim() !== '' );
+            const params = recommend_results.map((result) => result.trim());
+
+            connection.query('SELECT * FROM festival_info WHERE name IN (?, ?, ?, ?, ?)', params, (error, results, fields) => {
+              if (error) {
+                console.error('추천 축제 정보 가져오기 실패:', error);
+                res.status(500).json({ error: '추천 축제 정보 가져오기 실패' });
+                return;
+              }
+              console.log('추천 축제 정보 가져오기 성공');
+              const festivalList = results.map((result) => new Festival(result));
+              res.status(200).json({ festivals: festivalList });
+            });
+          });
+        } catch (error) {
+          console.error(`요청 데이터 파싱 중 에러가 발생했습니다: ${error}`);
+          res.status(400).json({ error: '올바른 JSON 형식의 요청 데이터를 전송해야 합니다.' });
         }
-
-        // 파이썬 실행 결과 전송
-        const recommend_results = stdout.split('\n').filter((result) => result.trim() !== '');
-        const params = recommend_results.map((result) => result.trim());
-
-        connection.query('SELECT * FROM festival_info WHERE name IN (?, ?, ?, ?, ?)', params, (error, results, fields) => {
+      } else {
+        let fsquery = `SELECT * FROM festival_info WHERE CURDATE() < begin_date ORDER BY begin_date LIMIT 5`;
+        connection.query(fsquery, (error, results, fields) => {
           if (error) {
-            console.error('추천 축제 정보 가져오기 실패:', error);
-            res.status(500).json({ error: '추천 축제 정보 가져오기 실패' });
-            return;
+            console.error('추천 축제 정보 가져오기 실패2:', error);
+            res.status(500).json({ error: '추천 축제 정보 가져오기 실패2' });
           }
-          console.log('추천 축제 정보 가져오기 성공');
-          const festivalList = results.map((result) => new Festival(result));
+          console.log('추천 축제 가져오기 성공2');
+          const festivalList = []
+          for (let i in results) {
+            const festival = new Festival(results[i]);
+            festivalList.push(festival);
+          }
+          console.log(festivalList);
           res.status(200).json({ festivals: festivalList });
         });
-      });
-    } catch (error) {
-      console.error(`요청 데이터 파싱 중 에러가 발생했습니다: ${error}`);
-      res.status(400).json({ error: '올바른 JSON 형식의 요청 데이터를 전송해야 합니다.' });
-    }
+      }
+    });
   }
 
   // ,
