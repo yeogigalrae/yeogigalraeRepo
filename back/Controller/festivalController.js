@@ -10,7 +10,7 @@ module.exports = {
   // 좋아요 상위 5개 조회 (메인 페이지)
   getMainFestivals(req, res) {
     const userId = req.params.user_id;
-    
+
     let getTop5FestivalsQuery = `SELECT festival_info.*, IF(l.festival_id IS NOT NULL, 1, NULL) AS LIKESTATE 
                                   FROM festival_info LEFT OUTER JOIN (SELECT festival_id FROM like1 WHERE user_id = ?) l
                                   ON festival_info.festival_id = l.festival_id
@@ -66,6 +66,7 @@ module.exports = {
     const category = req.params.category; // 클라이언트에서 보낼때 대소문자 구분
     const date = req.params.date;
     const place = req.params.place.split(','); // 여러 값을 콤마로 구분하여 배열로 변환
+    const convertplace = convertToLikePatterns(place);
 
     let query = `SELECT festival_info.*, IF(l.festival_id IS NOT NULL, 1, NULL) AS LIKESTATE
                 FROM festival_info LEFT OUTER JOIN (SELECT festival_id FROM like1 WHERE user_id = ?) l ON festival_info.festival_id = l.festival_id
@@ -89,9 +90,18 @@ module.exports = {
     if (place == 'ALL') {
 
     } else {
-      // 여러 값에 대한 조건을 IN 절로 추가
-      query += ' AND festival_info.place IN (?)';
-      params.push(place);
+      if (convertplace.length > 0) {
+        query += ' AND';
+        for (let i = 0; i < convertplace.length; i++) {
+          query += ' festival_info.address LIKE ?';
+          if (i < convertplace.length - 1) {
+            query += ' OR';
+          }
+        }
+      }
+      for (i in convertplace) {
+        params.push(convertplace[i]);
+      }
     }
 
     connection.query(query + ' ORDER BY festival_info.begin_date ASC', params, (error, results, fields) => {
@@ -149,7 +159,7 @@ module.exports = {
   // 추천 페이지
   getRecommendFestivals(req, res) {
     const userId = req.params.user_id;
-  
+
     let checkquery = `SELECT festival_id FROM like1 WHERE user_id = ?`;
     connection.query(checkquery, [userId], (error, results, fields) => {
       if (error) {
@@ -162,10 +172,10 @@ module.exports = {
         try {
           // 파이썬 파일의 디렉토리 경로
           const pythonFilePath = path.join(__dirname, 'recommend', 'recommend.py');
-  
+
           // 파이썬 명령어 생성
           const command = `python ${pythonFilePath} "${userId}"`;
-  
+
           // 파이썬 스크립트 실행
           exec(command, (error, stdout, stderr) => {
             if (error) {
@@ -173,11 +183,11 @@ module.exports = {
               res.status(500).json({ error: '파이썬 실행 중 에러가 발생했습니다.' });
               return;
             }
-  
+
             // 실행 결과 전송
             const recommend_results = stdout.split('\n').filter((result) => result.trim() !== '');
             const params = recommend_results.map((result) => result.trim());
-  
+
             const query = 'SELECT * FROM festival_info WHERE name IN (?, ?, ?, ?, ?)';
             connection.query(query, params, (error, results, fields) => {
               if (error) {
