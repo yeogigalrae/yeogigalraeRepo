@@ -66,6 +66,7 @@ module.exports = {
     const category = req.params.category; // 클라이언트에서 보낼때 대소문자 구분
     const date = req.params.date;
     const place = req.params.place.split(','); // 여러 값을 콤마로 구분하여 배열로 변환
+    const convertplace = convertToLikePatterns(place);
 
     let query = `SELECT festival_info.*, IF(l.festival_id IS NOT NULL, 1, NULL) AS LIKESTATE
                 FROM festival_info LEFT OUTER JOIN (SELECT festival_id FROM like1 WHERE user_id = ?) l ON festival_info.festival_id = l.festival_id
