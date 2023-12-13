@@ -10,7 +10,7 @@ import Message from '../../components/festival/festivalDetail/Message';
 import axios from "axios";
 
 
-export default LiveChatScreen = ({route}) => {
+export default LiveChatScreen = ({ route }) => {
     const currentUser = useUser(state => state.user);
     const festivalList = useFestivalStore(state => state.festivalList);
     const [currentFestival, setCurrentFestival] = useState(
@@ -18,80 +18,93 @@ export default LiveChatScreen = ({route}) => {
             return route.params.festivalInfo == festival
         })
     );
+    const scrollViewRef = useRef(null);
 
     const [message, setMessage] = useState();
     const [socket, setSocket] = useState(null);
     const [messageList, setMessageList] = useState([]);
-    const [pageNum, setPageNum] = useState(1);
+    const [pageNum, setPageNum] = useState(0);
+    const [isMaxPageNum, setMaxPageNum] = useState(false);
     // const [inputFocus, setInputFocus] = useState(false);
+
+    const scrollToBottom = () => {
+        scrollViewRef.current?.scrollToEnd({ animated: true });
+    };
+
+    const sendMessage = async () => {
+        if(message){
+            try {
+                if (socket) {
+                    socket.emit('send', {
+                        type: "send",
+                        user_id: currentUser.user_id,
+                        festival_id: currentFestival.id,
+                        msg: message,
+                    });
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    }
+
+    const getMessage = async () => {
+        if(!isMaxPageNum){
+            setPageNum(pageNum + 1);
+            console.log(pageNum);
+            try {
+                const response = await axios({
+                    method: "get",
+                    url: IPConfig.IP + `festivals/${currentFestival.id}/messages/${pageNum}`,
+                    headers: { "Content-Type": "application/json" }
+                })
+                // console.log("{LiveChat} : getMessage / response.data = ", response.data);
+                if(response.data.messageList == "") {
+                    setMaxPageNum(true);
+                } 
+                setMessageList(messageList => [...response.data.messageList, ...messageList]);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    }
+
+    const handleScroll = (event) => {
+        const offsetY = event.nativeEvent.contentOffset.y;
+        const currentHeight = event.nativeEvent.contentSize.height/20
+        if (offsetY < currentHeight) {
+            // 스크롤이 스크롤 뷰의 높이 
+            getMessage();
+        }
+    };
 
     useEffect(() => {
         const newSocket = io(IPConfig.LIVE_CHAT_IP);
-
-        setPageNum(1); // 상세페이지 오면 pageNum을 1로 초기화
+        
+        scrollToBottom();
+        setPageNum(0); // 상세페이지 오면 pageNum을 1로 초기화
         getMessage(); // 메시지 가져오기 
-
-
+    
+    
         newSocket.on('message', data => {
             console.log(data);
             setMessageList(preMessageList => [...preMessageList, data]);
         })
-
+    
         newSocket.on('error', e => {
             console.log(e.message);
         });
         newSocket.on('disconnect', e => {
             console.log('Disconnected. Check internet or server.');
         });
-
+    
         setSocket(newSocket);
-
+    
         return () => {
-            console.log("상세 페이지 나감")
-            let message = {
-                type: 'Leave',
-            };
-            newSocket.emit('Leave', message);
+            console.log("채팅 페이지 나감")
+            newSocket.emit('Leave', currentUser.user_id);
         };
     }, []);
-
-    const sendMessage = async () => {
-        try {
-            if (socket) {
-                socket.emit('send', {
-                    type: "send",
-                    user_id: currentUser.user_id,
-                    festival_id: currentFestival.id,
-                    msg: message,
-                });
-            }
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
-    const getMessage = async () => {
-        try {
-            const response = await axios({
-                method: "get",
-                url: IPConfig.IP + `festivals/${currentFestival.id}/messages/${pageNum}`,
-                headers: { "Content-Type": "application/json" }
-            })
-            // console.log("{LiveChat} : getMessage / response.data = ", response.data);
-            setMessageList(messageList => [...response.data.messageList, ...messageList]);
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
-    const handleScroll = (event) => {
-        const offsetY = event.nativeEvent.contentOffset.y;
-        if (offsetY === 0) {
-            // 스크롤이 맨 위에 도달했을 때 실행할 함수
-            setPageNum(pageNum + 1);
-            getMessage();
-        }
-    };
 
     return (
         <View
@@ -105,12 +118,16 @@ export default LiveChatScreen = ({route}) => {
                     style={LiveChatStyle.liveChatArea}
                     onScroll={handleScroll}
                     scrollEventThrottle={16}
+                    stickyHeaderHiddenOnScroll={true}
+                    ref={scrollViewRef}
+                
                 >
                     {
                         messageList?.map((data, idx) => {
                             return <Message data={data} key={idx} />
                         })
                     }
+                    <View style={{paddingBottom: 30}}/>
                 </ScrollView>
                 <View
                     style={LiveChatStyle.liveChatInputBox}
@@ -118,14 +135,15 @@ export default LiveChatScreen = ({route}) => {
                     <TextInput
                         style={LiveChatStyle.liveChatInput}
                         onChangeText={(value) => setMessage(value)}
-                        // multiline={true}
-                        // focusable={() => setInputFocus(true)}
+                        value={message}
                     >
                     </TextInput>
                     <TouchableOpacity
                         style={LiveChatStyle.liveChatInputButton}
                         onPress={() => {
-                            sendMessage()
+                            sendMessage();
+                            setMessage("");
+                            scrollToBottom();
                         }}
                     >
                         <Image

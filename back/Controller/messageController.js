@@ -8,27 +8,28 @@ module.exports = {
     getMessage(req, res) {
         const festival_id = req.params.festival_id;
         const pageNum = req.params.pageNum;
-        console.log(pageNum);
 
         const query = `
-        SELECT nickname, photo, chat_content, date
-        FROM user_info, (
-          SELECT *
-          FROM live_chat
-          WHERE FESTIVAL_ID = ?
-          ORDER BY date desc
-          limit 10
-          offset ?
-        ) AS lc
-        WHERE user_info.user_id = lc.user_id
+            SELECT NICKNAME, PHOTO, CHAT_CONTENT, DATE
+            FROM USER_INFO, (
+                SELECT *
+                FROM LIVE_CHAT
+                WHERE FESTIVAL_ID = ?
+                ORDER BY DATE DESC
+                LIMIT 20
+                OFFSET ?
+            ) AS LC
+            WHERE USER_INFO.USER_ID = LC.USER_ID
+            ORDER BY DATE ASC
         `;
-        connection.query(query, [festival_id, Number(pageNum)*10], (error, results, fields) => {
+        connection.query(query, [festival_id, Number(pageNum)*20], (error, results, fields) => {
             if (error) {
                 console.error(error);
             } else {
                 const messageList = []
                 for (let i in results) {
                     let message = new Message(results[i]);
+                    console.log(message);
                     messageList.push(message);
                 }
                 res.status(200).json({ messageList: messageList });

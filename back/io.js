@@ -18,24 +18,24 @@ module.exports = () => {
             const msg = data.msg;
 
             let query = `
-                insert into live_chat(
-                    user_id, festival_id, chat_content, date
+                INSERT INTO LIVE_CHAT(
+                    USER_ID, FESTIVAL_ID, CHAT_CONTENT, DATE
                 )
-                values(?, ?, ?, now())`;
+                VALUES(?, ?, ?, NOW())`;
             connection.query(query, [user_id, festival_id, msg], (error, results, fields) => {
                 if (error) {
                     console.error(error);
                 } else {
                     let query = `
-                        select *
-                        from live_chat, (
-                            select nickname, photo
-                            from user_info
-                            where user_id = ?
-                        ) as info
-                        where chat_id = ?
-                            and user_id = ?
-                            and festival_id = ?`;
+                        SELECT *
+                        FROM LIVE_CHAT, (
+                            SELECT NICKNAME, PHOTO
+                            FROM USER_INFO
+                            WHERE USER_ID = ?
+                        ) AS INFO
+                        WHERE CHAT_ID = ?
+                            AND USER_ID = ?
+                            AND FESTIVAL_ID = ?`;
                     connection.query(
                         query,
                         [user_id, results.insertId, user_id, festival_id],
@@ -43,7 +43,9 @@ module.exports = () => {
                             if(error){
                                 console.log(error);
                             } else {
+                                console.log("results[0] : ", results[0]);
                                 const response = new Message(results[0]);
+                                console.log("response : ", response);
                                 io.emit('message', response);
                             }
                         }
@@ -56,6 +58,10 @@ module.exports = () => {
         // 연결되어있던 소켓과 접속이 끊어지면 자동으로 실행
         socket.on('disconnect', function () {
             console.log("접속 종료");
+        })
+
+        socket.on('Leave', function(user_id) {
+            console.log(user_id+" 연결 종료")
         })
     })
 
