@@ -1,6 +1,5 @@
 class User{
     constructor(info){
-        // const newPhoto = info.PHOTO.map(num => String.fromCharCode(num)).join('');
         if(info.PHOTO != null){
             const decodedStringPhoto = info.PHOTO.toString('utf8');
             this.photo = decodedStringPhoto

@@ -61,11 +61,11 @@ export default FestivalDetailScreen = (props) => {
                                 latitude: festivalInfo.latitude,
                                 longitude: festivalInfo.longitude
                             }}
-                            subject={festivalInfo.subject}
+                            name={festivalInfo.name}
                         />
                     </TouchableOpacity>
                 </View>
-                <View>
+                {/* <View>
                     <Text
                         style={FestivalDetailScreenStyle.commentTitle}
                     >URL</Text>
@@ -76,7 +76,7 @@ export default FestivalDetailScreen = (props) => {
                             style={FestivalDetailScreenStyle.contactTitle}
                         >{festivalInfo.url}</Text>
                     </TouchableOpacity>
-                </View>
+                </View> */}
             </View>
         </ScrollView>
     );

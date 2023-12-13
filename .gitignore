@@ -132,4 +132,4 @@ dist
 # database
 back/database
 back/Controller/recommend/dbConnection.py
-bakc/Controller/recommend/__pycache__
+back/Controller/recommend/__pycache__

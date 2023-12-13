@@ -35,7 +35,7 @@ export default FestivalDetailButtons = (props) => {
             console.log("{FestivalDetailButton} : likeButtonClick / response.data = ", response.data);
             let newFestivalList = [];
             festivalList.map((festival, idx) => {
-                if (festival.id == response.data.id) {
+                if (festival.id == response.data.festival.id) {
                     newFestivalList.push(response.data.festival);
                 } else {
                     newFestivalList.push(festival);

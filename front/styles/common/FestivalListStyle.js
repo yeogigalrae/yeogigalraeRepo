@@ -16,6 +16,9 @@ export default StyleSheet.create({
     },
     imageBox: {
         borderBottomWidth: 3,
+        backgroundColor: "lightgray",
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20
     },
     image : {
         width: "100%",

@@ -1,15 +1,15 @@
-import {StyleSheet} from "react-native";
+import { StyleSheet } from "react-native";
 import appStyle from "../../configs/Style";
 
 export default StyleSheet.create({
     festivalDetail: {
         backgroundColor: appStyle.APP_BACKGROUD_COLOR,
     },
-    imageBox : {
-        height: 200,
+    imageBox: {
+        height: 500,
         backgroundColor: "lightgray"
     },
-    image : {
+    image: {
         resizeMode: "cover",
         width: "100%",
         height: "100%"
@@ -56,7 +56,7 @@ export default StyleSheet.create({
         flexDirection: "row",
         borderBottomWidth: 1
     },
-    button : {
+    button: {
         flex: 1,
         justifyContent: "space-evenly",
         alignItems: "center",
@@ -66,7 +66,7 @@ export default StyleSheet.create({
         width: 40,
         height: 40
     },
-    likeButtonBox:{
+    likeButtonBox: {
     },
     buttonLabel: {
         fontSize: 18
@@ -74,7 +74,7 @@ export default StyleSheet.create({
 
 
     // FestivalContent
-    content : {
+    content: {
     },
 
 
@@ -97,16 +97,17 @@ export default StyleSheet.create({
         maxWidth: 300
     },
 
+
     // LiveChat
     liveChatBox: {
-        paddingVertical: 20,
         borderBottomWidth: 1,
         borderTopWidth: 1,
         marginVertical: 10
     },
     liveChatButton: {
+        paddingVertical: 20,
         flexDirection: "row",
-        width: "auto",
+        maxWidth: 200,
     },
     liveChatLabel: {
         fontSize: 18,
@@ -131,5 +132,101 @@ export default StyleSheet.create({
         height: 10,
         borderRadius: 50,
         backgroundColor: "red"
-    }
+    },
+    liveChatArea: {
+        height: 600,
+        backgroundColor: appStyle.APP_MAIN_COLOR
+    },
+    liveChatInputBox: {
+        backgroundColor: "white",
+        justifyContent: "center",
+        alignItems: "center",
+        flexDirection: "row",
+        shadowOffset: {
+            width: 0,
+            height: -5
+        },
+        shadowOpacity: 0.2,
+        shadowRadius: 5
+    },
+    liveChatInput: {
+        borderWidth: 1,
+        width: "80%",
+        padding: 10,
+        height: 70,
+        borderColor: appStyle.APP_MAIN_COLOR,
+        backgroundColor: "white",
+        flex: 5
+    },
+    liveChatInputButton: {
+        justifyContent: "center",
+        width: "20%",
+        height: 70,
+        alignItems: "center",
+        backgroundColor: appStyle.APP_MAIN_COLOR,
+    },
+    liveChatInputButtonImage: {
+        width: 30,
+        height: 30,
+    },
+
+
+    // Message
+    messageBox: {
+        maxWidth: "90%",
+        minWidth: "50%",
+        minHeight: 80,
+        flexDirection: "row"
+    },
+    messageLeft: {
+        borderWidth: 1,
+        width: 60,
+        height: 60,
+        borderRadius: 50,
+        overflow: "hidden",
+        marginTop: 10,
+        marginLeft: 10,
+    },
+    messageRight: {
+        flex: 3,
+    },
+    profileImage: {
+        width: "100%",
+        height: "100%",
+        overflow: "hidden"
+    },
+    nickname: {
+        fontSize: 20,
+        paddingTop: 20,
+        paddingLeft: 10
+    },
+    message: {
+        flexDirection: "row",
+        paddingTop: 10
+    },
+    triangle: {
+        borderColor: "white",
+        borderWidth: 1,
+        width: 0,
+        height: 0,
+        borderLeftWidth: 10,
+        borderRightWidth: 10,
+        borderTopWidth: 0,
+        borderBottomWidth: 10,
+        borderLeftColor: 'transparent',
+        borderTopColor: 'transparent',
+        borderBottomColor: 'transparent',
+    },
+    messageContentBox: {
+        borderColor: "white",
+        borderWidth: 1,
+        minWidth: 50,
+        maxWidth: 250,
+        minHeight: 30,
+        backgroundColor: "white",
+        borderTopRightRadius: 5,
+        borderBottomLeftRadius: 5,
+        borderBottomRightRadius: 5,
+        padding: 5
+    },
 })

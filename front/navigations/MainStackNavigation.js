@@ -7,6 +7,7 @@ import CommonStyle from '../styles/common/CommonStyle';
 import FestivalDetailScreen from '../screens/festival/FestivalDetailScreen';
 import FestivalMapScreen from '../screens/festival/FestivalMapScreen';
 import SearchScreen from "../screens/festival/SearchScreen";
+import LiveChatScreen from "../screens/festival/LiveChatScreen";
 
 const Stack = createStackNavigator();
 
@@ -62,6 +63,10 @@ export default MainStackNavigation = (props) => {
             <Stack.Screen
                 name="textSearch"
                 component={SearchScreen}
+            />
+            <Stack.Screen
+                name="liveChat"
+                component={LiveChatScreen}
             />
         </Stack.Navigator>
     )

@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import IPConfig from '../../configs/IPConfig.json';
 import useUser from '../../components/user/UserState';
+import { useFocusEffect } from '@react-navigation/native';
 // import usePermissions from '../../components/map/usePermissions';
 
 export default MainScreen = (props) => {
@@ -22,11 +23,11 @@ export default MainScreen = (props) => {
         //     return true;
         // };
         // const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
+        initMain();
         // return () => {
         //     backHandler.remove();
         // };
-        initMain();
-    }, [])
+    }, [useFocusEffect])
 
     const initMain = async () => {
         try {

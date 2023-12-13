@@ -7,7 +7,8 @@ module.exports = function createConnection() {
         port: '3306',
         user: 'root',
         password: '1234',
-        database: 'TESTDB'
+        database: 'yeogigalrae'
+        // database: 'testdb'
     });
 
     connection.connect((error) => {

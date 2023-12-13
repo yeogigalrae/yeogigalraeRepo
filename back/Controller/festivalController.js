@@ -7,6 +7,7 @@ const { exec } = require('child_process');
 process.env.PYTHONIOENCODING = 'utf-8';
 
 module.exports = {
+
   // 좋아요 상위 5개 조회 (메인 페이지)
   getMainFestivals(req, res) {
     const userId = req.params.user_id;
@@ -88,7 +89,6 @@ module.exports = {
     }
 
     if (place == 'ALL') {
-
     } else {
       if (convertplace.length > 0) {
         query += ' AND';
@@ -110,7 +110,6 @@ module.exports = {
         res.status(500).json({ error: '축제 정보 가져오기 실패' });
         return;
       }
-
       console.log('축제 정보 가져오기 성공2');
       const festivalList = []
       for (let i in results) {
@@ -133,7 +132,6 @@ module.exports = {
                   WHERE festival_info.end_date > CURDATE()`;
 
     const params = [userId];
-
     if (search) {
       query += ' AND (festival_info.name LIKE ? OR festival_info.description LIKE ?)';
       params.push(`%${search}%`, `%${search}%`);

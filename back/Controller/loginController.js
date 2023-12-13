@@ -19,7 +19,6 @@ module.exports = {
 
       if (userResults.length > 0) {
         const user = new User(userResults[0]);
-
         res.status(200).json({ user: user });
       }
       else {

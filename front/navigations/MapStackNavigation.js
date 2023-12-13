@@ -1,12 +1,14 @@
-import {Text, TouchableOpacity} from "react-native";
+import { Text, TouchableOpacity } from "react-native";
 import { createStackNavigator } from '@react-navigation/stack';
 import MapScreen from '../screens/map/MapScreen';
 import CommonStyle from '../styles/common/CommonStyle';
 import FestivalDetailScreen from '../screens/festival/FestivalDetailScreen';
+import axios from "axios";
+import IPConfig from '../configs/IPConfig.json';
 
 const Stack = createStackNavigator();
 
-export default MapStackNavigation = ({navigation}) => {
+export default MapStackNavigation = ({ navigation }) => {
     return (
         <Stack.Navigator
             initialRouteName='map'
@@ -35,7 +37,9 @@ export default MapStackNavigation = ({navigation}) => {
                 options={{
                     headerTitle: () => (
                         <TouchableOpacity
-                            onPress={() => navigation.goBack()}
+                            onPress={async () => {
+                                navigation.goBack()
+                            }}
                         >
                             <Text style={CommonStyle.headerTitle}>{"여기갈래"}</Text>
                         </TouchableOpacity>
