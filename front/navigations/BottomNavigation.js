@@ -16,8 +16,6 @@ export default BottomNavigation = (props) => {
 
     return (
         <>
-            {/* <SafeAreaView> */}
-            {/* </SafeAreaView> */}
             <Tab.Navigator
                 initialRouteName='메인'
                 backBehavior='initialRoute'
@@ -46,7 +44,8 @@ export default BottomNavigation = (props) => {
                         },
                         tabBarStyle: ((route) => {
                             const routeName = getFocusedRouteNameFromRoute(route);
-                            if (routeName === 'textSearch') {
+                            if (routeName === 'textSearch' ||
+                                routeName === "liveChat") {
                                 return { display: "none" }
                             } else {
                                 return BottomTabStyle.tapBarStyle;
@@ -105,7 +104,9 @@ export default BottomNavigation = (props) => {
                         },
                         tabBarStyle: ((route) => {
                             const routeName = getFocusedRouteNameFromRoute(route);
-                            if (routeName === 'festivalMap' || routeName === "festival") {
+                            if (routeName === 'festivalMap' ||
+                                routeName === "festival" ||
+                                routeName === "liveChat") {
                                 return { display: "none" };
                             }
                             return BottomTabStyle.tapBarStyle;
@@ -115,7 +116,7 @@ export default BottomNavigation = (props) => {
                 <Tab.Screen
                     name="좋아요"
                     component={LikeStackNavigation}
-                    options={{
+                    options={({route}) => ({
                         tabBarIcon: () => {
                             return (
                                 <Image
@@ -123,8 +124,15 @@ export default BottomNavigation = (props) => {
                                     style={BottomTabStyle.icon}
                                 />
                             )
-                        }
-                    }}
+                        },
+                        tabBarStyle: ((route) => {
+                            const routeName = getFocusedRouteNameFromRoute(route);
+                            if (routeName === "liveChat") {
+                                return { display: "none" };
+                            }
+                            return BottomTabStyle.tapBarStyle;
+                        })(route),
+                    })}
                 />
                 <Tab.Screen
                     name="내정보"

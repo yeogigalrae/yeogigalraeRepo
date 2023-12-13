@@ -1,6 +1,11 @@
 class User{
     constructor(info){
-        
+        if(info.PHOTO != null){
+            const decodedStringPhoto = info.PHOTO.toString('utf8');
+            this.photo = decodedStringPhoto
+        } else {
+            this.photo = info.PHOTO
+        }
         this.user_id = info.USER_ID
         this.id = info.ID
         this.password = info.PASSWORD
@@ -10,7 +15,6 @@ class User{
         this.gender = info.GENDER
         this.address = info.ADDRESS
         this.nickname = info.NICKNAME
-        this.photo = info.PHOTO
         this.notice = info.NOTICE
     }
 

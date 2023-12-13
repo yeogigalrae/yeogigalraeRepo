@@ -4,6 +4,7 @@ import CommonStyle from '../styles/common/CommonStyle';
 import FestivalDetailScreen from '../screens/festival/FestivalDetailScreen';
 import FestivalMapScreen from '../screens/festival/FestivalMapScreen';
 import LikeListScreen from "../screens/user/LikeListScreen";
+import LiveChatScreen from "../screens/festival/LiveChatScreen";
 
 const Stack = createStackNavigator();
 
@@ -44,6 +45,10 @@ export default LikeStackNavigation = (props) => {
             <Stack.Screen
                 name="festivalMap"
                 component={FestivalMapScreen}
+            />
+            <Stack.Screen
+                name="liveChat"
+                component={LiveChatScreen}
             />
         </Stack.Navigator>
     )
