@@ -133,3 +133,4 @@ dist
 back/database
 back/Controller/recommend/dbConnection.py
 back/Controller/recommend/__pycache__
+back/modules/sentimentmoduel.js
