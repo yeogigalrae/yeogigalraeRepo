@@ -1,9 +1,9 @@
-class Message{
-    constructor(info){
-        this.photo = info.photo
-        this.nickname = info.nickname
-        this.msg = info.chat_content
-        this.datetime = info.date
-    }
+class Message {
+  constructor(info) {
+    this.photo = info.PHOTO;
+    this.nickname = info.NICKNAME;
+    this.msg = info.CHAT_CONTENT;
+    this.datetime = info.DATE;
+  }
 }
-module.exports = Message
+module.exports = Message;
