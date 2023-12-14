@@ -4,7 +4,6 @@ const userController = require('./Controller/userController');
 const likeController = require('./Controller/likeController');
 const festivalController = require('./Controller/festivalController');
 const loginController = require('./Controller/loginController');
-const messageController = require('./Controller/messageController');
 
 const routes = express.Router();
 
@@ -52,9 +51,6 @@ routes.post('/users/signup', loginController.userSignup);
 
 // 아이디 중복 체크
 routes.get('/users/signup/idcheck/:id', loginController.userSignupIdCheck);
-
-// 메시지 가져오기
-routes.get('/festivals/:festival_id/messages/:pageNum', messageController.getMessage);
 
 module.exports = routes;
 

@@ -1,8 +1,8 @@
 const createConnection = require("../database/dbConnection");
 const connection = createConnection();
-const Festival = require("../models/festival");
-const path = require("path");
-const {exec} = require("child_process");
+const Festival = require('../models/festival');
+const path = require('path');
+const { exec } = require('child_process');
 
 process.env.PYTHONIOENCODING = "utf-8";
 
@@ -31,7 +31,7 @@ module.exports = {
     connection.query(getTop5FestivalsQuery, [userId], (error, results, fields) => {
       if (error) {
         console.error("상위 5개 축제 정보 가져오기 실패:", error);
-        res.status(500).json({error: "상위 5개 축제 정보 가져오기 실패"});
+        res.status(500).json({ error: "상위 5개 축제 정보 가져오기 실패" });
         return;
       }
       const festivalList = [];
@@ -40,7 +40,7 @@ module.exports = {
         festivalList.push(festival);
       }
       console.log("좋아요 상위 5개 조회");
-      res.status(200).json({festivals: festivalList});
+      res.status(200).json({ festivals: festivalList });
     });
   },
   // 축제 조회 (진행 예정, 진행중)
@@ -67,7 +67,7 @@ module.exports = {
     connection.query(query, [user_id], (error, results, fields) => {
       if (error) {
         console.error("축제 정보 가져오기 실패1:", error);
-        res.status(500).json({error: "축제 정보 가져오기 실패"});
+        res.status(500).json({ error: "축제 정보 가져오기 실패" });
         return;
       }
       console.log("축제 정보 가져오기 성공1");
@@ -76,7 +76,7 @@ module.exports = {
         let festival = new Festival(results[i]);
         festivalList.push(festival);
       }
-      res.status(200).json({festivals: festivalList});
+      res.status(200).json({ festivals: festivalList });
     });
   },
 
@@ -138,7 +138,7 @@ module.exports = {
     connection.query(query + " ORDER BY festival_info.begin_date ASC", params, (error, results, fields) => {
       if (error) {
         console.error("축제 정보 가져오기 실패2:", error);
-        res.status(500).json({error: "축제 정보 가져오기 실패"});
+        res.status(500).json({ error: "축제 정보 가져오기 실패" });
         return;
       }
       console.log("축제 정보 가져오기 성공2");
@@ -147,7 +147,7 @@ module.exports = {
         const festival = new Festival(results[i]);
         festivalList.push(festival);
       }
-      res.status(200).json({festivals: festivalList});
+      res.status(200).json({ festivals: festivalList });
     });
   },
 
@@ -181,7 +181,7 @@ module.exports = {
     connection.query(query + "ORDER BY festival_info.begin_date ASC", params, (error, results, fields) => {
       if (error) {
         console.error("축제 정보 가져오기 실패3:", error);
-        res.status(500).json({error: "축제 정보 가져오기 실패"});
+        res.status(500).json({ error: "축제 정보 가져오기 실패" });
         return;
       }
       console.log("축제 정보 가져오기 성공3");
@@ -191,7 +191,7 @@ module.exports = {
         festivalList.push(festival);
       }
       console.log(festivalList);
-      res.status(200).json({festivals: festivalList});
+      res.status(200).json({ festivals: festivalList });
     });
   },
 
@@ -203,7 +203,7 @@ module.exports = {
     connection.query(checkquery, [userId], (error, results, fields) => {
       if (error) {
         console.error("추천 축제 정보 가져오기 실패1:", error);
-        res.status(500).json({error: "추천 축제 정보 가져오기 실패1"});
+        res.status(500).json({ error: "추천 축제 정보 가져오기 실패1" });
         return;
       }
       console.log(results);
@@ -219,7 +219,7 @@ module.exports = {
           exec(command, (error, stdout, stderr) => {
             if (error) {
               console.error(`파이썬 실행 중 에러가 발생했습니다: ${error}`);
-              res.status(500).json({error: "파이썬 실행 중 에러가 발생했습니다."});
+              res.status(500).json({ error: "파이썬 실행 중 에러가 발생했습니다." });
               return;
             }
 
@@ -243,24 +243,24 @@ module.exports = {
             connection.query(query, params, (error, results, fields) => {
               if (error) {
                 console.error("추천 축제 정보 가져오기 실패:", error);
-                res.status(500).json({error: "추천 축제 정보 가져오기 실패"});
+                res.status(500).json({ error: "추천 축제 정보 가져오기 실패" });
                 return;
               }
               console.log("추천 축제 정보 가져오기 성공");
               const festivalList = results.map((result) => new Festival(result));
-              res.status(200).json({festivals: festivalList});
+              res.status(200).json({ festivals: festivalList });
             });
           });
         } catch (error) {
           console.error(`요청 데이터 파싱 중 에러가 발생했습니다: ${error}`);
-          res.status(400).json({error: "올바른 JSON 형식의 요청 데이터를 전송해야 합니다."});
+          res.status(400).json({ error: "올바른 JSON 형식의 요청 데이터를 전송해야 합니다." });
         }
       } else {
         let fsquery = `SELECT * FROM festival_info WHERE CURDATE() < begin_date ORDER BY begin_date LIMIT 5`;
         connection.query(fsquery, (error, results, fields) => {
           if (error) {
             console.error("추천 축제 정보 가져오기 실패2:", error);
-            res.status(500).json({error: "추천 축제 정보 가져오기 실패2"});
+            res.status(500).json({ error: "추천 축제 정보 가져오기 실패2" });
             return;
           }
           console.log("추천 축제 가져오기 성공2");
@@ -270,7 +270,7 @@ module.exports = {
             festivalList.push(festival);
           }
           console.log(festivalList);
-          res.status(200).json({festivals: festivalList});
+          res.status(200).json({ festivals: festivalList });
         });
       }
     });

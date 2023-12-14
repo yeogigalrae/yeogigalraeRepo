@@ -5,18 +5,29 @@ import { View, Text, ActivityIndicator, Image } from 'react-native';
 import appStyle from '../../configs/Style.json';
 import axios from 'axios';
 import IPConfig from '../../configs/IPConfig.json';
+import useUser from '../user/UserState';
 
-export default Maps = () => {
+export default Maps = (props) => {
     const [location, setLocation] = useState(null);
     const [errorMsg, setErrorMsg] = useState(null);
     const [currentCoords, setCurrentCoords] = useState(location?.coords);
+    const [festivalList, setFestivalList] = useState(null);
+    const currentUser = useUser(state => state.user);
 
-    const handleRegionChangeComplete = (region) => {
+    const getFestivalMarkers = async (region) => {
         const { latitude, longitude, latitudeDelta, longitudeDelta } = region;
-        console.log('Latitude:', latitude);
-        console.log('Longitude:', longitude);
-        console.log('Latitude Delta:', latitudeDelta);
-        console.log('Longitude Delta:', longitudeDelta);
+
+        try {
+            const response = await axios({
+                method: "get",
+                url: IPConfig.IP + `festivals/coordinates/${latitude}/${longitude}/${latitudeDelta}/${longitudeDelta}/${currentUser.user_id}`,
+                headers: { "Content-Type": "application/json" },
+            })
+            console.log("{Maps} : getFestivalMarkers / response.data.festivals.length = ", response.data.festivals.length);
+            setFestivalList(response.data.festivals);
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     useEffect(() => {
@@ -33,32 +44,12 @@ export default Maps = () => {
         })();
     }, []);
 
-    const getFestivalMarker = async (latitude, longitude) => {
-        try {
-            const response = await axios({
-                method: "get",
-                url: IPConfig.IP + `coordinates/${latitude}/${longitude}`,
-                headers: { "Content-Type": "application/json" },
-            })
-            console.log("{Maps} : getFestivalMarker / response.data = ", response.data);
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
-    let text = 'Waiting..';
-    if (errorMsg) {
-        text = errorMsg;
-    } else if (location) {
-        getFestivalMarker(location.coords.latitude, location.coords.longitude);
-    }
-
     return (
         <>
             {
                 location ? (
                     <MapView
-                        style={{ width: "100%", height: "90%" }}
+                        style={{ flex: 5 }}
                         initialRegion={{
                             latitude: location.coords.latitude,
                             longitude: location.coords.longitude,
@@ -77,45 +68,36 @@ export default Maps = () => {
                         maxZoomLevel={16} // 줌 확대
                         // loadingEnabled={true}
                         loadingIndicatorColor={appStyle.APP_MAIN_COLOR}
-                        // onRegionChangeComplete={handleRegionChangeComplete}
+                        onRegionChangeComplete={getFestivalMarkers}
+                        onPress={() => {
+                            props.setFocusedFestival(null);
+                        }}
                     >
-                        <Marker
-                            title={"여기갈래"}
-                            description='설명설명'
-                            coordinate={{
-                                latitude: location.coords.latitude,
-                                longitude: location.coords.longitude,
-                            }}
-                        >
-                            <Image
-                                style={{ width: 30, height: 30 }}
-                                source={require("../../assets/marker.png")}
-                            />
-                        </Marker>
-                        <Marker
-                            icon={require('../../assets/home.png')}
-                            title={"여기갈래"}
-                            description='설명설명'
-                            coordinate={{
-                                latitude: location.coords.latitude + 0.001,
-                                longitude: location.coords.longitude + 0.001,
-                            }}
-                            callout={{ permanent: true }}
-                        >
-                            <Image
-                                style={{ width: 30, height: 30 }}
-                                source={require("../../assets/marker.png")}
-                            />
-                        </Marker>
-                        {/* <Marker
-                            key={1}
-                            coordinate={{
-                                latitude: location.coords.latitude,
-                                longitude: location.coords.longitude,
-                            }}
-                            title={"여긴어디"}
-                            description={"설명설명"}
-                        /> */}
+                        {
+                            festivalList?.map((value, idx) => {
+                                return(
+                                    <Marker
+                                        key={idx}
+                                        icon={require('../../assets/home.png')}
+                                        title={value.name}
+                                        description={value.description}
+                                        coordinate={{
+                                            latitude: value.latitude,
+                                            longitude: value.longitude,
+                                        }}
+                                        callout={{ permanent: true }}
+                                        onSelect={() => {
+                                            props.setFocusedFestival(value);
+                                        }}
+                                    >
+                                        <Image
+                                            style={{ width: 30, height: 30 }}
+                                            source={require("../../assets/marker.png")}
+                                        />
+                                    </Marker>
+                                )
+                            })
+                        }
                     </MapView>
                 ) : (
                     <View

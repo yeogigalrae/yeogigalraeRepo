@@ -8,9 +8,14 @@ import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
 import CustomDatePicker from '../../components/user/CustomDatePicker';
 import CustomPostcode from '../../components/user/CustomPostcode';
+import { initializeApp } from 'firebase/app';
+import { firebaseConfig } from '../../configs/FirebaseConfig';
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 export default Init_UserInfoScreen = () => {
     const navigation = useNavigation();
+    const app = initializeApp(firebaseConfig);
+    const storage = getStorage(app);
     const currentUser = useUser(state => state.user);
     const setUser = useUser((state) => state.setUser);
     const [date, setDate] = useState(new Date());
@@ -58,18 +63,37 @@ export default Init_UserInfoScreen = () => {
 
     const onRegistration = async () => {
         // if (regex.test(nickname) && address != "") {
-        const newUserInfo = {
-            ...currentUser,
-            photo: image,
-            gender: gender,
-            birth: `${date.getFullYear()}-${('0' + (date.getMonth() + 1)).slice(-2)}-${('0' + date.getDate()).slice(-2)}`,
-            address: address,
-            nickname: nickname
-        }
         try {
+            let downloadURL = currentUser.photo;
+
+            // 이미지가 새로 선택되었는지 확인
+            if (image !== currentUser.photo) {
+                console.log(image);
+                const imageName = image.substring(image.lastIndexOf("/") + 1);
+                console.log(2);
+                const response = await fetch(image);
+                console.log(3);
+                const blob = await response.blob();
+                console.log(4);
+                const storageRef = ref(storage, `yeogigalrae/${imageName}`);
+                console.log(5);
+                await uploadBytes(storageRef, blob);
+                console.log(6);
+                downloadURL = await getDownloadURL(storageRef);
+                console.log("downloadURL : ", downloadURL);
+            }
+
+            const newUserInfo = {
+                ...currentUser,
+                photo: downloadURL,
+                gender: gender,
+                birth: `${date.getFullYear()}-${('0' + (date.getMonth() + 1)).slice(-2)}-${('0' + date.getDate()).slice(-2)}`,
+                address: address,
+                nickname: nickname
+            }
             const response = await axios({
                 method: "put",
-                url: IPConfig.IP+`users/${currentUser.user_id}`,
+                url: IPConfig.IP + `users/${currentUser.user_id}`,
                 headers: {
                     "Content-Type": "application/json"
                 },
@@ -83,10 +107,10 @@ export default Init_UserInfoScreen = () => {
             // const newPhoto = imageData.map(num => String.fromCharCode(num)).join('');
             // response.data.user.photo = imageData;
             setUser(response.data.user);
+            return true;
         } catch (error) {
             console.log(error);
         }
-        return true;
         // } else {
         //     Alert.alert("닉네임 또는 주소를 다시입력해주세요.", "(닉네임 : 최대15글자 한글,숫자,영어)", [
         //         {
@@ -104,7 +128,7 @@ export default Init_UserInfoScreen = () => {
                 mediaTypes: ImagePicker.MediaTypeOptions.All,
                 allowsEditing: true, //이미지를 선택한 후 편집할 수 있는 UI를 표시할지 여부
                 aspect: [4, 3], //allowsEditing을 true로 줄 경우 유지할 가로,세로 길이
-                quality: 1, //압축 품질 0: 작은 크기 압축, 1: 최대 품질 압축
+                quality: 0, //압축 품질 0: 작은 크기 압축, 1: 최대 품질 압축
             });
             delete result.cancelled;
             if (!result.canceled) {

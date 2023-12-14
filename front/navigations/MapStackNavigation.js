@@ -3,8 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import MapScreen from '../screens/map/MapScreen';
 import CommonStyle from '../styles/common/CommonStyle';
 import FestivalDetailScreen from '../screens/festival/FestivalDetailScreen';
-import axios from "axios";
-import IPConfig from '../configs/IPConfig.json';
+import FestivalMapScreen from "../screens/festival/FestivalMapScreen";
 
 const Stack = createStackNavigator();
 
@@ -49,6 +48,10 @@ export default MapStackNavigation = ({ navigation }) => {
             <Stack.Screen
                 name="festival"
                 component={FestivalDetailScreen}
+            />
+            <Stack.Screen
+                name="festivalMap"
+                component={FestivalMapScreen}
             />
         </Stack.Navigator>
     )
