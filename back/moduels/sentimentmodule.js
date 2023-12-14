@@ -1,5 +1,4 @@
 const axios = require("axios");
-require("dotenv").config();
 
 const clientId = "8qzmj48qol";
 const clientSecret = "bapcD56rKWvbSyAoRvEf4oiXgnLzHsjaxh1FjCMJ";
