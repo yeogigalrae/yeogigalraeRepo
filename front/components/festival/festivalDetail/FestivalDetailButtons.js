@@ -12,9 +12,10 @@ export default FestivalDetailButtons = (props) => {
     const festivalList = useFestivalStore((state) => state.festivalList);
     const setFestivalList = useFestivalStore((state) => state.setFestivalList);
     const [currentFestival, setCurrentFestival] = useState(
-        festivalList.find((festival) => {
-            return props.festivalInfo == festival
-        })
+        // festivalList.find((festival) => {
+        //     return props.festivalInfo == festival
+        // })
+        props.festivalInfo
     );
     const likeFestivalList = useLikeFestivalStore((state) => state.likeFestivalList);
     const setLikeFestivalList = useLikeFestivalStore((state) => state.setLikeFestivalList);

@@ -5,6 +5,7 @@ const likeController = require('./Controller/likeController');
 const festivalController = require('./Controller/festivalController');
 const loginController = require('./Controller/loginController');
 const messageController = require('./Controller/messageController');
+const mapController = require('./Controller/mapController');
 
 const routes = express.Router();
 
@@ -55,6 +56,9 @@ routes.get('/users/signup/idcheck/:id', loginController.userSignupIdCheck);
 
 // 메시지 가져오기
 routes.get('/festivals/:festival_id/messages/:pageNum', messageController.getMessage);
+
+// 지도 화면에 존재하는 행사 목록 가져오기
+routes.get('/festivals/coordinates/:latitude/:longitude/:latitude_delta/:longitude_delta/:user_id', mapController.getFestivals);
 
 module.exports = routes;
 

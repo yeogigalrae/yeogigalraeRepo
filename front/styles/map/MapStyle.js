@@ -29,5 +29,40 @@ export default StyleSheet.create({
     searchImage: {
         width: 30,
         height: 30,
+    },
+
+    bottomBox : {
+        borderTopWidth : 1,
+        width: "100%",
+        padding: 10,
+        position: "absolute",
+        bottom: 0,
+        backgroundColor: "white"
+    },
+    firstLine : {
+        flexDirection: "row",
+        alignItems: "center"
+    },
+    festivalSubject : {
+        fontSize: 30,
+    },
+    secondLine: {
+        flexDirection: "row",
+        alignItems: "center",
+    },
+    icon : {
+        width: 20,
+        height: 20,
+        resizeMode: "contain",
+        marginRight: 10
+    },
+    likeCount : {
+        maxWidth: 50,
+    },
+    line : {
+        flexDirection: "row",
+        marginVertical: 2,
+        marginHorizontal: 2
     }
+    
 })

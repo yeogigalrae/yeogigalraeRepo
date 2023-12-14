@@ -1,14 +1,19 @@
 import { Image, View, TouchableOpacity, Text } from 'react-native';
-import NaverMap from '../../components/map/NaverMap';
+// import NaverMap from '../../components/map/NaverMap';
 import MapStyle from '../../styles/map/MapStyle';
 import Maps from '../../components/map/Maps';
+import { useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
 
 export default MapScreen = (props) => {
+    const navigation = useNavigation();
+    const [focusedFestival, setFocusedFestival] = useState(null);
+
     return (
         <View
             style={MapStyle.map}
         >
-            <View
+            {/* <View
                 style={MapStyle.searchBox}
             >
                 <TouchableOpacity
@@ -39,9 +44,68 @@ export default MapScreen = (props) => {
                     >
                     </Image>
                 </TouchableOpacity>
-            </View>
-            <Maps/>
-            {/* <NaverMap/> */}
+            </View> */}
+            <Maps setFocusedFestival={setFocusedFestival} />
+            {
+                focusedFestival ? (
+                    <TouchableOpacity
+                        style={MapStyle.bottomBox}
+                        onPress={() => {
+                            navigation.navigate("festival", {festivalInfo : focusedFestival});
+                        }}
+                    >
+                        <View style={MapStyle.line}>
+                            <Text style={MapStyle.festivalSubject}>
+                                {focusedFestival.name}
+                            </Text>
+                        </View>
+                        <View style={MapStyle.line}>
+                            <View
+                                style={[
+                                    MapStyle.secondLine,
+                                    { flex: 1 }
+                                ]}
+                            >
+                                {
+                                    focusedFestival.likestate ? (
+                                        <Image
+                                            source={require("../../assets/redHeart.png")}
+                                            style={MapStyle.icon}
+                                        />
+                                    ) : (
+                                        <Image
+                                            source={require("../../assets/heart.png")}
+                                            style={MapStyle.icon}
+                                        />
+                                    )
+                                }
+                                <Text style={MapStyle.likeCount}>{focusedFestival.like}</Text>
+                            </View>
+                            <View
+                                style={[
+                                    MapStyle.secondLine,
+                                    { flex: 2 }
+                                ]}
+                            >
+                                {/* <Image
+                                    source={require("../../assets/views.png")}
+                                    style={MapStyle.icon}
+                                />
+                                <Text style={MapStyle.likeCount}>{focusedFestival.views}</Text> */}
+                            </View>
+                        </View>
+                        <View style={MapStyle.line}>
+                            <Text>{focusedFestival.begin_date}</Text>
+                            <Text> ~ </Text>
+                            <Text>{focusedFestival.end_date}</Text>
+                        </View>
+                        <View style={MapStyle.line}>
+                            <Text>장소 : </Text>
+                            <Text>{focusedFestival.place}</Text>
+                        </View>
+                    </TouchableOpacity>
+                ) : null
+            }
         </View>
     );
 }
