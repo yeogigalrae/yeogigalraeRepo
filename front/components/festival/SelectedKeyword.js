@@ -6,19 +6,14 @@ export default SelectedKeyword = (props) => {
     return (
         props.currentSelectedKeywords?.map((keyword, idx) => {
             return(
-                <View
+                <TouchableOpacity
                     key={idx}
                     style={SearchScreenStyle.selectedKeyword}
+                    onPress={() => props.delete(keyword)}
                 >
                     <Text
-                    >{keyword}</Text>
-                    <TouchableOpacity
-                        style={SearchScreenStyle.selectedCancle}
-                        onPress={() => props.delete(keyword)}
-                    >
-                        <Text>X</Text>
-                    </TouchableOpacity>
-                </View>
+                    >{keyword}  X</Text>
+                </TouchableOpacity>
             )
         })
     )

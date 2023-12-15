@@ -38,9 +38,8 @@ export default styles = StyleSheet.create({
     appIconBox: {
     },
     appIcon: {
-        width: 250,
-        height: 100,
-        resizeMode: "contain"
+        resizeMode: "contain",
+        height: 150,
     },
     loginBox: {
         width: "90%",

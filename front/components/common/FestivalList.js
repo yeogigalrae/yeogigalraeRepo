@@ -31,10 +31,22 @@ export default function FestivalList({ data, isMain }) {
                 <View
                     style={FestivalListStyle.imageBox}
                 >
-                    <Image
-                        source={item.image ? { uri: item.image } : require('../../assets/home.png')}
-                        style={FestivalListStyle.image}
-                    />
+                    {
+                        item.image ? (
+                            <Image
+                                source={{ uri: item.image }}
+                                style={FestivalListStyle.image}
+                                />
+                            ) : (
+                                <View
+                                    style={[FestivalListStyle.image, {alignItems: "center", justifyContent: "center"}]}
+                                >
+                                    <Text
+                                        style={{fontSize: 24, color: "gray"}}
+                                    >이미지가 없습니다.</Text>
+                                </View>
+                            )
+                    }
                 </View>
                 <View style={FestivalListStyle.contentBox}>
                     <View style={FestivalListStyle.line}>
@@ -84,7 +96,11 @@ export default function FestivalList({ data, isMain }) {
                     </View>
                     <View style={FestivalListStyle.line}>
                         <Text>장소 : </Text>
-                        <Text>{item.place}</Text>
+                        <Text
+                            style={FestivalListStyle.text}
+                            numberOfLines={1}
+                            ellipsizeMode="tail"
+                        >{item.place}</Text>
                     </View>
                 </View>
             </TouchableOpacity>

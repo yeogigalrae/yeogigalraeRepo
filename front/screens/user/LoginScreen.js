@@ -78,7 +78,7 @@ export default LoginScreen = (props) => {
                     >
                         <Image
                             style={LoginStyle.appIcon}
-                            source={require("../../assets/home.png")}
+                            source={require("../../assets/logo.png")}
                         >
                         </Image>
                     </View>
