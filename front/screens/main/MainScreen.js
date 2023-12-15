@@ -8,6 +8,7 @@ import axios from 'axios';
 import IPConfig from '../../configs/IPConfig.json';
 import useUser from '../../components/user/UserState';
 import { useFocusEffect } from '@react-navigation/native';
+import appStyle from '../../configs/Style.json';
 
 export default MainScreen = (props) => {
     const [festivalList, setFestivalList] = useState();

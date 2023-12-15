@@ -128,7 +128,11 @@ export default LoginScreen = (props) => {
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={LoginStyle.signUpButton}
-                            onPress={() => navigation.navigate("signUp")}
+                            onPress={() => {
+                                setId("");
+                                setPassword("");
+                                navigation.navigate("signUp");
+                            }}
                         >
                             <Text
                                 style={LoginStyle.signUpLabel}

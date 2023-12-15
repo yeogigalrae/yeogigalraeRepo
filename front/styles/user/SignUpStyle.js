@@ -64,7 +64,7 @@ export default styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         height: 50,
-        marginTop: 5
+        marginTop: 5,
     },
     signUpButtonLabel: {
         fontSize: 20
