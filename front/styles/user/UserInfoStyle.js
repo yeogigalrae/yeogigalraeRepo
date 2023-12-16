@@ -43,10 +43,9 @@ export default StyleSheet.create({
         left: 85
     },
     profileLabel: {
-        width: "auto",
         marginLeft: 30,
         fontSize: 32,
-        textAlignVertical: "center"
+        alignSelf: "center"
     },
     addressInput: {
         fontSize: 16,

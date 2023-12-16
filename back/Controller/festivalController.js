@@ -3,6 +3,7 @@ const connection = createConnection();
 const Festival = require('../models/festival');
 const path = require('path');
 const { exec } = require('child_process');
+const {convertToLikePatterns} = require("../moduels/categorymodule");
 
 process.env.PYTHONIOENCODING = "utf-8";
 

@@ -10,7 +10,6 @@ import useUser from '../user/UserState';
 export default Maps = (props) => {
     const [location, setLocation] = useState(null);
     const [errorMsg, setErrorMsg] = useState(null);
-    const [currentCoords, setCurrentCoords] = useState(location?.coords);
     const [festivalList, setFestivalList] = useState(null);
     const currentUser = useUser(state => state.user);
 
@@ -58,13 +57,8 @@ export default Maps = (props) => {
                         }}
                         mapType="none"
                         showsUserLocation={true}
-                        follwsUserLocation={() => {
-                            if (currentCoords) {
-
-                            }
-                        }}
                         // followsUserLocation={true} // 자동으로 내위치로 지도 이동
-                        // minZoomLevel={8} // 줌 축소
+                        minZoomLevel={8} // 줌 축소
                         maxZoomLevel={16} // 줌 확대
                         // loadingEnabled={true}
                         loadingIndicatorColor={appStyle.APP_MAIN_COLOR}
@@ -78,14 +72,11 @@ export default Maps = (props) => {
                                 return(
                                     <Marker
                                         key={idx}
-                                        icon={require('../../assets/home.png')}
                                         title={value.name}
-                                        description={value.description}
                                         coordinate={{
                                             latitude: value.latitude,
                                             longitude: value.longitude,
                                         }}
-                                        callout={{ permanent: true }}
                                         onSelect={() => {
                                             props.setFocusedFestival(value);
                                         }}

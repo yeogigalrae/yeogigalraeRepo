@@ -106,7 +106,8 @@ export default BottomNavigation = (props) => {
                             const routeName = getFocusedRouteNameFromRoute(route);
                             if (routeName === 'festivalMap' ||
                                 routeName === "festival" ||
-                                routeName === "liveChat") {
+                                routeName === "liveChat" ||
+                                routeName === "map") {
                                 return { display: "none" };
                             }
                             return BottomTabStyle.tapBarStyle;

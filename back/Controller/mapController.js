@@ -28,7 +28,6 @@ function searchCoordinates(latitude, longitude, latitude_delta, longitude_delta,
             if (error) {
                 reject(error);
             } else {
-                console.log(results);
                 resolve(results);
             }
         });
