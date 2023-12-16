@@ -1,12 +1,13 @@
-import { View, Text, SafeAreaView } from 'react-native';
+import { View, SafeAreaView, Text, Image } from 'react-native';
 import FestivalList from '../../components/common/FestivalList';
 import appStyle from '../../configs/Style';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect} from 'react';
 import axios from 'axios';
 import useUser from '../../components/user/UserState';
 import IPConfig from '../../configs/IPConfig.json';
 import useFestivalStore from '../../components/common/FestivalStore';
 import useLikeFestivalStore from '../../components/common/likeFestivalStore';
+import LikeListStyle from '../../styles/user/LikeListStyle';
 
 export default LikeListScreen = (props) => {
     const currentUser = useUser((state) => state.user);
@@ -42,7 +43,30 @@ export default LikeListScreen = (props) => {
             <View
                 style={{ backgroundColor: appStyle.APP_BACKGROUD_COLOR, height: "100%" }}
             >
-                <FestivalList data={likeFestivalList} isMain={false} />
+                {
+                    likeFestivalList == []?(
+                        <FestivalList data={likeFestivalList} isMain={false} />
+                    ) : (
+                        <View
+                            style={LikeListStyle.noListView}
+                        >
+                            <Image
+                                source={require('../../assets/logo.png')}
+                                style={LikeListStyle.noListLogo}
+                            />
+                            <View
+                                style={LikeListStyle.textView}
+                            >
+                                <Text
+                                    style={LikeListStyle.noListText}
+                                >좋아요한 행사가 없습니다.</Text>
+                                <Text
+                                    style={LikeListStyle.noListTextSub}
+                                >행사 좋아요를 눌러서 목록에 추가해주세요.</Text>
+                            </View>
+                        </View>    
+                    )
+                }
             </View>
         </SafeAreaView>
     );

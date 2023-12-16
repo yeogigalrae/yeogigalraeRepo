@@ -39,6 +39,16 @@ export default FestivalDetailScreen = (props) => {
                     >행사 설명</Text>
                     <Text
                         style={FestivalDetailScreenStyle.comment}
+                    >{festivalInfo.info}</Text>
+                </View>
+                <View
+                    style={{marginTop: 100}}
+                >
+                    <Text
+                        style={FestivalDetailScreenStyle.commentTitle}
+                    >행사 내용</Text>
+                    <Text
+                        style={FestivalDetailScreenStyle.comment}
                     >{festivalInfo.description}</Text>
                 </View>
                 <TouchableOpacity
@@ -65,18 +75,20 @@ export default FestivalDetailScreen = (props) => {
                         />
                     </TouchableOpacity>
                 </View>
-                {/* <View>
+                <View
+                    style={{marginTop: 100}}
+                >
                     <Text
                         style={FestivalDetailScreenStyle.commentTitle}
                     >URL</Text>
                     <TouchableOpacity
-                        style={FestivalDetailScreenStyle.contactBox}
+                        style={[FestivalDetailScreenStyle.contactBox, {marginTop: 0}]}
                     >
                         <Text
                             style={FestivalDetailScreenStyle.contactTitle}
-                        >{festivalInfo.url}</Text>
+                        >{festivalInfo.url?festivalInfo.url:"URL 준비중입니다.."}</Text>
                     </TouchableOpacity>
-                </View> */}
+                </View>
             </View>
         </ScrollView>
     );

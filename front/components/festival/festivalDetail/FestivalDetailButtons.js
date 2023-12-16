@@ -11,12 +11,7 @@ export default FestivalDetailButtons = (props) => {
     const currentUser = useUser((state) => state.user);
     const festivalList = useFestivalStore((state) => state.festivalList);
     const setFestivalList = useFestivalStore((state) => state.setFestivalList);
-    const [currentFestival, setCurrentFestival] = useState(
-        // festivalList.find((festival) => {
-        //     return props.festivalInfo == festival
-        // })
-        props.festivalInfo
-    );
+    const [currentFestival, setCurrentFestival] = useState(props.festivalInfo);
     const likeFestivalList = useLikeFestivalStore((state) => state.likeFestivalList);
     const setLikeFestivalList = useLikeFestivalStore((state) => state.setLikeFestivalList);
 
@@ -80,13 +75,15 @@ export default FestivalDetailButtons = (props) => {
             <TouchableOpacity
                 style={FestivalDetailScreenStyle.button}
             >
-                <Image
-                    style={FestivalDetailScreenStyle.buttonImage}
-                    source={require('../../../assets/home.png')}
-                />
+                <Text
+                    style={FestivalDetailScreenStyle.sentiment}
+                >{
+                    currentFestival.sentiment == "neutral" ? "😑" :
+                    currentFestival.sentiment == "positive"?"😁":"😡"
+                }</Text>
                 <Text
                     style={FestivalDetailScreenStyle.buttonLabel}
-                >공유</Text>
+                >실시간 반응</Text>
             </TouchableOpacity>
         </View>
     )

@@ -30,7 +30,7 @@ export default StyleSheet.create({
         fontSize: 16
     },
     contactBox: {
-        marginVertical: 20,
+        marginVertical: 100,
         height: 50,
         borderRadius: 10,
         backgroundColor: appStyle.APP_MAIN_COLOR,
@@ -70,6 +70,10 @@ export default StyleSheet.create({
     },
     buttonLabel: {
         fontSize: 18
+    },
+    sentiment: {
+        textAlign: "center",
+        fontSize: 40
     },
 
 

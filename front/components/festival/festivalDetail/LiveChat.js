@@ -52,50 +52,6 @@ export default LiveChat = (props) => {
                     )}
                 </View>
             </TouchableOpacity>
-            {
-                chatOpen ? (
-                    <View>
-                        <KeyboardAvoidingView
-                            behavior={Platform.OS === 'ios' ? "height" : null}
-                            keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0}
-                        >
-                            <ScrollView
-                                style={FestivalDetailScreenStyle.liveChatArea}
-                                onScroll={handleScroll}
-                                scrollEventThrottle={16}
-                            >
-                                {
-                                    messageList?.map((data, idx) => {
-                                        return <Message data={data} key={idx} />
-                                    })
-                                }
-                            </ScrollView>
-                            <View
-                                style={FestivalDetailScreenStyle.liveChatInputBox}
-                            >
-                                <TextInput
-                                    style={FestivalDetailScreenStyle.liveChatInput}
-                                    onChangeText={(value) => setMessage(value)}
-                                >
-                                </TextInput>
-                                <TouchableOpacity
-                                    style={FestivalDetailScreenStyle.liveChatInputButton}
-                                    onPress={() => {
-                                        sendMessage()
-                                    }}
-                                >
-                                    <Image
-                                        style={FestivalDetailScreenStyle.liveChatInputButtonImage}
-                                        source={require("../../../assets/home.png")}
-                                    ></Image>
-                                </TouchableOpacity>
-                            </View>
-                        </KeyboardAvoidingView>
-                    </View>
-                ) : (
-                    null
-                )
-            }
         </View>
     )
 }

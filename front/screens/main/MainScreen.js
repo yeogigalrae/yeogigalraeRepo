@@ -39,7 +39,7 @@ export default MainScreen = (props) => {
                 },
                 responseType: "json",
             })
-            console.log("{MainScreen} : initMain / response.data = ", response.data);
+            console.log("{MainScreen} : initMain / response.data.festivals.length = ", response.data.festivals.length);
             setFestivalList(response.data.festivals);
         } catch (error) {
             console.log(error);
