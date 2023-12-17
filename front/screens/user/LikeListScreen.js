@@ -1,12 +1,13 @@
-import { View, Text, SafeAreaView } from 'react-native';
+import { View, SafeAreaView, Text, Image } from 'react-native';
 import FestivalList from '../../components/common/FestivalList';
 import appStyle from '../../configs/Style';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect} from 'react';
 import axios from 'axios';
 import useUser from '../../components/user/UserState';
 import IPConfig from '../../configs/IPConfig.json';
 import useFestivalStore from '../../components/common/FestivalStore';
 import useLikeFestivalStore from '../../components/common/likeFestivalStore';
+import CommonStyle from '../../styles/common/CommonStyle';
 
 export default LikeListScreen = (props) => {
     const currentUser = useUser((state) => state.user);
@@ -34,7 +35,6 @@ export default LikeListScreen = (props) => {
             console.log(error);
         }
     }
-
     return (
         <SafeAreaView
             style={{ backgroundColor: appStyle.APP_MAIN_COLOR }}
@@ -42,7 +42,30 @@ export default LikeListScreen = (props) => {
             <View
                 style={{ backgroundColor: appStyle.APP_BACKGROUD_COLOR, height: "100%" }}
             >
-                <FestivalList data={likeFestivalList} isMain={false} />
+                {
+                    likeFestivalList.length > 0?(
+                        <FestivalList data={likeFestivalList} isMain={false} />
+                    ) : (
+                        <View
+                            style={CommonStyle.noListView}
+                        >
+                            <Image
+                                source={require('../../assets/logo.png')}
+                                style={CommonStyle.noListLogo}
+                            />
+                            <View
+                                style={CommonStyle.textView}
+                            >
+                                <Text
+                                    style={CommonStyle.noListText}
+                                >좋아요한 행사가 없습니다.</Text>
+                                <Text
+                                    style={CommonStyle.noListTextSub}
+                                >행사 좋아요를 눌러서 목록에 추가해주세요.</Text>
+                            </View>
+                        </View>    
+                    )
+                }
             </View>
         </SafeAreaView>
     );

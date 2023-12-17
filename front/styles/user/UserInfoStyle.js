@@ -30,7 +30,7 @@ export default StyleSheet.create({
         height: 100,
         borderRadius: 50,
     },
-    miniImage: {
+    miniImageView: {
         borderWidth: 1,
         borderColor: "black",
         borderRadius: 50,
@@ -40,13 +40,18 @@ export default StyleSheet.create({
         backgroundColor: "white",
         resizeMode: "cover",
         top: 90,
-        left: 85
+        left: 85,
+        justifyContent: "center",
+        alignItems: "center"
+    },
+    miniImage:{
+        width: 20,
+        height: 20
     },
     profileLabel: {
-        width: "auto",
         marginLeft: 30,
         fontSize: 32,
-        textAlignVertical: "center"
+        alignSelf: "center"
     },
     addressInput: {
         fontSize: 16,

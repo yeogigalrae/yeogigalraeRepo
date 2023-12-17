@@ -3,7 +3,7 @@ const cors = require("cors");
 const routes = require("./routes");
 const bodyParser = require("body-parser");
 const cron = require("node-cron");
-const {mainFunction} = require("./database/tourAPI");
+const {mainFunction} = require("./database/tourAPI.js");
 
 const app = express();
 

@@ -78,7 +78,7 @@ export default LoginScreen = (props) => {
                     >
                         <Image
                             style={LoginStyle.appIcon}
-                            source={require("../../assets/home.png")}
+                            source={require("../../assets/logo.png")}
                         >
                         </Image>
                     </View>
@@ -93,6 +93,7 @@ export default LoginScreen = (props) => {
                             style={LoginStyle.inputBox}
                             onBlur={() => setFocus()}
                             onChangeText={(value) => setId(value)}
+                            value={id}
                         />
                         {
                             currentFocus === "id" ? (
@@ -110,6 +111,7 @@ export default LoginScreen = (props) => {
                             }}
                             onBlur={() => setFocus()}
                             onChangeText={(value) => setPassword(value)}
+                            value={password}
                         />
                         {
                             currentFocus === "password" ? (
@@ -128,7 +130,11 @@ export default LoginScreen = (props) => {
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={LoginStyle.signUpButton}
-                            onPress={() => navigation.navigate("signUp")}
+                            onPress={() => {
+                                setId("");
+                                setPassword("");
+                                navigation.navigate("signUp");
+                            }}
                         >
                             <Text
                                 style={LoginStyle.signUpLabel}

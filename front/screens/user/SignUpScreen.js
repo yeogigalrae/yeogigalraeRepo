@@ -208,9 +208,6 @@ export default SignUpScreen = () => {
                         </TouchableOpacity>
                     </View>
                 </KeyboardAvoidingView>
-                {/* <GoogleLoginComponent/> */}
-                {/* <NaverLoginComponent/> */}
-                {/* <NaverLoginC/> */}
             </SafeAreaView> 
         </TouchableWithoutFeedback>
     );

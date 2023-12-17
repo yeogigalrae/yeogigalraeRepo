@@ -36,20 +36,26 @@ module.exports = () => {
               console.error(error);
             } else {
               let query = `
-                            SELECT *
-                            FROM live_chat, (
-                                select NICKNAME, PHOTO
-                                from user_info
-                                where USER_ID = ?
-                            ) as info
-                            where CHAT_ID = ?
-                                and USER_ID = ?
-                                and FESTIVAL_ID = ?`;
-              connection.query(query, [user_id, results.insertId, user_id, festival_id], (error, results, fields) => {
+              SELECT CHAT_CONTENT, DATE, STATE, NICKNAME, PHOTO
+              FROM USER_INFO RIGHT OUTER JOIN (
+                SELECT USER_ID, CHAT_CONTENT, DATE, SUB1.STATE
+                FROM LIVE_CHAT , (
+                  SELECT STATE, COUNT(STATE) AS CNT
+                  FROM LIVE_CHAT
+                  WHERE FESTIVAL_ID = ?
+                  GROUP BY STATE
+                  ORDER BY CNT DESC
+                  LIMIT 1
+                ) AS SUB1
+                WHERE CHAT_ID = ?
+              ) AS SUB2 ON (USER_INFO.USER_ID = SUB2.USER_ID)`;
+              connection.query(query, [festival_id, results.insertId], (error, results, fields) => {
                 if (error) {
                   console.log(error);
                 } else {
+                  console.log(results[0]);
                   const response = new Message(results[0]);
+                  console.log(response);
                   io.emit("message", response);
                 }
               });

@@ -36,7 +36,12 @@ export default MyInfoScreen = (props) => {
     //     }
     // }
 
-    const logout = async () => {
+    const logout = () => {
+        deleteUser();
+        navigation.replace("login");
+    }
+
+    const userDelete = async () => {
         try {
             const response = await axios({
                 method: "delete",
@@ -50,7 +55,7 @@ export default MyInfoScreen = (props) => {
                 responseType: "json",
             })
             deleteUser();
-            navigation.navigate("login");
+            navigation.replace("login");
         } catch (error) {
             console.error(error);
         }
@@ -131,6 +136,26 @@ export default MyInfoScreen = (props) => {
                 style={MyInfoStyle.myInfoMenuBox}
             >
                 <MyInfoMenuLine
+                    text={"로그아웃"}
+                    style={[MyInfoStyle.menuTitle]}
+                    onPress={() => Alert.alert(
+                        '로그아웃',
+                        '정말로 로그아웃하시겠습니까?',
+                        [
+                            { text: '확인', onPress: () => { logout() }},
+                            { text: '취소', style: 'cancel' },
+                        ],
+                        {
+                            cancelable: true,
+                            onDismiss: () => console.log('취소'),
+                        }
+                    )}
+                />
+            </View>
+            <View
+                style={MyInfoStyle.myInfoMenuBox}
+            >
+                <MyInfoMenuLine
                     text={"회원 탈퇴"}
                     style={[MyInfoStyle.menuTitle, { color: "red" }]}
                     onPress={() => Alert.alert(
@@ -138,7 +163,7 @@ export default MyInfoScreen = (props) => {
                         '정말로 탈퇴하시겠습니까?',
                         [
                             {
-                                text: '확인', onPress: () => { logout() }
+                                text: '확인', onPress: () => { userDelete() }
                             },
                             { text: '취소', style: 'cancel' },
                         ],

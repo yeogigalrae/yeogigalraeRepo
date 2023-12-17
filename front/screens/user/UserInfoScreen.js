@@ -1,6 +1,9 @@
-import { Alert, View, Text, TouchableOpacity, Image, TextInput, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { ActivityIndicator, View, Text, TouchableOpacity,
+    Image, TextInput, TouchableWithoutFeedback,
+    Keyboard, Alert } from 'react-native';
+import Modal from 'react-native-modal';
 import UserInfoStyle from '../../styles/user/UserInfoStyle';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import * as ImagePicker from 'expo-image-picker';
 import useUser from '../../components/user/UserState';
 import IPConfig from "../../configs/IPConfig.json";
@@ -10,7 +13,8 @@ import CustomDatePicker from '../../components/user/CustomDatePicker';
 import CustomPostcode from '../../components/user/CustomPostcode';
 import { initializeApp } from 'firebase/app';
 import { firebaseConfig } from '../../configs/FirebaseConfig';
-import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { getStorage, ref, uploadBytes, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
+import appStyle from '../../configs/Style.json';
 
 export default Init_UserInfoScreen = () => {
     const navigation = useNavigation();
@@ -20,15 +24,16 @@ export default Init_UserInfoScreen = () => {
     const setUser = useUser((state) => state.setUser);
     const [date, setDate] = useState(new Date());
     const [open, setOpen] = useState(false);
-    const [image, setImage] = useState(currentUser.photo != null ? currentUser.photo : null);
+    const [image, setImage] = useState(currentUser.photo != null ? currentUser.photo : appStyle.APP_IMAGE);
     const [isImage, setIsImage] = useState(false);
     const [gender, setGender] = useState("남자");
     const [address, setAddress] = useState(currentUser.address != "" ? currentUser.address : "");
     const [checked, setChecked] = useState(0);
     const [nickname, setNickname] = useState(currentUser.nickname != "" ? currentUser.nickname : "");
     const [isModal, setModal] = useState(false);
+    const [loding, setLoding] = useState(false);
 
-    const regex = /^[ㄱ-힣a-zA-Z0-9]*$/;
+    const regex = /^[가-힣a-zA-Z0-9]*$/;
 
     const Radio = () => {
         var gender = ['남자', '여자'];
@@ -63,54 +68,50 @@ export default Init_UserInfoScreen = () => {
 
     const onRegistration = async () => {
         // if (regex.test(nickname) && address != "") {
-        try {
-            let downloadURL = currentUser.photo;
+            try {
+                let downloadURL = currentUser.photo;
 
-            // 이미지가 새로 선택되었는지 확인
-            if (image !== currentUser.photo) {
-                console.log(image);
-                const imageName = image.substring(image.lastIndexOf("/") + 1);
-                console.log(2);
-                const response = await fetch(image);
-                console.log(3);
-                const blob = await response.blob();
-                console.log(4);
-                const storageRef = ref(storage, `yeogigalrae/${imageName}`);
-                console.log(5);
-                await uploadBytes(storageRef, blob);
-                console.log(6);
-                downloadURL = await getDownloadURL(storageRef);
-                console.log("downloadURL : ", downloadURL);
-            }
+                // 이미지가 새로 선택되었는지 확인
+                if (image !== currentUser.photo) {
+                    if(image != appStyle.APP_IMAGE){
+                        const storageRef = ref(storage, `yeogigalrae/${new Date().getTime()}.jpg`);
+                        const response = await fetch(image);
+                        const blob = await response.blob();
+                        setLoding(true);
+                        await uploadBytesResumable(storageRef, blob);
+                        downloadURL = await getDownloadURL(storageRef);
+                        setLoding(false);
+                    }
+                }
 
-            const newUserInfo = {
-                ...currentUser,
-                photo: downloadURL,
-                gender: gender,
-                birth: `${date.getFullYear()}-${('0' + (date.getMonth() + 1)).slice(-2)}-${('0' + date.getDate()).slice(-2)}`,
-                address: address,
-                nickname: nickname
+                const newUserInfo = {
+                    ...currentUser,
+                    photo: downloadURL,
+                    gender: gender,
+                    birth: `${date.getFullYear()}-${('0' + (date.getMonth() + 1)).slice(-2)}-${('0' + date.getDate()).slice(-2)}`,
+                    address: address,
+                    nickname: nickname
+                }
+                const response = await axios({
+                    method: "put",
+                    url: IPConfig.IP + `users/${currentUser.user_id}`,
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    data: {
+                        user: newUserInfo
+                    },
+                    responseType: "json",
+                })
+                console.log("{UserInfoScreen} : onRegistration / response.data = ", response.data);
+                // const imageData = response.data.user.photo.data;
+                // const newPhoto = imageData.map(num => String.fromCharCode(num)).join('');
+                // response.data.user.photo = imageData;
+                setUser(response.data.user);
+                return true;
+            } catch (error) {
+                console.log(error);
             }
-            const response = await axios({
-                method: "put",
-                url: IPConfig.IP + `users/${currentUser.user_id}`,
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                data: {
-                    user: newUserInfo
-                },
-                responseType: "json",
-            })
-            console.log("{UserInfoScreen} : onRegistration / response.data = ", response.data);
-            // const imageData = response.data.user.photo.data;
-            // const newPhoto = imageData.map(num => String.fromCharCode(num)).join('');
-            // response.data.user.photo = imageData;
-            setUser(response.data.user);
-            return true;
-        } catch (error) {
-            console.log(error);
-        }
         // } else {
         //     Alert.alert("닉네임 또는 주소를 다시입력해주세요.", "(닉네임 : 최대15글자 한글,숫자,영어)", [
         //         {
@@ -159,10 +160,14 @@ export default Init_UserInfoScreen = () => {
                             source={{ uri: image }}
                         >
                         </Image>
-                        <Image
-                            style={UserInfoStyle.miniImage}
-                            source={require("../../assets/home.png")}
-                        />
+                        <View
+                            style={UserInfoStyle.miniImageView}
+                        >
+                            <Image
+                                style={UserInfoStyle.miniImage}
+                                source={require("../../assets/camera.png")}
+                            />
+                        </View>
                         <Text style={UserInfoStyle.profileLabel}>
                             프로필 등록
                         </Text>
@@ -293,6 +298,19 @@ export default Init_UserInfoScreen = () => {
                         </TouchableOpacity>
                     </View>
                 </View>
+                {
+                    loding ? (
+                        <Modal
+                            isVisible={true}
+                        >
+                            <ActivityIndicator
+                                size="large"
+                                color={appStyle.APP_MAIN_COLOR}
+                                animating={true}
+                            />
+                        </Modal>
+                    ) : null
+                }
             </View>
         </TouchableWithoutFeedback>
     )

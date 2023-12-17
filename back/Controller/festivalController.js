@@ -3,6 +3,7 @@ const connection = createConnection();
 const Festival = require('../models/festival');
 const path = require('path');
 const { exec } = require('child_process');
+const {convertToLikePatterns} = require("../moduels/categorymodule");
 
 process.env.PYTHONIOENCODING = "utf-8";
 
@@ -47,22 +48,22 @@ module.exports = {
   getFestivals(req, res) {
     const user_id = req.params.user_id;
 
-    let query = `SELECT festival_info.*, IF(l.festival_id IS NOT NULL, 1, NULL) AS LIKESTATE, COALESCE(subquery.STATE, 'neutral') AS SENTIMENT
-                  FROM festival_info
-                  LEFT OUTER JOIN (SELECT festival_id FROM like1 WHERE user_id = ?) l
-                      ON festival_info.festival_id = l.festival_id
-                  LEFT OUTER JOIN (
-                      SELECT festival_id, state
-                      FROM (
-                          SELECT festival_id, state, COUNT(*) as count, RANK() OVER (PARTITION BY festival_id ORDER BY COUNT(*) DESC) as rank
-                          FROM live_chat
-                          GROUP BY festival_id, state
-                      ) as subquery
-                      WHERE rank = 1
-                  ) as subquery
-                      ON festival_info.festival_id = subquery.festival_id
-                  WHERE festival_info.end_date > CURDATE()
-                  ORDER BY festival_info.begin_date`;
+    let query = `SELECT FESTIVAL_INFO.*, IF(L.FESTIVAL_ID IS NOT NULL, 1, NULL) AS LIKESTATE, COALESCE(SUBQUERY.STATE, 'neutral') AS SENTIMENT
+    FROM FESTIVAL_INFO
+    LEFT OUTER JOIN (SELECT FESTIVAL_ID FROM LIKE1 WHERE USER_ID = ?) L
+        ON FESTIVAL_INFO.FESTIVAL_ID = L.FESTIVAL_ID
+    LEFT OUTER JOIN (
+        SELECT FESTIVAL_ID, STATE
+        FROM (
+            SELECT FESTIVAL_ID, STATE, COUNT(*) AS COUNT, ROW_NUMBER () OVER (PARTITION BY FESTIVAL_ID ORDER BY COUNT(*) DESC) AS RANK
+            FROM LIVE_CHAT
+            GROUP BY FESTIVAL_ID, STATE
+        ) AS SUBQUERY
+        WHERE RANK = 1
+    ) AS SUBQUERY
+        ON FESTIVAL_INFO.FESTIVAL_ID = SUBQUERY.FESTIVAL_ID
+    WHERE FESTIVAL_INFO.END_DATE > CURDATE()
+    ORDER BY FESTIVAL_INFO.BEGIN_DATE`;
 
     connection.query(query, [user_id], (error, results, fields) => {
       if (error) {
@@ -89,20 +90,20 @@ module.exports = {
     const convertplace = convertToLikePatterns(place);
 
     let query = `SELECT festival_info.*, IF(l.festival_id IS NOT NULL, 1, NULL) AS LIKESTATE, COALESCE(subquery.STATE, 'neutral') AS SENTIMENT
-                FROM festival_info 
-                LEFT OUTER JOIN (SELECT festival_id FROM like1 WHERE user_id = ?) l 
-                    ON festival_info.festival_id = l.festival_id
-                LEFT OUTER JOIN (
-                  SELECT festival_id, state
-                  FROM (
-                      SELECT festival_id, state, COUNT(*) as count, RANK() OVER (PARTITION BY festival_id ORDER BY COUNT(*) DESC) as rank
-                      FROM live_chat
-                      GROUP BY festival_id, state
-                  ) as subquery
-                  WHERE rank = 1
-              ) as subquery
-                    ON festival_info.festival_id = subquery.festival_id
-                WHERE 1+1`;
+                  FROM festival_info 
+                  LEFT OUTER JOIN (SELECT festival_id FROM like1 WHERE user_id = ?) l 
+                      ON festival_info.festival_id = l.festival_id
+                  LEFT OUTER JOIN (
+                    SELECT festival_id, state
+                    FROM (
+                        SELECT festival_id, state, COUNT(*) as count, row_number() OVER (PARTITION BY festival_id ORDER BY COUNT(*) DESC) as rank
+                        FROM live_chat
+                        GROUP BY festival_id, state
+                    ) as subquery
+                    WHERE rank = 1
+                ) as subquery
+                      ON festival_info.festival_id = subquery.festival_id
+                  WHERE 1+1`;
 
     const params = [userId];
 
@@ -256,7 +257,19 @@ module.exports = {
           res.status(400).json({ error: "올바른 JSON 형식의 요청 데이터를 전송해야 합니다." });
         }
       } else {
-        let fsquery = `SELECT * FROM festival_info WHERE CURDATE() < begin_date ORDER BY begin_date LIMIT 5`;
+        let fsquery = `SELECT *, COALESCE(subquery.STATE, 'neutral') AS SENTIMENT 
+        FROM festival_info 
+        LEFT OUTER JOIN (
+          SELECT festival_id, state
+          FROM (
+              SELECT festival_id, state, COUNT(*) as count, RANK() OVER (PARTITION BY festival_id ORDER BY COUNT(*) DESC) as rank
+              FROM live_chat
+              GROUP BY festival_id, state
+          ) as subquery
+          WHERE rank = 1
+      ) as subquery
+            ON festival_info.festival_id = subquery.festival_id
+        WHERE CURDATE() < begin_date ORDER BY begin_date LIMIT 5`;
         connection.query(fsquery, (error, results, fields) => {
           if (error) {
             console.error("추천 축제 정보 가져오기 실패2:", error);

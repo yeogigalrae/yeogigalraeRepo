@@ -38,9 +38,8 @@ export default styles = StyleSheet.create({
     appIconBox: {
     },
     appIcon: {
-        width: 250,
-        height: 100,
-        resizeMode: "contain"
+        resizeMode: "contain",
+        height: 150,
     },
     loginBox: {
         width: "90%",
@@ -76,14 +75,16 @@ export default styles = StyleSheet.create({
     },
     signUpButton: {
         alignItems: "center",
-        marginTop: 20
+        marginTop: 20,
+        alignSelf: "center"
     },
     signUpLabel: {
         color: "gray",
+        fontSize: 20
     },
     LabelUnder: {
         borderBottomColor: "gray",
         borderBottomWidth: 1,
-        width: 50
+        width: 70
     }
 })

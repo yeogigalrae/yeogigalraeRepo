@@ -1,4 +1,4 @@
-import { ScrollView, Alert, BackHandler } from 'react-native';
+import { ScrollView, Alert, BackHandler, ActivityIndicator } from 'react-native';
 import FestivalTypeButtonBox from '../../components/main/FestivalTypeButtonBox';
 import FestivalSearchButtonBox from '../../components/main/FestivalSearchButtonBox';
 import BestFestivalListBox from '../../components/main/BestFestivalListBox';
@@ -8,25 +8,25 @@ import axios from 'axios';
 import IPConfig from '../../configs/IPConfig.json';
 import useUser from '../../components/user/UserState';
 import { useFocusEffect } from '@react-navigation/native';
-// import usePermissions from '../../components/map/usePermissions';
+import appStyle from '../../configs/Style.json';
 
 export default MainScreen = (props) => {
     const [festivalList, setFestivalList] = useState();
     const currentUser = useUser(state => state.user);
 
     useEffect(() => {
-        // const backAction = () => {
-        //     Alert.alert('앱 종료', '앱을 종료하시겠습니까?', [
-        //         { text: '확인', onPress: () => BackHandler.exitApp() },
-        //         { text: '취소', onPress: () => null },
-        //     ]);
-        //     return true;
-        // };
-        // const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
         initMain();
-        // return () => {
-        //     backHandler.remove();
-        // };
+        const backAction = () => {
+            Alert.alert('앱 종료', '앱을 종료하시겠습니까?', [
+                { text: '확인', onPress: () => BackHandler.exitApp() },
+                { text: '취소', onPress: () => null },
+            ]);
+            return true;
+        };
+        const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
+        return () => {
+            backHandler.remove();
+        };
     }, [useFocusEffect])
 
     const initMain = async () => {
@@ -39,7 +39,7 @@ export default MainScreen = (props) => {
                 },
                 responseType: "json",
             })
-            console.log("{MainScreen} : initMain / response.data = ", response.data);
+            console.log("{MainScreen} : initMain / response.data.festivals.length = ", response.data.festivals.length);
             setFestivalList(response.data.festivals);
         } catch (error) {
             console.log(error);
@@ -53,9 +53,15 @@ export default MainScreen = (props) => {
             <FestivalTypeButtonBox />
             <FestivalSearchButtonBox />
             {
-                festivalList != null ?
+                festivalList != null ? (
                     <BestFestivalListBox list={festivalList} />
-                    : null
+                ) : (
+                    <ActivityIndicator
+                        size="large"
+                        color={appStyle.APP_MAIN_COLOR}
+                        animating={true}
+                    />
+                )
             }
         </ScrollView>
     );

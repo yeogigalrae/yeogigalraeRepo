@@ -4,6 +4,8 @@ const userController = require('./Controller/userController');
 const likeController = require('./Controller/likeController');
 const festivalController = require('./Controller/festivalController');
 const loginController = require('./Controller/loginController');
+const messageController = require('./Controller/messageController');
+const mapController = require('./Controller/mapController');
 
 const routes = express.Router();
 
@@ -42,7 +44,6 @@ routes.get('/festivals/search/:user_id/:search', festivalController.getSearchFes
 // // 축제 상세 조회
 // routes.get('/festivals/:festival_id/:user_id', festivalController.getFestivalInfo);
 
-
 // 로그인
 routes.get('/users/login/:id/:password', loginController.userLogin);
 
@@ -51,6 +52,12 @@ routes.post('/users/signup', loginController.userSignup);
 
 // 아이디 중복 체크
 routes.get('/users/signup/idcheck/:id', loginController.userSignupIdCheck);
+
+// 메시지 가져오기
+routes.get('/festivals/:festival_id/messages/:pageNum', messageController.getMessage);
+
+// 지도 값 가져오기
+routes.get('/festivals/coordinates/:latitude/:longitude/:latitude_delta/:longitude_delta/:user_id', mapController.getFestivals);
 
 module.exports = routes;
 

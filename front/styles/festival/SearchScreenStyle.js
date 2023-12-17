@@ -68,10 +68,6 @@ export default StyleSheet.create({
         alignItems: "center",
         paddingBottom: 2
     },
-    selectedCancle: {
-        marginLeft: 5,
-        paddingTop: 2
-    },
 
 
     // SearchScreenTop

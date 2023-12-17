@@ -12,19 +12,18 @@ export default LiveChat = (props) => {
         })
     );
     const navigation = useNavigation();
-
     const begin_date = new Date(props.festivalInfo.begin_date);
     const end_date = new Date(props.festivalInfo.end_date);
     const currentDate = new Date();
     const liveChatActivate = (currentDate >= begin_date && currentDate <= end_date) ? true : false;
-
+    
     return (
         <View
             style={FestivalDetailScreenStyle.liveChatBox}
         >
             <TouchableOpacity
                 style={FestivalDetailScreenStyle.liveChatButton}
-                disabled={liveChatActivate}
+                disabled={!liveChatActivate}
                 onPress={() => {
                     navigation.navigate("liveChat", {festivalInfo : currentFestival});
                 }}
@@ -35,7 +34,7 @@ export default LiveChat = (props) => {
                 <View
                     style={FestivalDetailScreenStyle.liveChatStateBox}
                 >
-                    {!liveChatActivate ? (
+                    {liveChatActivate ? (
                         <>
                             <Text>ON</Text>
                             <View
@@ -52,50 +51,6 @@ export default LiveChat = (props) => {
                     )}
                 </View>
             </TouchableOpacity>
-            {
-                chatOpen ? (
-                    <View>
-                        <KeyboardAvoidingView
-                            behavior={Platform.OS === 'ios' ? "height" : null}
-                            keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0}
-                        >
-                            <ScrollView
-                                style={FestivalDetailScreenStyle.liveChatArea}
-                                onScroll={handleScroll}
-                                scrollEventThrottle={16}
-                            >
-                                {
-                                    messageList?.map((data, idx) => {
-                                        return <Message data={data} key={idx} />
-                                    })
-                                }
-                            </ScrollView>
-                            <View
-                                style={FestivalDetailScreenStyle.liveChatInputBox}
-                            >
-                                <TextInput
-                                    style={FestivalDetailScreenStyle.liveChatInput}
-                                    onChangeText={(value) => setMessage(value)}
-                                >
-                                </TextInput>
-                                <TouchableOpacity
-                                    style={FestivalDetailScreenStyle.liveChatInputButton}
-                                    onPress={() => {
-                                        sendMessage()
-                                    }}
-                                >
-                                    <Image
-                                        style={FestivalDetailScreenStyle.liveChatInputButtonImage}
-                                        source={require("../../../assets/home.png")}
-                                    ></Image>
-                                </TouchableOpacity>
-                            </View>
-                        </KeyboardAvoidingView>
-                    </View>
-                ) : (
-                    null
-                )
-            }
         </View>
     )
 }

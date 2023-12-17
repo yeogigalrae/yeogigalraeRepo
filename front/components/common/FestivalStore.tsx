@@ -22,6 +22,9 @@ export interface Festival {
     name: string;
     place: string;
     url: string;
+    sentiment: string;
+    show_times: string;
+    info: string;
 }
 
 const useFestivalStore = create<FestivalState>((set) => ({

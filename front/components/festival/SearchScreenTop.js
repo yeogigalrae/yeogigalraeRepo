@@ -29,14 +29,17 @@ export default SearchScreenTop = (props) => {
                     >
                     </TextInput>
                 </View>
-                <View
+                <TouchableOpacity
                     style={SearchScreenStyle.searchBoxRight}
+                    onPress={() => {
+                        props.onSubmitEditing(searchText);
+                    }}
                 >
                     <Image
                         style={SearchScreenStyle.searchImage}
                         source={require("../../assets/search.png")}
                     />
-                </View>
+                </TouchableOpacity>
             </View>
             <View style={SearchScreenStyle.topEmpty} />
         </View>

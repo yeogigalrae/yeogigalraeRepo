@@ -30,18 +30,17 @@ export default StyleSheet.create({
     },
     profileRight: {
         width: "60%",
+        maxWidth: "60%",
+        justifyContent: "space-around",
     },
     profileName: {
-        flex: 1,
         fontSize: 32,
         fontWeight: "bold",
         textAlignVertical: "center",
         paddingHorizontal: 10
     },
     profileNickName: {
-        flex: 1,
         fontSize: 24,
-        textAlignVertical: "center",
         paddingHorizontal: 10
     },
     myInfoMenuBox: {
