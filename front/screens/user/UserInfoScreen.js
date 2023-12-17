@@ -81,6 +81,8 @@ export default Init_UserInfoScreen = () => {
                         await uploadBytesResumable(storageRef, blob);
                         downloadURL = await getDownloadURL(storageRef);
                         setLoding(false);
+                    } else {
+                        downloadURL = appStyle.APP_IMAGE;
                     }
                 }
 
