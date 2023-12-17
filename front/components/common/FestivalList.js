@@ -100,7 +100,7 @@ export default function FestivalList({ data, isMain }) {
                             style={FestivalListStyle.text}
                             numberOfLines={1}
                             ellipsizeMode="tail"
-                        >{item.place}</Text>
+                        >{item.address}</Text>
                     </View>
                 </View>
             </TouchableOpacity>

@@ -24,7 +24,7 @@ export default Init_UserInfoScreen = () => {
     const setUser = useUser((state) => state.setUser);
     const [date, setDate] = useState(new Date());
     const [open, setOpen] = useState(false);
-    const [image, setImage] = useState(currentUser.photo != null ? currentUser.photo : null);
+    const [image, setImage] = useState(currentUser.photo != null ? currentUser.photo : appStyle.APP_IMAGE);
     const [isImage, setIsImage] = useState(false);
     const [gender, setGender] = useState("남자");
     const [address, setAddress] = useState(currentUser.address != "" ? currentUser.address : "");
@@ -73,13 +73,15 @@ export default Init_UserInfoScreen = () => {
 
                 // 이미지가 새로 선택되었는지 확인
                 if (image !== currentUser.photo) {
-                    const storageRef = ref(storage, `yeogigalrae/${new Date().getTime()}.jpg`);
-                    const response = await fetch(image);
-                    const blob = await response.blob();
-                    setLoding(true);
-                    await uploadBytesResumable(storageRef, blob);
-                    downloadURL = await getDownloadURL(storageRef);
-                    setLoding(false);
+                    if(image != appStyle.APP_IMAGE){
+                        const storageRef = ref(storage, `yeogigalrae/${new Date().getTime()}.jpg`);
+                        const response = await fetch(image);
+                        const blob = await response.blob();
+                        setLoding(true);
+                        await uploadBytesResumable(storageRef, blob);
+                        downloadURL = await getDownloadURL(storageRef);
+                        setLoding(false);
+                    }
                 }
 
                 const newUserInfo = {
@@ -158,10 +160,14 @@ export default Init_UserInfoScreen = () => {
                             source={{ uri: image }}
                         >
                         </Image>
-                        <Image
-                            style={UserInfoStyle.miniImage}
-                            source={require("../../assets/home.png")}
-                        />
+                        <View
+                            style={UserInfoStyle.miniImageView}
+                        >
+                            <Image
+                                style={UserInfoStyle.miniImage}
+                                source={require("../../assets/camera.png")}
+                            />
+                        </View>
                         <Text style={UserInfoStyle.profileLabel}>
                             프로필 등록
                         </Text>

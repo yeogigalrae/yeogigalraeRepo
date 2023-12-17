@@ -98,7 +98,7 @@ export default StyleSheet.create({
         fontSize: 14,
         marginLeft: 10,
         flexWrap: "wrap",
-        maxWidth: 300
+        maxWidth: 250,
     },
 
 

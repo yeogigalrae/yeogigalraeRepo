@@ -7,7 +7,7 @@ import useUser from '../../components/user/UserState';
 import IPConfig from '../../configs/IPConfig.json';
 import useFestivalStore from '../../components/common/FestivalStore';
 import useLikeFestivalStore from '../../components/common/likeFestivalStore';
-import LikeListStyle from '../../styles/user/LikeListStyle';
+import CommonStyle from '../../styles/common/CommonStyle';
 
 export default LikeListScreen = (props) => {
     const currentUser = useUser((state) => state.user);
@@ -35,7 +35,6 @@ export default LikeListScreen = (props) => {
             console.log(error);
         }
     }
-
     return (
         <SafeAreaView
             style={{ backgroundColor: appStyle.APP_MAIN_COLOR }}
@@ -44,24 +43,24 @@ export default LikeListScreen = (props) => {
                 style={{ backgroundColor: appStyle.APP_BACKGROUD_COLOR, height: "100%" }}
             >
                 {
-                    likeFestivalList == []?(
+                    likeFestivalList.length > 0?(
                         <FestivalList data={likeFestivalList} isMain={false} />
                     ) : (
                         <View
-                            style={LikeListStyle.noListView}
+                            style={CommonStyle.noListView}
                         >
                             <Image
                                 source={require('../../assets/logo.png')}
-                                style={LikeListStyle.noListLogo}
+                                style={CommonStyle.noListLogo}
                             />
                             <View
-                                style={LikeListStyle.textView}
+                                style={CommonStyle.textView}
                             >
                                 <Text
-                                    style={LikeListStyle.noListText}
+                                    style={CommonStyle.noListText}
                                 >좋아요한 행사가 없습니다.</Text>
                                 <Text
-                                    style={LikeListStyle.noListTextSub}
+                                    style={CommonStyle.noListTextSub}
                                 >행사 좋아요를 눌러서 목록에 추가해주세요.</Text>
                             </View>
                         </View>    

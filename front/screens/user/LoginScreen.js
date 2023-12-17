@@ -93,6 +93,7 @@ export default LoginScreen = (props) => {
                             style={LoginStyle.inputBox}
                             onBlur={() => setFocus()}
                             onChangeText={(value) => setId(value)}
+                            value={id}
                         />
                         {
                             currentFocus === "id" ? (
@@ -110,6 +111,7 @@ export default LoginScreen = (props) => {
                             }}
                             onBlur={() => setFocus()}
                             onChangeText={(value) => setPassword(value)}
+                            value={password}
                         />
                         {
                             currentFocus === "password" ? (

@@ -12,19 +12,18 @@ export default LiveChat = (props) => {
         })
     );
     const navigation = useNavigation();
-
     const begin_date = new Date(props.festivalInfo.begin_date);
     const end_date = new Date(props.festivalInfo.end_date);
     const currentDate = new Date();
     const liveChatActivate = (currentDate >= begin_date && currentDate <= end_date) ? true : false;
-
+    
     return (
         <View
             style={FestivalDetailScreenStyle.liveChatBox}
         >
             <TouchableOpacity
                 style={FestivalDetailScreenStyle.liveChatButton}
-                disabled={liveChatActivate}
+                disabled={!liveChatActivate}
                 onPress={() => {
                     navigation.navigate("liveChat", {festivalInfo : currentFestival});
                 }}
@@ -35,7 +34,7 @@ export default LiveChat = (props) => {
                 <View
                     style={FestivalDetailScreenStyle.liveChatStateBox}
                 >
-                    {!liveChatActivate ? (
+                    {liveChatActivate ? (
                         <>
                             <Text>ON</Text>
                             <View

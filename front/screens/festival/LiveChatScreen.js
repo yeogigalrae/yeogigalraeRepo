@@ -13,6 +13,7 @@ import axios from "axios";
 export default LiveChatScreen = ({ route }) => {
     const currentUser = useUser(state => state.user);
     const festivalList = useFestivalStore(state => state.festivalList);
+    const setFestivalList = useFestivalStore(state => state.setFestivalList);
     const [currentFestival, setCurrentFestival] = useState(
         festivalList.find((festival) => {
             return route.params.festivalInfo == festival
@@ -34,7 +35,29 @@ export default LiveChatScreen = ({ route }) => {
         getMessage(); // 메시지 가져오기 
 
         newSocket.on('message', data => {
-            setMessageList(preMessageList => [...preMessageList, data]);
+            console.log(data);
+            const newChatData = {
+                datetime : data.datetime,
+                msg : data.msg,
+                nickname : data.nickname,
+                photo : data.photo,
+            }
+            const newFestivalInfo = {
+                ...currentFestival,
+                sentiment : data.state
+            }
+            let newFestivalList = [];
+            festivalList.map((festival, idx) => {
+                if (festival.id == newFestivalInfo.id) {
+                    newFestivalList.push(newFestivalInfo);
+                } else {
+                    newFestivalList.push(festival);
+                }
+            })
+            
+            setCurrentFestival(newFestivalInfo);
+            setFestivalList(newFestivalList);
+            setMessageList(preMessageList => [...preMessageList, newChatData]);
         })
 
         newSocket.on('error', e => {
@@ -55,6 +78,7 @@ export default LiveChatScreen = ({ route }) => {
             newSocket.emit('Leave', currentUser.user_id);
         };
     }, []);
+
 
     const scrollToBottom = () => {
         scrollViewRef.current?.scrollToEnd({ animated: true });

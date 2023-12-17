@@ -4,9 +4,17 @@ import FestivalContent from '../../components/festival/festivalDetail/FestivalCo
 import FestivalDetailScreenStyle from '../../styles/festival/FestivalDetailScreenStyle';
 import LiveChat from '../../components/festival/festivalDetail/LiveChat';
 import FestivalMap from '../../components/festival/festivalDetail/FestivalMap';
+import CommonStyle from '../../styles/common/CommonStyle';
+import useFestivalStore from '../../components/common/FestivalStore';
+import { useState } from 'react';
 
 export default FestivalDetailScreen = (props) => {
-    const festivalInfo = props.route.params.festivalInfo;
+    const festivalList = useFestivalStore(state => state.festivalList);
+    const [currentFestival, setCurrentFestival] = useState(
+        festivalList.find((festival) => {
+            return props.route.params.festivalInfo.id == festival.id
+        })
+    );
 
     return (
         <ScrollView
@@ -15,23 +23,43 @@ export default FestivalDetailScreen = (props) => {
             <View
                 style={FestivalDetailScreenStyle.imageBox}
             >
-                <Image
-                    style={FestivalDetailScreenStyle.image}
-                    source={{uri: festivalInfo.image}}
-                />
+                {
+                    currentFestival.image ? (
+                        <Image
+                            style={FestivalDetailScreenStyle.image}
+                            source={{ uri: currentFestival.image }}
+                        />
+                    ) : (
+                        <View
+                            style={CommonStyle.noListView}
+                        >
+                            <Image
+                                source={require('../../assets/logo.png')}
+                                style={CommonStyle.noListLogo}
+                            />
+                            <View
+                                style={CommonStyle.textView}
+                            >
+                                <Text
+                                    style={CommonStyle.noListText}
+                                >이미지가 없습니다.</Text>
+                            </View>
+                        </View>
+                    )
+                }
             </View>
             <FestivalDetailButtons
-                festivalInfo={festivalInfo}
+                festivalInfo={currentFestival}
             />
             <View
                 style={FestivalDetailScreenStyle.contentBox}
             >
                 <Text
                     style={FestivalDetailScreenStyle.subject}
-                >{festivalInfo.name}</Text>
-                <FestivalContent data={festivalInfo}/>
-                <LiveChat 
-                    festivalInfo={festivalInfo}
+                >{currentFestival.name}</Text>
+                <FestivalContent data={currentFestival} />
+                <LiveChat
+                    festivalInfo={currentFestival}
                 />
                 <View>
                     <Text
@@ -39,17 +67,17 @@ export default FestivalDetailScreen = (props) => {
                     >행사 설명</Text>
                     <Text
                         style={FestivalDetailScreenStyle.comment}
-                    >{festivalInfo.info}</Text>
+                    >{currentFestival.info}</Text>
                 </View>
                 <View
-                    style={{marginTop: 100}}
+                    style={{ marginTop: 100 }}
                 >
                     <Text
                         style={FestivalDetailScreenStyle.commentTitle}
                     >행사 내용</Text>
                     <Text
                         style={FestivalDetailScreenStyle.comment}
-                    >{festivalInfo.description}</Text>
+                    >{currentFestival.description}</Text>
                 </View>
                 <TouchableOpacity
                     style={FestivalDetailScreenStyle.contactBox}
@@ -57,7 +85,7 @@ export default FestivalDetailScreen = (props) => {
                     <Text
                         style={FestivalDetailScreenStyle.contactTitle}
                     >문의안내</Text>
-                    <Text>{festivalInfo.call}</Text>
+                    <Text>{currentFestival.call}</Text>
                 </TouchableOpacity>
                 <View>
                     <Text
@@ -68,25 +96,25 @@ export default FestivalDetailScreen = (props) => {
                     >
                         <FestivalMap
                             location={{
-                                latitude: festivalInfo.latitude,
-                                longitude: festivalInfo.longitude
+                                latitude: currentFestival.latitude,
+                                longitude: currentFestival.longitude
                             }}
-                            name={festivalInfo.name}
+                            name={currentFestival.name}
                         />
                     </TouchableOpacity>
                 </View>
                 <View
-                    style={{marginTop: 100}}
+                    style={{ marginTop: 100 }}
                 >
                     <Text
                         style={FestivalDetailScreenStyle.commentTitle}
                     >URL</Text>
                     <TouchableOpacity
-                        style={[FestivalDetailScreenStyle.contactBox, {marginTop: 0}]}
+                        style={[FestivalDetailScreenStyle.contactBox, { marginTop: 0 }]}
                     >
                         <Text
                             style={FestivalDetailScreenStyle.contactTitle}
-                        >{festivalInfo.url?festivalInfo.url:"URL 준비중입니다.."}</Text>
+                        >{currentFestival.url ? currentFestival.url : "URL 준비중입니다.."}</Text>
                     </TouchableOpacity>
                 </View>
             </View>
