@@ -7,15 +7,18 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import IPConfig from '../../configs/IPConfig.json';
 import useUser from '../../components/user/UserState';
-import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import appStyle from '../../configs/Style.json';
 
 export default MainScreen = (props) => {
     const [festivalList, setFestivalList] = useState();
     const currentUser = useUser(state => state.user);
+    const navigation = useNavigation();
 
     useEffect(() => {
-        initMain();
+        navigation.addListener('focus', () => {
+            initMain();
+        });
         const backAction = () => {
             Alert.alert('앱 종료', '앱을 종료하시겠습니까?', [
                 { text: '확인', onPress: () => BackHandler.exitApp() },
@@ -27,7 +30,7 @@ export default MainScreen = (props) => {
         return () => {
             backHandler.remove();
         };
-    }, [useFocusEffect])
+    }, [])
 
     const initMain = async () => {
         try {
