@@ -1,1 +1,1 @@
-# yeogigalraeRepo
+# 축제 정보 제공 어플리케이션
