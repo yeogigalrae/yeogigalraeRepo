@@ -1,8 +1,8 @@
-# 여기갈래 - 축제 정보 제공 어플리케이션
-
+![여기갈래 메인사진](https://github.com/user-attachments/assets/7eafc203-7694-41be-b587-d7bfc64b2ce6)
 
 ## 프로젝트 진행 기간
-2023.11.01(수) ~ 2023.12.18(월)
+2023.11.01(수) ~ 2023.12.18(월) 약 2개월
+
 모바일 프로젝트
 
 
@@ -18,10 +18,13 @@
 - 지도 검색
 
 ## 개발 환경
+![My Skills](https://skillicons.dev/icons?i=nodejs,react,git,github,notion,vscode)
 ### Backend 
-- Nodejs
+- Node.js
+
 ### Frontend 
 - React Native
+
 ### Database 
 - MariaDB
 ### tool 
@@ -33,7 +36,15 @@
 ## 팀원 역할 분배
 - 서한수 - Frontend
 - 이승한 - Backend
-## 여기갈래 화면
+
+## 요구사항 정의서
+![img](https://github.com/user-attachments/assets/2b7a03d7-e236-4f7b-8b74-08565f8903dd)
+
+
+## ERD
+![img](https://github.com/user-attachments/assets/e8492f83-713e-4fdf-b300-e77ac10dadfa)
+
+## 여기갈래 UI
 
 ### 메인 페이지
 <p align="left">
@@ -42,21 +53,15 @@
 
 ----------
 
-### 메인페이지 - 전체 축제
+### 검색페이지 - 전체, 추천 축제
 <p align="left">
   <img src="https://github.com/yeogigalrae/yeogigalraeRepo/assets/127086663/3e6e3d9e-e983-49ed-9f9d-3c5345c883b1" width="200" />
-</p>
-
-----------
-
-### 메인페이지 - 추천 축제
-<p align="left">
   <img src="https://github.com/yeogigalrae/yeogigalraeRepo/assets/127086663/dcff2791-a0e3-4c3c-9bb8-aafb56abe9ae" width="200" />
 </p>
 
 ----------
 
-### 메인페이지 - 좋아요한 축제  
+### 좋아요 페이지
 <p align="left">
   <img src="https://github.com/yeogigalrae/yeogigalraeRepo/assets/127086663/1e3861b6-2c42-4b49-9725-43ca51b4ae64" width="200" />
 </p>
@@ -68,19 +73,7 @@
   <img src="https://github.com/yeogigalrae/yeogigalraeRepo/assets/127086663/e9d47114-e418-4942-87b8-abef29cbe2cf" width="200" />
   <img src="https://github.com/yeogigalrae/yeogigalraeRepo/assets/127086663/6a4e535f-19ea-422f-8d70-7b04607b765d" width="200" />
   <img src="https://github.com/yeogigalrae/yeogigalraeRepo/assets/127086663/1b751e86-9506-4af0-bde0-501613954861" width="200" />
-</p>
-
-----------
-
-### 축제 상세 페이지 - 지도
-<p align="left">
   <img src="https://github.com/yeogigalrae/yeogigalraeRepo/assets/127086663/fe517c9f-f4c8-4eef-8b4a-27c84bef7761" width="200" />
-</p>
-
-----------
-
-### 축제 상세 페이지 - 실시간 채팅
-<p align="left">
   <img src="https://github.com/yeogigalrae/yeogigalraeRepo/assets/127086663/1101af21-9690-4582-92b6-d71c11e4b33f" width="200" />
 </p>
 
@@ -95,7 +88,7 @@
 
 ----------
 
-### 축제 검색 페이지 - 지도 검색
+### 메인 페이지 - 지도 검색
 <p align="left">
   <img src="https://github.com/yeogigalrae/yeogigalraeRepo/assets/127086663/39c4537e-416c-4aa5-a80a-aac44d5f4e08" width="200" />
   <img src="https://github.com/yeogigalrae/yeogigalraeRepo/assets/127086663/8692fe68-fe63-4183-92dc-00cec753e55f" width="200" />
@@ -104,27 +97,22 @@
 
 ----------
 
-### 회원가입 페이지
+### 로그인, 회원가입 페이지
 <p align="left">
+  <img src="https://github.com/yeogigalrae/yeogigalraeRepo/assets/127086663/51fbf075-61ef-47cc-b624-d4abdfc1a10b" width="200" />
   <img src="https://github.com/yeogigalrae/yeogigalraeRepo/assets/127086663/5f2e40c7-d3fc-4295-ac47-6154eaf45b98" width="200" />
   <img src="https://github.com/yeogigalrae/yeogigalraeRepo/assets/127086663/d29c8446-13dd-49b1-8a89-dcf7fed11f15" width="200" />
 </p>
 
 ----------
 
-### 로그인 페이지
-<p align="left">
-  <img src="https://github.com/yeogigalrae/yeogigalraeRepo/assets/127086663/51fbf075-61ef-47cc-b624-d4abdfc1a10b" width="200" />
-</p>
-
-----------
-
 ### 내정보 페이지
 <p align="left">
-  <img src="https://github.com/yeogigalrae/yeogigalraeRepo/assets/127086663/1b3f4e05-5332-4b39-9004-0f3ceccbbba5" width="190" />
-  <img src="https://github.com/yeogigalrae/yeogigalraeRepo/assets/127086663/92f5fca0-1c2a-4f7e-9dab-6e2d9a1aa31e" width="190" />
-  <img src="https://github.com/yeogigalrae/yeogigalraeRepo/assets/127086663/04620b1b-39d7-457e-93ac-d5eefdf6d2b2" width="190" />
-  <img src="https://github.com/yeogigalrae/yeogigalraeRepo/assets/127086663/671808fb-845d-4326-9f69-b320bbbddf73" width="190" />
-  <img src="https://github.com/yeogigalrae/yeogigalraeRepo/assets/127086663/f9e348b8-4bce-4788-a51c-85704d2ba17a" width="190" />
+  <img src="https://github.com/yeogigalrae/yeogigalraeRepo/assets/127086663/1b3f4e05-5332-4b39-9004-0f3ceccbbba5" width="200" />
+  <img src="https://github.com/yeogigalrae/yeogigalraeRepo/assets/127086663/92f5fca0-1c2a-4f7e-9dab-6e2d9a1aa31e" width="200" />
+  <img src="https://github.com/yeogigalrae/yeogigalraeRepo/assets/127086663/04620b1b-39d7-457e-93ac-d5eefdf6d2b2" width="200" />
+
+  <img src="https://github.com/yeogigalrae/yeogigalraeRepo/assets/127086663/671808fb-845d-4326-9f69-b320bbbddf73" width="200" />
+  <img src="https://github.com/yeogigalrae/yeogigalraeRepo/assets/127086663/f9e348b8-4bce-4788-a51c-85704d2ba17a" width="200" />
 </p>
 
