@@ -38,7 +38,7 @@
 - 이승한 - Backend
 
 ## 요구사항 정의서
-![img](https://github.com/user-attachments/assets/2b7a03d7-e236-4f7b-8b74-08565f8903dd)
+![Image](https://github.com/user-attachments/assets/f5ac4401-e233-4517-a148-8442e36b7a4b)
 
 
 ## ERD
