@@ -36,9 +36,10 @@
 ## 팀원 역할 분배
 - 서한수 - Frontend
 - 이승한 - Backend
+- 임희석 - Backend
 
 ## 요구사항 정의서
-![Image](https://github.com/user-attachments/assets/f5ac4401-e233-4517-a148-8442e36b7a4b)
+![Image](https://github.com/user-attachments/assets/3ee1b97a-0bd6-4418-a1b1-360a3281ff3d)
 
 
 ## ERD
